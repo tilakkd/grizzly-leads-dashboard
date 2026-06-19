@@ -23,9 +23,9 @@
 </head>
 <body>
   <h1>Leads Dashboard &mdash; Grizzly Insulations</h1>
-  <div class="meta">Sources: Gravity Forms (leads + names) &middot; Lucky Orange (source / keyword) &middot; Site: grizzlyinsulationco.com &middot; Last updated: 2026-06-19</div>
+  <div class="meta">Sources: Gravity Forms (leads + names) &middot; Lucky Orange (source / campaign / keyword / city) &middot; Site: grizzlyinsulationco.com &middot; Last updated: 2026-06-19</div>
 
-  <div class="count">Total leads: <b>3</b> &nbsp;|&nbsp; Form: 3 &middot; Call: 0 &middot; Paid: 2 &middot; Organic: 1</div>
+  <div class="count">Total leads: <b>3</b> &nbsp;|&nbsp; Form: 3 &middot; Call: 0 &middot; Paid: 3 &middot; Organic: 0</div>
 
   <table>
     <thead>
@@ -61,20 +61,20 @@
         <td>Daimi Verstraete</td>
         <td>Form</td>
         <td class="paid">Google Ads (cpc)</td>
-        <td>grizzly_insulation</td>
-        <td>insulation company</td>
+        <td>grizzly_insulation_general</td>
+        <td>insulation companies near me</td>
         <td>Denver, CO</td>
         <td>Blown-In Insulation</td>
-        <td>/</td>
+        <td>/attic-insulation/</td>
       </tr>
       <tr>
         <td>3</td>
         <td>2026-06-14</td>
         <td>Gigi Birinyi</td>
         <td>Form</td>
-        <td class="organic">Organic</td>
-        <td>(none)</td>
-        <td>(not provided)</td>
+        <td class="paid">Google Ads (cpc)</td>
+        <td>grizzly_insulation_general</td>
+        <td>home insulation services</td>
         <td>&mdash;</td>
         <td>(general enquiry)</td>
         <td>/ (Contact Us)</td>
@@ -83,10 +83,14 @@
   </table>
 
   <div class="note">
-    Lead names come from Gravity Forms entries; source / campaign / keyword are matched from Lucky Orange.
-    Phone &amp; email are intentionally <b>not shown here</b> (they stay in Gravity Forms) to avoid exposing customer
-    contact details on a public page. &mdash; <b>Call leads (0):</b> phone-call lead tracking with caller details
-    needs CallTrackingMetrics (CTM), which is not set up yet; only form leads are shown for now.
+    Lead names come from Gravity Forms entries; source / campaign / keyword / city are matched from Lucky Orange
+    Thank-You sessions (matched by visitor IP + date). Phone &amp; email are intentionally <b>not shown here</b>
+    (they stay in Gravity Forms) to avoid exposing customer contact details on a public page. &mdash;
+    <b>Call leads (0):</b> phone-call lead tracking with caller details needs CallTrackingMetrics (CTM),
+    which is not set up yet; only form leads are shown for now. &mdash;
+    <b>Note on Gigi Birinyi:</b> source/campaign/keyword are read from the Google Ads UTM parameters captured on
+    her form-submission URL (utm_medium=cpc, gad_source=1), so she is classified as paid (Google Ads); no Lucky
+    Orange recording was captured for her session, so her city is unavailable.
     This page auto-refreshes from Lucky Orange + Gravity Forms on a schedule.
   </div>
 </body>
