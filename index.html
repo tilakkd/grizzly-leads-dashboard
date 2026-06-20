@@ -5,108 +5,375 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="googlebot" content="noindex, nofollow">
-<title>Leads Dashboard - Grizzly Insulations</title>
+<title>Leads Dashboard — Grizzly Insulations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  body { font-family: Arial, Helvetica, sans-serif; margin: 16px; color: #222; }
-  h1 { font-size: 18px; margin: 0 0 2px; }
-  .meta { font-size: 12px; color: #666; margin-bottom: 12px; }
-  .count { font-size: 13px; margin: 10px 0 14px; }
-  .count b { font-size: 16px; }
-  table { border-collapse: collapse; width: 100%; font-size: 13px; }
-  th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; vertical-align: top; }
-  th { background: #f1f1f1; font-weight: bold; white-space: nowrap; }
-  tr:nth-child(even) td { background: #fafafa; }
-  .paid { color: #185FA5; font-weight: bold; }
-  .organic { color: #3B6D11; font-weight: bold; }
-  .note { font-size: 12px; color: #777; margin-top: 14px; line-height: 1.5; }
+  :root{
+    --navy:#13314f; --navy2:#1d4d77; --blue:#2563eb; --blue-bg:#e8f0fe;
+    --green:#15803d; --green-bg:#e7f6ec; --amber:#b45309; --amber-bg:#fdf0dd;
+    --ink:#1f2937; --muted:#6b7280; --line:#e6e9ef; --bg:#f4f6fa; --card:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,Arial,sans-serif;font-size:14px;}
+  .wrap{max-width:1140px;margin:0 auto;padding:20px 18px 40px;}
+
+  /* Header */
+  .topbar{background:#13314f;background:linear-gradient(100deg,#13314f,#1d4d77);color:#fff;border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 6px 18px rgba(19,49,79,.18);}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .logo{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;}
+  .brand h1{margin:0;font-size:18px;font-weight:800;letter-spacing:.2px;}
+  .brand .sub{font-size:12px;color:#c9d8e8;margin-top:1px;}
+  .head-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .live{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);padding:6px 11px;border-radius:999px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:#36d399;box-shadow:0 0 0 0 rgba(54,211,153,.7);animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(54,211,153,.6)}70%{box-shadow:0 0 0 7px rgba(54,211,153,0)}100%{box-shadow:0 0 0 0 rgba(54,211,153,0)}}
+  .updated{font-size:12px;color:#c9d8e8;}
+  .period{font-size:12px;font-weight:700;color:#fff;background:rgba(255,255,255,.12);padding:6px 11px;border-radius:999px;}
+  .arch{position:relative;}
+  .arch summary{list-style:none;cursor:pointer;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);color:#fff;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;}
+  .arch summary::-webkit-details-marker{display:none;}
+  .arch[open] summary{background:rgba(255,255,255,.24);}
+  .arch-menu{position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 10px 28px rgba(20,30,50,.2);padding:6px;min-width:215px;z-index:30;}
+  .arch-item{display:block;padding:8px 11px;border-radius:7px;font-size:13px;color:#13314f;text-decoration:none;font-weight:600;}
+  .arch-item:hover{background:#f2f6fc;}
+  .arch-item.current{color:#15803d;}
+  .arch-empty{font-size:11px;color:#9aa0ab;padding:8px 11px;line-height:1.45;}
+
+  /* KPI cards */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px 16px;box-shadow:0 2px 6px rgba(20,30,50,.04);position:relative;overflow:hidden;}
+  .kpi .lbl{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+  .kpi .val{font-size:30px;font-weight:800;line-height:1.1;margin-top:6px;}
+  .kpi .ico{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+  .kpi.total .ico{background:#e8f0fe;color:#2563eb;} .kpi.total .val{color:#13314f;}
+  .kpi.paid .ico{background:var(--blue-bg);color:var(--blue);} .kpi.paid .val{color:var(--blue);}
+  .kpi.organic .ico{background:var(--green-bg);color:var(--green);} .kpi.organic .val{color:var(--green);}
+  .kpi.calls .ico{background:#fdf0dd;color:#b45309;} .kpi.calls .val{color:#b45309;}
+
+  /* Source blocks (Paid vs Organic, each split into Form + Call) */
+  .totline{font-size:12.5px;color:var(--muted);margin:18px 2px 8px;font-weight:600;}
+  .totline b{color:#13314f;font-size:15px;}
+  .blocks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 18px;}
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px 16px 22px;box-shadow:0 2px 6px rgba(20,30,50,.04);position:relative;overflow:hidden;}
+  .block:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;}
+  .block.paid:before{background:var(--blue);}
+  .block.organic:before{background:var(--green);}
+  .bhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;}
+  .btag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:5px 11px;border-radius:999px;}
+  .btag.paid{background:var(--blue-bg);color:var(--blue);}
+  .btag.organic{background:var(--green-bg);color:var(--green);}
+  .btot{font-size:32px;font-weight:800;line-height:1;}
+  .block.paid .btot{color:var(--blue);}
+  .block.organic .btot{color:var(--green);}
+  .bstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .bstat{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:9px 12px;}
+  .bs-lbl{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+  .bs-val{font-size:21px;font-weight:800;color:#13314f;margin-top:2px;}
+
+  /* Controls */
+  .controls{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+  .search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:240px;flex:1;max-width:340px;}
+  .search input{border:0;outline:0;font:inherit;width:100%;background:transparent;color:var(--ink);}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;}
+  .chip.active{background:#13314f;color:#fff;border-color:#13314f;}
+
+  /* Section title */
+  .sec-title{display:flex;align-items:center;gap:9px;margin:26px 2px 12px;font-size:15px;font-weight:800;color:#13314f;}
+  .sec-title .ic{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;}
+  .sec-title .ic.f{background:#e8f0fe;color:#2563eb;} .sec-title .ic.c{background:#fdf0dd;color:#b45309;}
+  .sec-title .cnt{margin-left:auto;font-size:12px;font-weight:700;color:#6b7280;background:#eef1f5;padding:4px 11px;border-radius:999px;}
+
+  /* Source legend */
+  .legend{display:flex;flex-wrap:wrap;gap:12px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:12px;font-size:12.5px;line-height:1.5;}
+  .legend .li{display:flex;align-items:flex-start;gap:9px;max-width:250px;}
+  .legend .li b{color:#374151;}
+  .legend .li .muted{color:#8a909c;}
+
+  /* Table card */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 14px rgba(20,30,50,.05);overflow:hidden;}
+  .tablewrap{overflow-x:auto;}
+  table{border-collapse:separate;border-spacing:0;width:100%;font-size:13.5px;min-width:860px;}
+  thead th{position:sticky;top:0;background:#f7f9fc;color:#5b6573;text-align:left;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.4px;padding:13px 14px;border-bottom:1px solid var(--line);white-space:nowrap;}
+  tbody td{padding:13px 14px;border-bottom:1px solid #f0f2f6;vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:0;}
+  tbody tr:hover td{background:#f9fbff;}
+  .name{font-weight:700;color:#13314f;display:flex;align-items:center;gap:8px;}
+  .avatar{width:26px;height:26px;border-radius:50%;background:#e8f0fe;color:#2563eb;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .avatar.c{background:#fdf0dd;color:#b45309;}
+  .muted{color:var(--muted);}
+  .tiny{font-size:11px;color:#9aa0ab;margin-top:2px;}
+  .kw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#374151;background:#f3f4f6;padding:2px 7px;border-radius:6px;display:inline-block;}
+  .lp{color:#2563eb;text-decoration:none;font-weight:600;} .lp:hover{text-decoration:underline;}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;}
+  .pill.form{background:var(--blue-bg);color:#1e40af;}
+  .pill.call{background:#fdf0dd;color:#9a5400;}
+  .pill.paid{background:var(--blue-bg);color:var(--blue);}
+  .pill.organic{background:var(--green-bg);color:var(--green);}
+  .pill.gmb{background:var(--amber-bg);color:var(--amber);}
+  .pill.direct{background:#eef1f5;color:#4b5563;}
+  .new{background:#fde68a;color:#92400e;font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;letter-spacing:.4px;}
+  .sample{background:#eef1f5;color:#9aa0ab;font-size:9px;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:.5px;}
+  .st-ans{color:#15803d;font-weight:700;} .st-vm{color:#b45309;font-weight:700;}
+
+  .note{font-size:12px;color:#7a808c;line-height:1.6;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+  .note b{color:#374151;}
+  .foot{text-align:center;color:#9aa0ab;font-size:12px;margin-top:18px;}
+  .foot b{color:#6b7280;}
+
+  @media(max-width:760px){
+    .kpis{grid-template-columns:repeat(2,1fr);}
+    .blocks{grid-template-columns:1fr;}
+    .brand h1{font-size:16px;}
+  }
 </style>
 </head>
 <body>
-  <h1>Leads Dashboard &mdash; Grizzly Insulations</h1>
-  <div class="meta">Sources: Gravity Forms (leads + names) &middot; Lucky Orange (source / campaign / keyword / city) &middot; Site: grizzlyinsulationco.com &middot; Last updated: 2026-06-20</div>
+<div class="wrap">
 
-  <div class="count">Total leads: <b>4</b> &nbsp;|&nbsp; Form: 4 &middot; Call: 0 &middot; Paid: 4 &middot; Organic: 0</div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Date</th>
-        <th>Lead name</th>
-        <th>Type</th>
-        <th>Source</th>
-        <th>Campaign</th>
-        <th>Keyword</th>
-        <th>City</th>
-        <th>Service</th>
-        <th>Landing page</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>2026-06-19</td>
-        <td>Alicia Powell</td>
-        <td>Form</td>
-        <td class="paid">Google Ads (cpc)</td>
-        <td>grizzly_insulation_general</td>
-        <td>home insulation services</td>
-        <td>Silver Spring, MD</td>
-        <td>(general enquiry)</td>
-        <td>/ (Contact Us)</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>2026-06-17</td>
-        <td>Marco Deluna</td>
-        <td>Form</td>
-        <td class="paid">Google Ads (cpc)</td>
-        <td>spray-foam-insulation</td>
-        <td>spray foam insulation</td>
-        <td>Denver, CO</td>
-        <td>Spray Foam Insulation</td>
-        <td>/spray-foam-insulation/</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>2026-06-17</td>
-        <td>Daimi Verstraete</td>
-        <td>Form</td>
-        <td class="paid">Google Ads (cpc)</td>
-        <td>grizzly_insulation_general</td>
-        <td>insulation companies near me</td>
-        <td>Denver, CO</td>
-        <td>Blown-In Insulation</td>
-        <td>/attic-insulation/</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>2026-06-14</td>
-        <td>Gigi Birinyi</td>
-        <td>Form</td>
-        <td class="paid">Google Ads (cpc)</td>
-        <td>grizzly_insulation_general</td>
-        <td>home insulation services</td>
-        <td>&mdash;</td>
-        <td>(general enquiry)</td>
-        <td>/ (Contact Us)</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="note">
-    Lead names come from Gravity Forms entries; source / campaign / keyword / city are matched from Lucky Orange
-    Thank-You sessions (matched by visitor IP + date). Phone &amp; email are intentionally <b>not shown here</b>
-    (they stay in Gravity Forms) to avoid exposing customer contact details on a public page. &mdash;
-    <b>Call leads (0):</b> phone-call lead tracking with caller details needs CallTrackingMetrics (CTM),
-    which is not set up yet; only form leads are shown for now. &mdash;
-    <b>Note on Alicia Powell:</b> matched to Lucky Orange Thank-You session (IP 74.96.207.26, Google PPC,
-    campaign grizzly_insulation_general); the city shown is her Lucky Orange geolocation (Silver Spring, MD),
-    while her Contact Us message referenced a townhome in Aurora, CO. &mdash;
-    <b>Note on Gigi Birinyi:</b> source/campaign/keyword are read from the Google Ads UTM parameters captured on
-    her form-submission URL (utm_medium=cpc, gad_source=1), so she is classified as paid (Google Ads); no Lucky
-    Orange recording was captured for her session, so her city is unavailable.
-    This page auto-refreshes from Lucky Orange + Gravity Forms on a schedule.
+  <!-- Header -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5 5.5.5-4 4 1 5.5L12 19l-5 3 1-5.5-4-4 5.5-.5z"/></svg>
+      </div>
+      <div>
+        <h1>Leads Dashboard</h1>
+        <div class="sub">Grizzly Insulations &middot; grizzlyinsulationco.com</div>
+      </div>
+    </div>
+    <div class="head-right">
+      <span class="live"><span class="dot"></span> Live</span>
+      <span class="period">June 2026</span>
+      <details class="arch">
+        <summary>Archives <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <div class="arch-menu">
+          <a class="arch-item current">June 2026 &middot; current</a>
+          <!-- MONTHLY ROLLOVER: when a month ends, add its saved file above this line, e.g.
+               <a class="arch-item" href="archives/Leads-2026-06.html">June 2026</a> -->
+          <div class="arch-empty">Older months are saved as files in <b>/archives</b> and linked here.</div>
+        </div>
+      </details>
+      <span class="updated">Last updated: <b style="color:#fff">Jun 20, 2026</b></span>
+    </div>
   </div>
+
+  <!-- Source blocks -->
+  <div class="totline"><b id="total-leads">7</b> total leads &nbsp;&middot;&nbsp; split by source below</div>
+  <div class="blocks">
+    <div class="block paid">
+      <div class="bhead"><span class="btag paid">Paid &middot; Google Ads</span><span class="btot" id="paid-total">4</span></div>
+      <div class="bstats">
+        <div class="bstat"><div class="bs-lbl">Form leads</div><div class="bs-val" id="paid-form">3</div></div>
+        <div class="bstat"><div class="bs-lbl">Call leads</div><div class="bs-val" id="paid-call">1</div></div>
+      </div>
+    </div>
+    <div class="block organic">
+      <div class="bhead"><span class="btag organic">Organic / GMB</span><span class="btot" id="org-total">3</span></div>
+      <div class="bstats">
+        <div class="bstat"><div class="bs-lbl">Form leads</div><div class="bs-val" id="org-form">1</div></div>
+        <div class="bstat"><div class="bs-lbl">Call leads</div><div class="bs-val" id="org-call">2</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa0ab" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input id="q" type="text" placeholder="Search name, keyword, city…">
+    </div>
+    <div class="chips">
+      <span class="chip active" data-f="all">All</span>
+      <span class="chip" data-f="paid">Paid</span>
+      <span class="chip" data-f="organic">Organic / GMB</span>
+    </div>
+  </div>
+
+  <!-- ===== FORM LEADS ===== -->
+  <div class="sec-title">
+    <span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></span>
+    Form Leads <span class="cnt" id="form-cnt">4 leads</span>
+  </div>
+  <div class="card">
+    <div class="tablewrap">
+      <table id="leads">
+        <thead>
+          <tr>
+            <th>#</th><th>Date</th><th>Lead name</th><th>Type</th><th>Source</th>
+            <th>Campaign</th><th>Keyword</th><th>City</th><th>Service</th><th>Landing page</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-source="paid" data-date="2026-06-19">
+            <td>1</td>
+            <td>Jun 19, 2026 <span class="new">NEW</span></td>
+            <td><span class="name"><span class="avatar">AP</span>Alicia Powell</span></td>
+            <td><span class="pill form">Form</span></td>
+            <td><span class="pill paid">Paid · Google Ads</span></td>
+            <td>grizzly_insulation_general</td>
+            <td><span class="kw">home insulation services</span></td>
+            <td>Silver Spring, MD</td>
+            <td class="muted">General enquiry</td>
+            <td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/ (Contact Us)</a></td>
+          </tr>
+          <tr data-source="paid" data-date="2026-06-17">
+            <td>2</td>
+            <td>Jun 17, 2026</td>
+            <td><span class="name"><span class="avatar">MD</span>Marco Deluna</span></td>
+            <td><span class="pill form">Form</span></td>
+            <td><span class="pill paid">Paid · Google Ads</span></td>
+            <td>spray-foam-insulation</td>
+            <td><span class="kw">spray foam insulation</span></td>
+            <td>Denver, CO</td>
+            <td>Spray Foam Insulation</td>
+            <td><a class="lp" href="https://grizzlyinsulationco.com/spray-foam-insulation/" target="_blank" rel="noopener">/spray-foam-insulation/</a></td>
+          </tr>
+          <tr data-source="organic" data-date="2026-06-17">
+            <td>3</td>
+            <td>Jun 17, 2026</td>
+            <td><span class="name"><span class="avatar">DV</span>Daimi Verstraete</span></td>
+            <td><span class="pill form">Form</span></td>
+            <td><span class="pill organic">Organic / Direct</span></td>
+            <td class="muted">(none)</td>
+            <td class="muted">(not provided)</td>
+            <td>Denver, CO</td>
+            <td>Blown-In Insulation</td>
+            <td><a class="lp" href="https://grizzlyinsulationco.com/attic-insulation/" target="_blank" rel="noopener">/attic-insulation/</a></td>
+          </tr>
+          <tr data-source="paid" data-date="2026-06-14">
+            <td>4</td>
+            <td>Jun 14, 2026</td>
+            <td><span class="name"><span class="avatar">GB</span>Gigi Birinyi</span></td>
+            <td><span class="pill form">Form</span></td>
+            <td><span class="pill paid">Paid · Google Ads</span></td>
+            <td>grizzly_insulation_general</td>
+            <td><span class="kw">home insulation services</span></td>
+            <td class="muted">&mdash;</td>
+            <td class="muted">General enquiry</td>
+            <td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/ (Contact Us)</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== CALL LEADS ===== -->
+  <div class="sec-title">
+    <span class="ic c"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.68 2.74a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.34-1.34a2 2 0 0 1 2.11-.45c.88.32 1.8.55 2.74.68A2 2 0 0 1 22 16.92z"/></svg></span>
+    Call Leads <span class="cnt">manually logged from CTM</span>
+  </div>
+
+  <div class="card">
+    <div class="tablewrap">
+      <table id="calls">
+        <thead>
+          <tr>
+            <th>#</th><th>Date &amp; time</th><th>Caller</th><th>Source</th>
+            <th>Tracking line (CTM)</th><th>Duration</th><th>Status</th><th>Topic / keyword</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-source="paid" data-date="2026-06-18">
+            <td>1</td>
+            <td>Jun 18, 2026<div class="tiny">9:03 AM</div></td>
+            <td><span class="name"><span class="avatar c">LT</span>Louis Tanczer</span><div class="tiny">Bennett, CO &middot; (720)&nbsp;&bull;&bull;&bull;&#8209;5173</div></td>
+            <td><span class="pill paid">Paid · Google Ads</span><div class="tiny">matched via Lucky Orange</div></td>
+            <td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+            <td>6:53</td>
+            <td><span class="st-ans">Answered</span><div class="tiny">Mercede W</div></td>
+            <td class="muted">Morton building — spray foam estimate<div class="tiny"><span class="kw">insulation company</span></div></td>
+          </tr>
+          <tr data-source="organic" data-date="2026-06-19">
+            <td>2</td>
+            <td>Jun 19, 2026<div class="tiny">11:46 AM</div></td>
+            <td><span class="name"><span class="avatar c">SR</span>Sample Caller <span class="sample">SAMPLE</span></span><div class="tiny">Denver, CO</div></td>
+            <td><span class="pill gmb">GMB · Denver</span></td>
+            <td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+            <td>3:08</td>
+            <td><span class="st-ans">Answered</span></td>
+            <td class="muted">Attic insulation quote</td>
+          </tr>
+          <tr data-source="organic" data-date="2026-06-18">
+            <td>3</td>
+            <td>Jun 18, 2026<div class="tiny">11:01 AM</div></td>
+            <td><span class="name"><span class="avatar c">SR</span>Sample Caller <span class="sample">SAMPLE</span></span><div class="tiny">Colorado Springs, CO</div></td>
+            <td><span class="pill organic">Organic</span></td>
+            <td>Core GBP<div class="tiny"><span class="kw">(720) 208-4065</span></div></td>
+            <td>2:05</td>
+            <td><span class="st-vm">Voicemail</span></td>
+            <td class="muted">Crawl space question</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="foot">Prepared by <b>KD Digital</b> &middot; Lefko Digital &nbsp;|&nbsp; Showing <b>June 2026</b> &mdash; older months in Archives &nbsp;&middot;&nbsp; Form leads: Lucky Orange + Gravity Forms &middot; Call leads: manual from CTM</div>
+
+</div>
+
+<script>
+  // Search + source filter across both tables, with live KPI counts
+  var q = document.getElementById('q');
+  var leadRows = Array.prototype.slice.call(document.querySelectorAll('#leads tbody tr'));
+  var callRows = Array.prototype.slice.call(document.querySelectorAll('#calls tbody tr'));
+  var rows = leadRows.concat(callRows);
+  var activeFilter = 'all';
+
+  function setVal(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  function vis(r){ return r.style.display !== 'none'; }
+
+  function updateKPIs(){
+    var pf=0,pc=0,of=0,oc=0,forms=0;
+    leadRows.forEach(function(r){
+      if(!vis(r)) return; forms++;
+      var s=r.getAttribute('data-source');
+      if(s==='paid') pf++; else if(s==='organic') of++;
+    });
+    callRows.forEach(function(r){
+      if(!vis(r)) return;
+      var s=r.getAttribute('data-source');
+      if(s==='paid') pc++; else if(s==='organic') oc++;
+    });
+    setVal('paid-form',pf); setVal('paid-call',pc); setVal('paid-total',pf+pc);
+    setVal('org-form',of); setVal('org-call',oc); setVal('org-total',of+oc);
+    setVal('total-leads',pf+pc+of+oc);
+    var fc=document.getElementById('form-cnt'); if(fc) fc.textContent = forms + (forms===1?' lead':' leads');
+  }
+
+  function apply(){
+    var t = (q.value||'').toLowerCase();
+    rows.forEach(function(r){
+      var matchText = r.innerText.toLowerCase().indexOf(t) > -1;
+      var matchSrc = activeFilter === 'all' || r.getAttribute('data-source') === activeFilter;
+      r.style.display = (matchText && matchSrc) ? '' : 'none';
+    });
+    updateKPIs();
+  }
+  q.addEventListener('input', apply);
+  document.querySelectorAll('.chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('active');});
+      c.classList.add('active');
+      activeFilter = c.getAttribute('data-f');
+      apply();
+    });
+  });
+  // Auto NEW badge for leads within last 2 days
+  var now = new Date();
+  rows.forEach(function(r){
+    var d = r.getAttribute('data-date'); if(!d) return;
+    var diff = (now - new Date(d)) / 86400000;
+    if(diff >= 0 && diff <= 2 && r.querySelector('td:nth-child(2) .new') === null){
+      var cell = r.querySelector('td:nth-child(2)');
+      if(cell) cell.innerHTML += ' <span class="new">NEW</span>';
+    }
+  });
+  updateKPIs();
+</script>
 </body>
 </html>
