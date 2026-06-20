@@ -107,7 +107,7 @@
   .tiny{font-size:11px;color:#9aa0ab;margin-top:2px;}
   .kw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#374151;background:#f3f4f6;padding:2px 7px;border-radius:6px;display:inline-block;}
   .lp{color:#2563eb;text-decoration:none;font-weight:600;} .lp:hover{text-decoration:underline;}
-  .viewbtn{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:11px;font-weight:700;color:#2563eb;background:#e8f0fe;border:1px solid #cfe0fb;padding:3px 9px;border-radius:7px;text-decoration:none;white-space:nowrap;} .viewbtn:hover{background:#d8e7fd;}
+  .lobtn{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:11px;font-weight:700;color:#b45309;background:#fdf0dd;border:1px solid #f3d4a8;padding:3px 9px;border-radius:7px;text-decoration:none;white-space:nowrap;cursor:pointer;} .lobtn:hover{background:#fbe6c8;}
 
   .pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;}
   .pill.form{background:var(--blue-bg);color:#1e40af;}
@@ -212,7 +212,7 @@
           <tr data-source="paid" data-date="2026-06-19">
             <td>1</td>
             <td>Jun 19, 2026 <span class="new">NEW</span></td>
-            <td><span class="name"><span class="avatar">AP</span>Alicia Powell</span> <a class="viewbtn" href="https://grizzlyinsulationco.com/wp-admin/admin.php?page=gf_entries&view=entry&id=1&lid=53" target="_blank" rel="noopener" title="Open full lead in Gravity Forms">View &#8599;</a></td>
+            <td><span class="name"><span class="avatar">AP</span>Alicia Powell</span> <a class="lobtn" href="https://classic.luckyorange.com/v3/dash.php#/recordings" target="_blank" rel="noopener" data-ip="74.96.207.26" title="Open Lucky Orange — copies IP 74.96.207.26; paste it in the recordings filter" onclick="copyIp(this)">LO &#8599;</a></td>
             <td><span class="pill form">Form</span></td>
             <td><span class="pill paid">Paid · Google Ads</span></td>
             <td>grizzly_insulation_general</td>
@@ -224,7 +224,7 @@
           <tr data-source="paid" data-date="2026-06-17">
             <td>2</td>
             <td>Jun 17, 2026</td>
-            <td><span class="name"><span class="avatar">MD</span>Marco Deluna</span> <a class="viewbtn" href="https://grizzlyinsulationco.com/wp-admin/admin.php?page=gf_entries&view=entry&id=2&lid=16" target="_blank" rel="noopener" title="Open full lead in Gravity Forms">View &#8599;</a></td>
+            <td><span class="name"><span class="avatar">MD</span>Marco Deluna</span> <a class="lobtn" href="https://classic.luckyorange.com/v3/dash.php#/recordings" target="_blank" rel="noopener" data-ip="98.245.137.141" title="Open Lucky Orange — copies IP 98.245.137.141; paste it in the recordings filter" onclick="copyIp(this)">LO &#8599;</a></td>
             <td><span class="pill form">Form</span></td>
             <td><span class="pill paid">Paid · Google Ads</span></td>
             <td>spray-foam-insulation</td>
@@ -236,7 +236,7 @@
           <tr data-source="organic" data-date="2026-06-17">
             <td>3</td>
             <td>Jun 17, 2026</td>
-            <td><span class="name"><span class="avatar">DV</span>Daimi Verstraete</span> <a class="viewbtn" href="https://grizzlyinsulationco.com/wp-admin/admin.php?page=gf_entries&view=entry&id=2&lid=17" target="_blank" rel="noopener" title="Open full lead in Gravity Forms">View &#8599;</a></td>
+            <td><span class="name"><span class="avatar">DV</span>Daimi Verstraete</span> <a class="lobtn" href="https://classic.luckyorange.com/v3/dash.php#/recordings" target="_blank" rel="noopener" data-ip="67.166.48.13" title="Open Lucky Orange — copies IP 67.166.48.13; paste it in the recordings filter" onclick="copyIp(this)">LO &#8599;</a></td>
             <td><span class="pill form">Form</span></td>
             <td><span class="pill organic">Organic / Direct</span></td>
             <td class="muted">(none)</td>
@@ -248,7 +248,7 @@
           <tr data-source="paid" data-date="2026-06-14">
             <td>4</td>
             <td>Jun 14, 2026</td>
-            <td><span class="name"><span class="avatar">GB</span>Gigi Birinyi</span> <a class="viewbtn" href="https://grizzlyinsulationco.com/wp-admin/admin.php?page=gf_entries&view=entry&id=1&lid=6" target="_blank" rel="noopener" title="Open full lead in Gravity Forms">View &#8599;</a></td>
+            <td><span class="name"><span class="avatar">GB</span>Gigi Birinyi</span> <a class="lobtn" href="https://classic.luckyorange.com/v3/dash.php#/recordings" target="_blank" rel="noopener" data-ip="24.8.240.195" title="Open Lucky Orange — copies IP 24.8.240.195; paste it in the recordings filter" onclick="copyIp(this)">LO &#8599;</a></td>
             <td><span class="pill form">Form</span></td>
             <td><span class="pill paid">Paid · Google Ads</span></td>
             <td>grizzly_insulation_general</td>
@@ -374,6 +374,7 @@
       if(cell) cell.innerHTML += ' <span class="new">NEW</span>';
     }
   });
+  function copyIp(el){ try{ navigator.clipboard.writeText(el.getAttribute('data-ip')); var o=el.innerHTML; el.innerHTML='Copied!'; setTimeout(function(){ el.innerHTML=o; },1200); }catch(e){} }
   updateKPIs();
 </script>
 </body>
