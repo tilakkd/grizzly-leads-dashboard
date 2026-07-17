@@ -106,6 +106,7 @@ tbody tr:hover td{background:#f9fbff;}
 .muted{color:var(--muted);}
 .tiny{font-size:11px;color:#9aa0ab;margin-top:2px;}
 .kw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#374151;background:#f3f4f6;padding:2px 7px;border-radius:6px;display:inline-block;}
+.stq{font-size:12px;color:#4b5563;font-style:italic;} .stq-empty{color:#c2c7d0;font-weight:700;}
 .lp{color:#2563eb;text-decoration:none;font-weight:600;} .lp:hover{text-decoration:underline;}
 .lobtn{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:11px;font-weight:700;color:#b45309;background:#fdf0dd;border:1px solid #f3d4a8;padding:3px 9px;border-radius:7px;text-decoration:none;white-space:nowrap;cursor:pointer;} .lobtn:hover{background:#fbe6c8;}
 
@@ -207,7 +208,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <thead>
 <tr>
 <th>#</th><th>Date</th><th>Lead name</th><th>Type</th><th>Source</th>
-<th>Campaign</th><th>Keyword</th><th>City</th><th>Service</th><th>Landing page</th>
+<th>Campaign</th><th>Keyword</th><th>Search term</th><th>City</th><th>Service</th><th>Landing page</th>
 </tr>
 </thead>
 <tbody>
@@ -219,6 +220,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Grizzly | Search | Spray Foam Insulation</td>
 <td><span class="kw">spray insulation</span></td>
+<td><span class="stq">spray foam insulation company</span></td>
 <td>Denver, CO</td>
 <td>Spray Foam Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
@@ -231,6 +233,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
 <td><span class="kw">insulation companies near me</span></td>
+<td><span class="stq">insulation companies near me</span></td>
 <td>Denver, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
@@ -243,6 +246,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
 <td><span class="kw">home insulation services</span></td>
+<td><span class="stq">blown in insulation denver</span></td>
 <td>Atlanta, GA</td>
 <td>Blown-In Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
@@ -255,6 +259,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
 <td><span class="kw">home insulation services</span></td>
+<td><span class="stq-empty">—</span></td>
 <td>Golden, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
@@ -267,6 +272,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Grizzly | Search | Spray Foam Insulation</td>
 <td><span class="kw">spray foam insulation denver</span></td>
+<td><span class="stq">spray foam insulation denver</span></td>
 <td>Dacula, GA</td>
 <td>Spray Foam Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
@@ -279,6 +285,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
 <td><span class="kw">insulation companies near me</span></td>
+<td><span class="stq">insulation companies near me</span></td>
 <td>Denver, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
@@ -291,6 +298,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
 <td><span class="kw">insulation company denver</span></td>
+<td><span class="stq-empty">—</span></td>
 <td>Littleton, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
@@ -303,6 +311,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
 <td><span class="kw">insulation company</span></td>
+<td><span class="stq-empty">—</span></td>
 <td>Thornton, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
@@ -315,6 +324,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
 <td><span class="kw">insulation companies near me</span></td>
+<td><span class="stq">insulation companies near me</span></td>
 <td>Denver, CO</td>
 <td>Attic Air Sealing</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
@@ -327,6 +337,7 @@ Form Leads <span class="cnt" id="form-cnt">4 leads</span>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
 <td><span class="kw">home insulation services</span></td>
+<td><span class="stq-empty">—</span></td>
 <td>Aurora, CO</td>
 <td>Spray Foam Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
