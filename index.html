@@ -483,17 +483,24 @@ updateKPIs();
     return rowsFrom(doc, "leads", "Form").concat(rowsFrom(doc, "calls", "Call"));
   }
 
-  /* Every month we can export: each entry in the Archives menu + the month on screen. */
+  /* Every month we can export: the month on screen (read straight from this page) plus every
+     entry in the Archives menu. Works the same on the live dashboard and on an archive page,
+     because the menu links are relative to whichever page is open. */
   function monthList(){
-    var list = [];
-    Array.prototype.forEach.call(document.querySelectorAll(".arch-menu a.arch-item[href]"), function(a){
-      var label = clean(a.textContent);
-      if(!label) return;
-      list.push({ label: label, href: a.getAttribute("href"), key: monthKey(label) });
-    });
+    var list = [], seen = {};
+    function add(label, href){
+      var l = clean(String(label).split("·")[0]);   /* "August 2026 · current" -> "August 2026" */
+      if(!l) return;
+      var key = monthKey(l);
+      if(seen[key]) return;                          /* the page we're on always wins */
+      seen[key] = 1;
+      list.push({ label: l, href: href, key: key });
+    }
     var cur = document.querySelector(".period");
-    var curLabel = cur ? clean(cur.textContent) : "Current";
-    list.push({ label: curLabel, href: null, key: monthKey(curLabel) });
+    add(cur ? cur.textContent : "Current", null);
+    Array.prototype.forEach.call(document.querySelectorAll(".arch-menu a.arch-item[href]"), function(a){
+      add(a.textContent, a.getAttribute("href"));
+    });
     list.sort(function(a,b){ return a.key < b.key ? -1 : (a.key > b.key ? 1 : 0); });
     return list;
   }
