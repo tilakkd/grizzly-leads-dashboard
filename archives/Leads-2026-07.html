@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Leads Dashboard — Grizzly Insulations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+--navy:#13314f; --navy2:#1d4d77; --blue:#2563eb; --blue-bg:#e8f0fe;
+--green:#15803d; --green-bg:#e7f6ec; --amber:#b45309; --amber-bg:#fdf0dd;
+--ink:#1f2937; --muted:#6b7280; --line:#e6e9ef; --bg:#f4f6fa; --card:#ffffff;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,Arial,sans-serif;font-size:14px;}
+.wrap{max-width:1140px;margin:0 auto;padding:20px 18px 40px;}
+
+/* Header */
+.topbar{background:#13314f;background:linear-gradient(100deg,#13314f,#1d4d77);color:#fff;border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 6px 18px rgba(19,49,79,.18);}
+.brand{display:flex;align-items:center;gap:12px;}
+.logo{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;}
+.brand h1{margin:0;font-size:18px;font-weight:800;letter-spacing:.2px;}
+.brand .sub{font-size:12px;color:#c9d8e8;margin-top:1px;}
+.head-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.live{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);padding:6px 11px;border-radius:999px;}
+.dot{width:8px;height:8px;border-radius:50%;background:#36d399;box-shadow:0 0 0 0 rgba(54,211,153,.7);animation:pulse 1.8s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(54,211,153,.6)}70%{box-shadow:0 0 0 7px rgba(54,211,153,0)}100%{box-shadow:0 0 0 0 rgba(54,211,153,0)}}
+.updated{font-size:12px;color:#c9d8e8;}
+.period{font-size:12px;font-weight:700;color:#fff;background:rgba(255,255,255,.12);padding:6px 11px;border-radius:999px;}
+.arch{position:relative;}
+.arch summary{list-style:none;cursor:pointer;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);color:#fff;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;}
+.arch summary::-webkit-details-marker{display:none;}
+.arch[open] summary{background:rgba(255,255,255,.24);}
+.arch-menu{position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 10px 28px rgba(20,30,50,.2);padding:6px;min-width:215px;z-index:30;}
+.arch-item{display:block;padding:8px 11px;border-radius:7px;font-size:13px;color:#13314f;text-decoration:none;font-weight:600;}
+.arch-item:hover{background:#f2f6fc;}
+.arch-item.current{color:#15803d;}
+.arch-empty{font-size:11px;color:#9aa0ab;padding:8px 11px;line-height:1.45;}
+
+/* KPI cards */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0;}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px 16px;box-shadow:0 2px 6px rgba(20,30,50,.04);position:relative;overflow:hidden;}
+.kpi .lbl{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+.kpi .val{font-size:30px;font-weight:800;line-height:1.1;margin-top:6px;}
+.kpi .ico{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.kpi.total .ico{background:#e8f0fe;color:#2563eb;} .kpi.total .val{color:#13314f;}
+.kpi.paid .ico{background:var(--blue-bg);color:var(--blue);} .kpi.paid .val{color:var(--blue);}
+.kpi.organic .ico{background:var(--green-bg);color:var(--green);} .kpi.organic .val{color:var(--green);}
+.kpi.calls .ico{background:#fdf0dd;color:#b45309;} .kpi.calls .val{color:#b45309;}
+
+/* Source blocks (Paid vs Organic, each split into Form + Call) */
+.totline{font-size:12.5px;color:var(--muted);margin:18px 2px 8px;font-weight:600;}
+.totline b{color:#13314f;font-size:15px;}
+.blocks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 18px;}
+.block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px 16px 22px;box-shadow:0 2px 6px rgba(20,30,50,.04);position:relative;overflow:hidden;}
+.block:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;}
+.block.paid:before{background:var(--blue);}
+.block.organic:before{background:var(--green);}
+.bhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;}
+.btag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:5px 11px;border-radius:999px;}
+.btag.paid{background:var(--blue-bg);color:var(--blue);}
+.btag.organic{background:var(--green-bg);color:var(--green);}
+.btot{font-size:32px;font-weight:800;line-height:1;}
+.block.paid .btot{color:var(--blue);}
+.block.organic .btot{color:var(--green);}
+.bstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.bstat{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:9px 12px;}
+.bs-lbl{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+.bs-val{font-size:21px;font-weight:800;color:#13314f;margin-top:2px;}
+
+/* Controls */
+.controls{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:240px;flex:1;max-width:340px;}
+.search input{border:0;outline:0;font:inherit;width:100%;background:transparent;color:var(--ink);}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;}
+.chip.active{background:#13314f;color:#fff;border-color:#13314f;}
+
+/* Section title */
+.sec-title{display:flex;align-items:center;gap:9px;margin:26px 2px 12px;font-size:15px;font-weight:800;color:#13314f;}
+.sec-title .ic{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;}
+.sec-title .ic.f{background:#e8f0fe;color:#2563eb;} .sec-title .ic.c{background:#fdf0dd;color:#b45309;}
+.sec-title .cnt{margin-left:auto;font-size:12px;font-weight:700;color:#6b7280;background:#eef1f5;padding:4px 11px;border-radius:999px;}
+
+/* Source legend */
+.legend{display:flex;flex-wrap:wrap;gap:12px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:12px;font-size:12.5px;line-height:1.5;}
+.legend .li{display:flex;align-items:flex-start;gap:9px;max-width:250px;}
+.legend .li b{color:#374151;}
+.legend .li .muted{color:#8a909c;}
+
+/* Table card */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 14px rgba(20,30,50,.05);overflow:hidden;}
+.tablewrap{overflow-x:auto;}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;min-width:0;table-layout:auto;}
+thead th{position:sticky;top:0;background:#f7f9fc;color:#5b6573;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.3px;padding:10px 9px;border-bottom:1px solid var(--line);white-space:normal;vertical-align:bottom;}
+tbody td{padding:10px 9px;border-bottom:1px solid #f0f2f6;vertical-align:top;}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr:hover td{background:#f9fbff;}
+.name{font-weight:700;color:#13314f;display:flex;align-items:center;gap:8px;}
+.avatar{width:26px;height:26px;border-radius:50%;background:#e8f0fe;color:#2563eb;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.avatar.c{background:#fdf0dd;color:#b45309;}
+.muted{color:var(--muted);}
+.tiny{font-size:11px;color:#9aa0ab;margin-top:2px;}
+.kw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#374151;background:#f3f4f6;padding:2px 7px;border-radius:6px;display:inline-block;overflow-wrap:anywhere;white-space:normal;}
+.name{overflow-wrap:normal;word-break:normal;}
+.lp{overflow-wrap:anywhere;}
+#leads td,#calls td{overflow-wrap:break-word;}
+.stq{font-size:12px;color:#4b5563;font-style:italic;} .stq-empty{color:#c2c7d0;font-weight:700;}
+.lp{color:#2563eb;text-decoration:none;font-weight:600;} .lp:hover{text-decoration:underline;}
+.lobtn{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:11px;font-weight:700;color:#b45309;background:#fdf0dd;border:1px solid #f3d4a8;padding:3px 9px;border-radius:7px;text-decoration:none;white-space:nowrap;cursor:pointer;} .lobtn:hover{background:#fbe6c8;}
+
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;}
+.pill.form{background:var(--blue-bg);color:#1e40af;}
+.pill.call{background:#fdf0dd;color:#9a5400;}
+.pill.paid{background:var(--blue-bg);color:var(--blue);}
+.pill.organic{background:var(--green-bg);color:var(--green);}
+.pill.gmb{background:var(--amber-bg);color:var(--amber);}
+.pill.direct{background:#eef1f5;color:#4b5563;}
+.new{background:#fde68a;color:#92400e;font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;letter-spacing:.4px;}
+.sample{background:#eef1f5;color:#9aa0ab;font-size:9px;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:.5px;}
+.st-ans{color:#15803d;font-weight:700;} .st-vm{color:#b45309;font-weight:700;}
+.ntcell{font-size:12.5px;color:#374151;max-width:260px;line-height:1.45;} .nt-empty{color:#c2c7d0;font-weight:700;}
+
+.note{font-size:12px;color:#7a808c;line-height:1.6;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.note b{color:#374151;}
+.foot{text-align:center;color:#9aa0ab;font-size:12px;margin-top:18px;}
+.foot b{color:#6b7280;}
+
+@media(max-width:760px){
+.kpis{grid-template-columns:repeat(2,1fr);}
+.blocks{grid-template-columns:1fr;}
+.brand h1{font-size:16px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- Header -->
+<div class="topbar">
+<div class="brand">
+<div class="logo">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5 5.5.5-4 4 1 5.5L12 19l-5 3 1-5.5-4-4 5.5-.5z"/></svg>
+</div>
+<div>
+<h1>Leads Dashboard</h1>
+<div class="sub">Grizzly Insulations &middot; grizzlyinsulationco.com</div>
+</div>
+</div>
+<div class="head-right">
+<span class="live"><span class="dot"></span> Live</span>
+<span class="period">July 2026</span>
+<details class="arch">
+<summary>Archives <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+<div class="arch-menu">
+<a class="arch-item" href="../index.html">August 2026 &middot; current</a>
+<a class="arch-item current">July 2026 &middot; archived</a>
+<a class="arch-item" href="Leads-2026-06.html">June 2026</a>
+<div class="arch-empty">Older months are saved as files in <b>/archives</b> and linked here.</div>
+</div>
+</details>
+<span class="updated">Last updated: <b style="color:#fff">Jul 31, 2026</b></span>
+</div>
+</div>
+
+<!-- Source blocks -->
+<div class="totline"><b id="total-leads">7</b> total leads &nbsp;&middot;&nbsp; split by source below</div>
+<div class="blocks">
+<div class="block paid">
+<div class="bhead"><span class="btag paid">Paid &middot; Google Ads</span><span class="btot" id="paid-total">4</span></div>
+<div class="bstats">
+<div class="bstat"><div class="bs-lbl">Form leads</div><div class="bs-val" id="paid-form">3</div></div>
+<div class="bstat"><div class="bs-lbl">Call leads</div><div class="bs-val" id="paid-call">1</div></div>
+</div>
+</div>
+<div class="block organic">
+<div class="bhead"><span class="btag organic">Organic / GMB</span><span class="btot" id="org-total">3</span></div>
+<div class="bstats">
+<div class="bstat"><div class="bs-lbl">Form leads</div><div class="bs-val" id="org-form">1</div></div>
+<div class="bstat"><div class="bs-lbl">Call leads</div><div class="bs-val" id="org-call">2</div></div>
+</div>
+</div>
+</div>
+
+<div class="totline" style="margin-top:2px;">⏱ All times in <b>Arizona time (MST, GMT−7)</b> — <b>India time (IST)</b> shown in brackets.</div>
+<!-- Controls -->
+<div class="controls">
+<div class="search">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa0ab" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+<input id="q" type="text" placeholder="Search name, keyword, city…">
+</div>
+<div class="chips">
+<span class="chip active" data-f="all">All</span>
+<span class="chip" data-f="paid">Paid</span>
+<span class="chip" data-f="organic">Organic / GMB</span>
+</div>
+</div>
+
+<!-- ===== FORM LEADS ===== -->
+<div class="sec-title">
+<span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></span>
+Form Leads <span class="cnt" id="form-cnt">4 leads</span>
+</div>
+<div class="card">
+<div class="tablewrap">
+<table id="leads">
+<thead>
+<tr>
+<th>#</th><th>Date &amp; time (MST)</th><th>Lead name</th><th>Form</th><th>Source</th>
+<th>Campaign</th><th>Keyword</th><th>Search term</th><th>City</th><th>Service</th><th>Landing page</th>
+</tr>
+</thead>
+<tbody><tr data-source="paid" data-date="2026-07-31">
+<td>1</td>
+<td>Jul 31, 2026<div class="tiny">8:15 PM MST (Aug 1, 8:45 AM IST)</div></td>
+<td><span class="name"><span class="avatar">LG</span>Lisa Garbett</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray foam insulation</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Golden, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-31">
+<td>2</td>
+<td>Jul 31, 2026<div class="tiny">2:54 PM MST (Aug 1, 3:24 AM IST)</div></td>
+<td><span class="name"><span class="avatar">KB</span>Kristen Brelig</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic Insulation</td>
+<td><span class="kw">attic insulation services</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Denver, CO</td>
+<td>Not Sure / Needs Advice</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-31">
+<td>3</td>
+<td>Jul 31, 2026<div class="tiny">12:13 PM MST (Aug 1, 12:43 AM IST)</div></td>
+<td><span class="name"><span class="avatar">SS</span>Steve Schleu</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic | Denver</td>
+<td><span class="kw">attic insulation denver</span></td>
+<td><span class="stq">attic insulation denver</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-denver-lp/" target="_blank" rel="noopener">/attic-insulation-denver-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-31"><td>4</td><td>Jul 31, 2026<div class="tiny">5:19 AM MST (Jul 31, 5:49 PM IST)</div></td><td><span class="name"><span class="avatar">TR</span>Todd Rocchio</span></td><td><span class="pill form">Subdomain Page</span></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Grizzly | Search | Spray Foam Insulation</td><td><span class="kw">spray insulation</span></td><td><span class="stq">best spray foam for crawl space</span></td><td>Denver, CO</td><td>Crawl Space Insulation</td><td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td></tr>
+<tr data-source="paid" data-date="2026-07-30"><td>5</td><td>Jul 30, 2026<div class="tiny">10:22 PM MST (Jul 31, 10:52 AM IST)</div></td><td><span class="name"><span class="avatar">DH</span>Dave Haag</span></td><td><span class="pill form">Subdomain Page</span></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Grizzly | Search | Spray Foam Insulation</td><td><span class="kw">spray insulation</span></td><td><span class="stq-empty">—</span></td><td>Littleton, CO</td><td>Spray Foam Insulation</td><td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td></tr>
+<tr data-source="paid" data-date="2026-07-30"><td>6</td><td>Jul 30, 2026<div class="tiny">9:02 PM MST (Jul 31, 9:32 AM IST)</div></td><td><span class="name"><span class="avatar">ET</span>Elisa Thurston</span></td><td><span class="pill form">Popup Estimate</span></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Grizzly | Search | General | Denver</td><td><span class="kw">insulation companies near me</span></td><td><span class="stq">insulation near me</span></td><td><span class="stq-empty">—</span></td><td>Not Sure / Needs Advice</td><td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td></tr>
+<tr data-source="organic" data-date="2026-07-27">
+<td>7</td>
+<td>Jul 27, 2026<div class="tiny">8:01 PM MST (Jul 28, 8:31 AM IST)</div></td>
+<td><span class="name"><span class="avatar">LA</span>Lindsay Ames</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Denver, CO</td>
+<td>Insulation Removal</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/castle-rock-insulation/" target="_blank" rel="noopener">/castle-rock-insulation/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-27">
+<td>8</td>
+<td>Jul 27, 2026<div class="tiny">2:06 PM MST (Jul 28, 2:36 AM IST)</div></td>
+<td><span class="name"><span class="avatar">LB</span>Lori Beuerle</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Commercial Insulation</td>
+<td><span class="kw">commercial insulation contractors</span></td>
+<td><span class="stq">commercial insulation contractors</span></td>
+<td>Denver, CO</td>
+<td>Commercial Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/commercial-insulation/" target="_blank" rel="noopener">/commercial-insulation/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-26">
+<td>9</td>
+<td>Jul 26, 2026<div class="tiny">7:09 PM MST (Jul 27, 7:39 AM IST)</div></td>
+<td><span class="name"><span class="avatar">LW</span>Lila Walker</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray foam insulation</span></td>
+<td><span class="stq">attic spray foam insulation</span></td>
+<td>Littleton, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-26">
+<td>10</td>
+<td>Jul 26, 2026<div class="tiny">7:01 PM MST (Jul 27, 7:31 AM IST)</div></td>
+<td><span class="name"><span class="avatar">AS</span>Alexander Spencer</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic Insulation</td>
+<td><span class="kw">attic insulation</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-lp/" target="_blank" rel="noopener">/attic-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-26">
+<td>11</td>
+<td>Jul 26, 2026<div class="tiny">5:04 PM MST (Jul 27, 5:34 AM IST)</div></td>
+<td><span class="name"><span class="avatar">TB</span>Todd Berkebile</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Denver, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-07-26">
+<td>12</td>
+<td>Jul 26, 2026<div class="tiny">2:37 PM MST (Jul 27, 3:07 AM IST)</div></td>
+<td><span class="name"><span class="avatar">AM</span>Andrew McClennan</span></td>
+<td><span class="pill form">Contact Us</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-24">
+<td>13</td>
+<td>Jul 24, 2026<div class="tiny">7:12 PM MST (Jul 25, 7:42 AM IST)</div></td>
+<td><span class="name"><span class="avatar">SL</span>Stephen Lutz</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq">mile high insulation</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/attic-insulation/" target="_blank" rel="noopener">/attic-insulation/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-24">
+<td>14</td>
+<td>Jul 24, 2026<div class="tiny">4:25 PM MST (Jul 25, 4:55 AM IST)</div></td>
+<td><span class="name"><span class="avatar">CB</span>C R Bradley</span></td>
+<td><span class="pill form">Contact Us</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic Insulation</td>
+<td><span class="kw">attic insulation services</span></td>
+<td><span class="stq">best company for attic insulation</span></td>
+<td>Colorado Springs, CO</td>
+<td>General Inquiry</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-07-23">
+<td>15</td>
+<td>Jul 23, 2026<div class="tiny">9:40 PM MST (Jul 24, 10:10 AM IST)</div></td>
+<td><span class="name"><span class="avatar">RL</span>Rachel Lee</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Lakewood, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-07-23">
+<td>16</td>
+<td>Jul 23, 2026<div class="tiny">2:34 AM MST (Jul 23, 3:04 PM IST)</div></td>
+<td><span class="name"><span class="avatar">MP</span>Melanie Patterson</span></td>
+<td><span class="pill form">Services</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Boulder, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/attic-insulation/" target="_blank" rel="noopener">/attic-insulation/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-07-22">
+<td>17</td>
+<td>Jul 22, 2026<div class="tiny">4:29 PM MST (Jul 23, 4:59 AM IST)</div></td>
+<td><span class="name"><span class="avatar">BJ</span>Brady Johnson</span></td>
+<td><span class="pill form">Contact Us</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-22">
+<td>18</td>
+<td>Jul 22, 2026<div class="tiny">2:01 PM MST (Jul 23, 2:31 AM IST)</div></td>
+<td><span class="name"><span class="avatar">WR</span>Warren Ross</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq">spray foam insulation near me</span></td>
+<td>Parker, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-07-21">
+<td>19</td>
+<td>Jul 21, 2026<div class="tiny">8:53 PM MST (Jul 22, 9:23 AM IST)</div></td>
+<td><span class="name"><span class="avatar">DS</span>David Slater</span></td>
+<td><span class="pill form">Services</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>—</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-07-21">
+<td>20</td>
+<td>Jul 21, 2026<div class="tiny">5:36 PM MST (Jul 22, 6:06 AM IST)</div></td>
+<td><span class="name"><span class="avatar">LT</span>Luke Thompson</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Louisville, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/denver-attic-insulation/" target="_blank" rel="noopener">/denver-attic-insulation/</a></td>
+</tr>
+
+<tr data-source="organic" data-date="2026-07-21">
+<td>21</td>
+<td>Jul 21, 2026<div class="tiny">11:03 AM MST (Jul 21, 11:33 PM IST)</div></td>
+<td><span class="name"><span class="avatar">SC</span>Stephanie Claypool</span></td>
+<td><span class="pill form">Contact Us</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>—</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-20">
+<td>22</td>
+<td>Jul 20, 2026<div class="tiny">6:10 PM MST (Jul 21, 6:40 AM IST)</div></td>
+<td><span class="name"><span class="avatar">AG</span>Athenna Gant</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq">spray foam insulation cost</span></td>
+<td>Colorado</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-07-20">
+<td>23</td>
+<td>Jul 20, 2026<div class="tiny">1:51 PM MST (Jul 21, 2:21 AM IST)</div></td>
+<td><span class="name"><span class="avatar">CA</span>Chad Angell</span></td>
+<td><span class="pill form">Contact Us</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Louisville, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-19">
+<td>24</td>
+<td>Jul 19, 2026<div class="tiny">10:00 PM MST (Jul 20, 10:30 AM IST)</div></td>
+<td><span class="name"><span class="avatar">NE</span>Nathaniel Enlow</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic Insulation</td>
+<td><span class="kw">attic insulation near me</span></td>
+<td><span class="stq">attic insulation near me</span></td>
+<td>Thornton, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-lp/" target="_blank" rel="noopener">/attic-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-19">
+<td>25</td>
+<td>Jul 19, 2026<div class="tiny">4:05 PM MST (Jul 20, 4:35 AM IST)</div></td>
+<td><span class="name"><span class="avatar">JR</span>Jack Reynolds</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic Insulation</td>
+<td><span class="kw">blown in attic insulation</span></td>
+<td><span class="stq">attic blown insulation</span></td>
+<td>Aurora, CO</td>
+<td>Blown-In Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-lp/" target="_blank" rel="noopener">/attic-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-18">
+<td>26</td>
+<td>Jul 18, 2026<div class="tiny">3:13 PM MST (Jul 19, 3:43 AM IST)</div></td>
+<td><span class="name"><span class="avatar">SM</span>Scott Mann</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic Insulation</td>
+<td><span class="kw">attic insulation</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-lp/" target="_blank" rel="noopener">/attic-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-17">
+<td>27</td>
+<td>Jul 17, 2026<div class="tiny">10:31 PM MST (Jul 18, 11:01 AM IST)</div></td>
+<td><span class="name"><span class="avatar">J</span>Jose</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic Insulation</td>
+<td><span class="kw">blown in attic insulation</span></td>
+<td><span class="stq">blow in insulation</span></td>
+<td>Littleton, CO</td>
+<td>Blown-In Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-lp/" target="_blank" rel="noopener">/attic-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-17">
+<td>28</td>
+<td>Jul 17, 2026<div class="tiny">5:40 PM MST (Jul 18, 6:10 AM IST)</div></td>
+<td><span class="name"><span class="avatar">MK</span>Mark Kobrin</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation company</span></td>
+<td><span class="stq">fort collins attic insulation</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-13">
+<td>29</td>
+<td>Jul 13, 2026<div class="tiny">2:16 PM MST (Jul 14, 2:46 AM IST)</div></td>
+<td><span class="name"><span class="avatar">MS</span>Mai Samhouri</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq">spray foam insulation company</span></td>
+<td>Denver, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-12">
+<td>30</td>
+<td>Jul 12, 2026<div class="tiny">10:38 PM MST (Jul 13, 11:08 AM IST)</div></td>
+<td><span class="name"><span class="avatar">RJ</span>Rachel Johnson</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><span class="stq">insulation companies near me</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-12">
+<td>31</td>
+<td>Jul 12, 2026<div class="tiny">10:28 AM MST (Jul 12, 10:58 PM IST)</div></td>
+<td><span class="name"><span class="avatar">MH</span>Mike Herron</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">home insulation services</span></td>
+<td><span class="stq">blown in insulation denver</span></td>
+<td>Atlanta, GA</td>
+<td>Blown-In Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-11">
+<td>32</td>
+<td>Jul 11, 2026<div class="tiny">9:48 AM MST (Jul 11, 10:18 PM IST)</div></td>
+<td><span class="name"><span class="avatar">KB</span>Karen Bosworth</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">home insulation services</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Golden, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-11">
+<td>33</td>
+<td>Jul 11, 2026<div class="tiny">8:40 AM MST (Jul 11, 9:10 PM IST)</div></td>
+<td><span class="name"><span class="avatar">AG</span>Andy Grossman</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray foam insulation denver</span></td>
+<td><span class="stq">spray foam insulation denver</span></td>
+<td>Dacula, GA</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-10">
+<td>34</td>
+<td>Jul 10, 2026<div class="tiny">11:18 AM MST (Jul 10, 11:48 PM IST)</div></td>
+<td><span class="name"><span class="avatar">NC</span>Nancy Chapin</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><span class="stq">insulation companies near me</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-08">
+<td>35</td>
+<td>Jul 8, 2026<div class="tiny">11:15 AM MST (Jul 8, 11:45 PM IST)</div></td>
+<td><span class="name"><span class="avatar">MH</span>Mitch Hah</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation company denver</span></td>
+<td><span class="stq">blown in insulation denver</span></td>
+<td>Littleton, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-06">
+<td>36</td>
+<td>Jul 6, 2026<div class="tiny">2:24 PM MST (Jul 7, 2:54 AM IST)</div></td>
+<td><span class="name"><span class="avatar">DR</span>Donna Rivers</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation company</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Thornton, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-04">
+<td>37</td>
+<td>Jul 4, 2026<div class="tiny">10:40 PM MST (Jul 5, 11:10 AM IST)</div></td>
+<td><span class="name"><span class="avatar">DL</span>Doug Lutat</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><span class="stq">insulation companies near me</span></td>
+<td>Denver, CO</td>
+<td>Attic Air Sealing</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-02">
+<td>38</td>
+<td>Jul 2, 2026<div class="tiny">1:23 PM MST (Jul 3, 1:53 AM IST)</div></td>
+<td><span class="name"><span class="avatar">DA</span>Dustin Arp</span></td>
+<td><span class="pill form">Ad Landing Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">home insulation services</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Aurora, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ===== CALL LEADS ===== -->
+<div class="sec-title">
+<span class="ic c"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.68 2.74a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.34-1.34a2 2 0 0 1 2.11-.45c.88.32 1.8.55 2.74.68A2 2 0 0 1 22 16.92z"/></svg></span>
+Call Leads <span class="cnt">manually logged from CTM</span>
+</div>
+
+<div class="card">
+<div class="tablewrap">
+<table id="calls">
+<thead>
+<tr>
+<th>#</th><th>Date &amp; time (MST)</th><th>Caller</th><th>Source</th>
+<th>Tracking line (CTM)</th><th>Duration</th><th>Status</th><th>Topic / keyword</th><th>Notes</th>
+</tr>
+</thead>
+<tbody><tr data-source="paid" data-date="2026-07-31">
+<td>1</td>
+<td>Jul 31, 2026<div class="tiny">2:08 PM MST (Aug 1, 2:38 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">CY</span>Candelaria Yvon</span><div class="tiny">Denver, CO · (720) 935-2034</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>1:06</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Inquiry</div></td>
+<td class="muted">Voicemail — asked whether Grizzly can come out and check why hot air is coming into her house from the attic, and how appointments are booked; left a callback number<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-31">
+<td>2</td>
+<td>Jul 31, 2026<div class="tiny">12:06 PM MST (Aug 1, 12:36 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">BF</span>Bill Fleming (Environments Denver)</span><div class="tiny">Denver, CO · (720) 570-5400</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>1:09</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Inquiry</div></td>
+<td class="muted">Voicemail — wants pricing and information on soundproofing a conference room for a Denver office; left a callback number<div class="tiny"><span class="kw">soundproofing insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-30"><td>3</td><td>Jul 30, 2026<div class="tiny">1:43 PM MST (Jul 31, 2:13 AM IST)</div></td><td><span class="name"><span class="avatar c">WB</span>William Bishop</span><div class="tiny">Denver, CO · (720) 492-5031</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td>2:52</td><td><span class="st-ans">Answered</span><div class="tiny">Inquiry</div></td><td class="muted">General contractor in Boulder — about 1,000 sq ft of wall needing R-21 (3&quot; spray foam) and about 960 sq ft of ceiling needing R-49; Mercede confirmed Grizzly can do the job and will text a formal estimate<div class="tiny"><span class="kw">spray foam insulation</span></div></td><td class="ntcell"><span class="nt-empty">—</span></td></tr>
+<tr data-source="paid" data-date="2026-07-29">
+<td>4</td>
+<td>Jul 29, 2026<div class="tiny">9:36 AM MST (Jul 29, 10:06 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">SL</span>Steve Levine (CommerceCentric Builders)</span><div class="tiny">Colorado Springs, CO · (719) 460-0871</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>1:02</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Inquiry</div></td>
+<td class="muted">Voicemail — commercial builder asking about building insulation for a project in Colorado Springs; asked for a callback and left his number<div class="tiny"><span class="kw">commercial insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-29">
+<td>5</td>
+<td>Jul 29, 2026<div class="tiny">9:10 AM MST (Jul 29, 9:40 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">RB</span>Ray Brittner Sr</span><div class="tiny">Denver, CO · (720) 788-6156</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>3:11</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Estimate set</div></td>
+<td class="muted">Wants garage wall insulation; Mercede confirmed a drill-and-fill through the drywall and booked an on-site quote for the next day 2–4 PM — home at Thornton, CO 80602<div class="tiny"><span class="kw">garage insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-27">
+<td>6</td>
+<td>Jul 27, 2026<div class="tiny">1:09 PM MST (Jul 28, 1:39 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">B</span>Bob (crawl-space removal)</span><div class="tiny">Denver, CO · (720) 317-8378</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>7:40</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Inquiry</div></td>
+<td class="muted">Rough estimate to remove blown-in insulation from a crawl space (~12x30 ft, 12" deep, ≈364 sq ft) over moisture and odor concerns; Mercede asked him to text photos for a quote — more openings next week<div class="tiny"><span class="kw">insulation removal</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-25">
+<td>7</td>
+<td>Jul 25, 2026<div class="tiny">4:18 PM MST (Jul 26, 4:48 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">AO</span>Andrew Osborne</span><div class="tiny">Covington, LA · (985) 590-2226</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>1:35</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Inquiry</div></td>
+<td class="muted">Voicemail — bought a 1962 Northglenn house with only 0–3" of old rock-wool attic insulation; wants a quote to compare against DIY; left callback number<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-24">
+<td>8</td>
+<td>Jul 24, 2026<div class="tiny">8:36 AM MST (Jul 24, 9:06 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">HB</span>Harvey Brandy</span><div class="tiny">Denver, CO · (303) 947-3286</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>5:58</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Inquiry</div></td>
+<td class="muted">Answered call via Denver GMB paid line — 5:58 conversation; no agent note logged yet<div class="tiny"><span class="kw">insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-23">
+<td>9</td>
+<td>Jul 23, 2026<div class="tiny">12:29 PM MST (Jul 24, 12:59 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">NA</span>Nicholas Auer</span><div class="tiny">Longmont, CO · (303) 845-0533</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>4:18</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Estimate set</div></td>
+<td class="muted">Attic/ceiling insulation upgrade — 1970 Fort Collins home, ~1 ft existing insulation not replaced in 5 yrs, upstairs much hotter than downstairs; on-site estimate booked Fri the 31st 12–2 PM<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-21">
+<td>10</td>
+<td>Jul 21, 2026<div class="tiny">8:03 AM MST (Jul 21, 8:33 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">JF</span>James Fugett</span><div class="tiny">Denver, CO · (303) 819-0971</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>1:01</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Callback req.</div></td>
+<td class="muted">Voicemail — James “Jim” Fugett, a contractor in Boulder, asked Grizzly to take a look at an upcoming insulation job; left a callback number<div class="tiny"><span class="kw">commercial insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+
+<tr data-source="paid" data-date="2026-07-17">
+<td>11</td>
+<td>Jul 17, 2026<div class="tiny">1:59 PM MST (Jul 18, 2:29 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">RM</span>Ray (Mark Seven Equipment)</span><div class="tiny">Arvada, CO · (720) 402-4957</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>0:59</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Callback req.</div></td>
+<td class="muted">Voicemail — Ray from Mark Seven Equipment (Arvada) asked for someone to bid on repairing insulation in a warehouse; left a callback number<div class="tiny"><span class="kw">commercial insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-17">
+<td>12</td>
+<td>Jul 17, 2026<div class="tiny">1:09 PM MST (Jul 18, 1:39 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">JD</span>Jesse Denison</span><div class="tiny">Denver, CO · (970) 208-6976</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>3:53</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Inspection set</div></td>
+<td class="muted">Attic insulation inspection — existing blown-in reported insufficient and the new AC is struggling; free inspection booked Wed 11 AM–1 PM at 7146 Inca Way, Denver 80221<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-17">
+<td>13</td>
+<td>Jul 17, 2026<div class="tiny">9:34 AM MST (Jul 17, 10:04 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">BC</span>Betsy Carr</span><div class="tiny">Denver, CO · (303) 243-4012</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>5:36</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Inspection set</div></td>
+<td class="muted">Attic assessment — missing baffles blocking soffit vents, possible old rodent droppings, and compacted insulation that needs fluffing; inspection booked Wed 2–4 PM at 13596 Hondarosa Dr, Conifer; prepping home for sale<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-17">
+<td>14</td>
+<td>Jul 17, 2026<div class="tiny">8:35 AM MST (Jul 17, 9:05 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">DF</span>Danielle Fiore</span><div class="tiny">Denver, CO · (303) 961-0136</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>11:20</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Callback promised</div></td>
+<td class="muted">Rodent biohazard sanitation plus attic insulation repair for a Colorado Springs home (417 Union Place) — droppings from basement drop-ceiling tiles, nesting and chewed attic insulation; wants cleanup, exclusion, and attic insulation in one quote; free inspection offered<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell">SEO - Gemini AI - City Page<div class="tiny"><a class="lp" href="https://grizzlyinsulationco.com/colorado-springs-pest-rodent-prevention/" target="_blank" rel="noopener">/colorado-springs-pest-rodent-prevention/</a></div></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-16">
+<td>15</td>
+<td>Jul 16, 2026<div class="tiny">10:51 AM MST (Jul 16, 11:21 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">DL</span>Daniel Ledezma</span><div class="tiny">Denver, CO · (720)&nbsp;501-9918</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>3:03</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Comparing quotes</div></td>
+<td class="muted">Attic remediation quote — remove and dispose old attic insulation, sanitize, air-seal, then blow in new to R-60; discussed the 30% install rebate; comparing other quotes and will call back — Denver, CO<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-16">
+<td>16</td>
+<td>Jul 16, 2026<div class="tiny">8:11 AM MST (Jul 16, 8:41 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">JB</span>Jake Brooks (Lifetime Reconstruction)</span><div class="tiny">Denver, CO · (720)&nbsp;930-8750</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>7:11</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Ballpark to follow</div></td>
+<td class="muted">Commercial job — remove old attic insulation and bring ~30 units (22 buildings) up to R-49 for a reside/reroof project in Thornton; needs one unit inspected first, rough pricing to follow — Denver, CO<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-14">
+<td>17</td>
+<td>Jul 14, 2026<div class="tiny">12:40 PM MST (Jul 15, 1:10 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">JS</span>Jeffrey Saless</span><div class="tiny">Longmont, CO · (303)&nbsp;518-3274</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>7:23</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Inspection set</div></td>
+<td class="muted">Drill-and-fill insulation for a 1963 Longmont home — one-car garage conversion (drywalled walls) plus possibly adding attic insulation; free inspection scheduled for Jul 23 (11 AM–1 PM) at 1118 Spencer St, Longmont 80501<div class="tiny"><span class="kw">wall insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-14">
+<td>18</td>
+<td>Jul 14, 2026<div class="tiny">12:14 PM MST (Jul 15, 12:44 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">LS</span>Leonas Sulas</span><div class="tiny">Golden, CO · (508)&nbsp;524-8578</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>7:09</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Inspection set</div></td>
+<td class="muted">Quote to redo attic insulation plus exterior wall drill-and-fill; mentioned minor past rodent activity; onsite inspection scheduled for Jul 15 (2–4 PM) at 1948 Golden View Drive<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-14">
+<td>19</td>
+<td>Jul 14, 2026<div class="tiny">8:36 AM MST (Jul 14, 9:06 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">AF</span>Anthony Fuentes</span><div class="tiny">Thornton, CO · (720)&nbsp;532-4668</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>7:46</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Inspection set</div></td>
+<td class="muted">Spray-foam attic insulation estimate via the Xcel rebate/finance program (Grizzly confirmed as an approved vendor); free inspection scheduled (tentatively next day, 11 AM–1 PM) at 1819 E 97th Dr, Thornton<div class="tiny"><span class="kw">spray foam insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-13">
+<td>20</td>
+<td>Jul 13, 2026<div class="tiny">2:59 PM MST (Jul 14, 3:29 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">MS</span>Mai Samhouri</span><div class="tiny">Denver, CO · (720)&nbsp;237-1033</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>4:14</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Quote to follow</div></td>
+<td class="muted">Closed-cell spray foam quote — 3&quot; on walls &amp; ceiling of a 3,200 sq ft metal building (40×80×14) in Elizabeth, CO; agent to send a written quote with projected timeline<div class="tiny"><span class="kw">spray foam insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-13">
+<td>21</td>
+<td>Jul 13, 2026<div class="tiny">12:36 PM MST (Jul 14, 1:06 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">TF</span>Todd (First General Services)</span><div class="tiny">Denver, CO · (720)&nbsp;334-8704</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>13:43</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Est. to follow</div></td>
+<td class="muted">Commercial estimate — 3.5&quot; exterior wall spray foam (~741 sq ft) + attic blow-in (~459 sq ft) at target R-60, plus vents/soffit pricing — 402½ Stewart St, Denver 80219; formal estimate to be sent<div class="tiny"><span class="kw">spray foam insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-13">
+<td>22</td>
+<td>Jul 13, 2026<div class="tiny">11:35 AM MST (Jul 14, 12:05 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">RM</span>Rodger Mejia</span><div class="tiny">Denver, CO · (720)&nbsp;609-4583</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>2:34</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Callback req.</div></td>
+<td class="muted">Reached Grizzly voicemail and left name &amp; number requesting a callback — Denver, CO<div class="tiny"><span class="kw">insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-10">
+<td>23</td>
+<td>Jul 10, 2026<div class="tiny">11:16 AM MST (Jul 10, 11:46 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">NC</span>Nancy Chapin</span><div class="tiny">Denver, CO · (303)&nbsp;839-9921</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>1:17</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Callback req.</div></td>
+<td class="muted">Blown-in insulation for a 3rd-floor attic apartment (~600 sq ft) — Denver, CO; needs quick turnaround, left voicemail with callback number<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-09">
+<td>24</td>
+<td>Jul 9, 2026<div class="tiny">1:07 PM MST (Jul 10, 1:37 AM IST)</div></td>
+<td><span class="name"><span class="avatar c">LN</span>Lisa Nierenberg</span><div class="tiny">Evergreen, CO · (303)&nbsp;887-8137</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>6:05</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Est. to follow</div></td>
+<td class="muted">Attic insulation / remediation after rodent activity — Evergreen, CO (~756 sq ft); formal estimate to be sent<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-09">
+<td>25</td>
+<td>Jul 9, 2026<div class="tiny">10:07 AM MST (Jul 9, 10:37 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">JP</span>John Purdy</span><div class="tiny">Denver, CO · (303)&nbsp;564-1520</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>3:19</td>
+<td><span class="st-ans">Answered</span><div class="tiny">Inspection set</div></td>
+<td class="muted">Garage attic / underside-of-roof insulation + fire-retardant covering — Denver, CO; free inspection scheduled<div class="tiny"><span class="kw">attic insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+<tr data-source="paid" data-date="2026-07-02">
+<td>26</td>
+<td>Jul 2, 2026<div class="tiny">10:22 AM MST (Jul 2, 10:52 PM IST)</div></td>
+<td><span class="name"><span class="avatar c">KB</span>Ken Bonderack</span><div class="tiny">Sedalia, CO · (925)&nbsp;324-6250</div></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td>
+<td>0:56</td>
+<td><span class="st-vm">Voicemail</span><div class="tiny">Callback req.</div></td>
+<td class="muted">Spray foam insulation enquiry — Sedalia, CO; left voicemail requesting callback<div class="tiny"><span class="kw">spray foam insulation</span></div></td>
+<td class="ntcell"><span class="nt-empty">—</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="foot">Prepared by <b>Lefko Digital</b> &nbsp;|&nbsp; Showing <b>July 2026</b> &mdash; older months in Archives &nbsp;&middot;&nbsp; Form leads: Lucky Orange + Gravity Forms &middot; Call leads: manual from CTM &nbsp;&middot;&nbsp; Times: Arizona MST (India IST in brackets)</div>
+
+</div>
+
+<script>
+// Search + source filter across both tables, with live KPI counts
+var q = document.getElementById('q');
+var leadRows = Array.prototype.slice.call(document.querySelectorAll('#leads tbody tr'));
+var callRows = Array.prototype.slice.call(document.querySelectorAll('#calls tbody tr'));
+var rows = leadRows.concat(callRows);
+var activeFilter = 'all';
+
+function setVal(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+function vis(r){ return r.style.display !== 'none'; }
+
+function updateKPIs(){
+var pf=0,pc=0,of=0,oc=0,forms=0;
+leadRows.forEach(function(r){
+if(!vis(r)) return; forms++;
+var s=r.getAttribute('data-source');
+if(s==='paid') pf++; else if(s==='organic') of++;
+});
+callRows.forEach(function(r){
+if(!vis(r)) return;
+var s=r.getAttribute('data-source');
+if(s==='paid') pc++; else if(s==='organic') oc++;
+});
+setVal('paid-form',pf); setVal('paid-call',pc); setVal('paid-total',pf+pc);
+setVal('org-form',of); setVal('org-call',oc); setVal('org-total',of+oc);
+setVal('total-leads',pf+pc+of+oc);
+var fc=document.getElementById('form-cnt'); if(fc) fc.textContent = forms + (forms===1?' lead':' leads');
+}
+
+function apply(){
+var t = (q.value||'').toLowerCase();
+rows.forEach(function(r){
+var matchText = r.innerText.toLowerCase().indexOf(t) > -1;
+var matchSrc = activeFilter === 'all' || r.getAttribute('data-source') === activeFilter;
+r.style.display = (matchText && matchSrc) ? '' : 'none';
+});
+updateKPIs();
+}
+q.addEventListener('input', apply);
+document.querySelectorAll('.chip').forEach(function(c){
+c.addEventListener('click', function(){
+document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('active');});
+c.classList.add('active');
+activeFilter = c.getAttribute('data-f');
+apply();
+});
+});
+// Auto NEW badge for leads within last 2 days
+var now = new Date();
+rows.forEach(function(r){
+var d = r.getAttribute('data-date'); if(!d) return;
+var diff = (now - new Date(d)) / 86400000;
+if(diff >= 0 && diff <= 2 && r.querySelector('td:nth-child(2) .new') === null){
+var cell = r.querySelector('td:nth-child(2)');
+if(cell) cell.innerHTML += ' <span class="new">NEW</span>';
+}
+});
+function copyIp(el){ try{ navigator.clipboard.writeText(el.getAttribute('data-ip')); var o=el.innerHTML; el.innerHTML='Copied!'; setTimeout(function(){ el.innerHTML=o; },1200); }catch(e){} }
+updateKPIs();
+</script>
+<!-- ===== CLIENT NOTES FEATURE (Supabase) — added 2026-07-21 · KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
+<!-- Self-contained: injects its own styles, sign-in button, modal, and per-call note boxes at runtime.
+     The daily automation does NOT need to touch it — it re-enhances every call row on load. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  "use strict";
+  var SUPABASE_URL = "https://bbtcdrlsijshakcndglg.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_98de4_qs8nI1_wZf1XSX-A_ZliCKMDH";
+  var SHARED_EMAIL = "notes@grizzlyinsulationco.com";
+
+  function boot(){
+    if(!window.supabase || !window.supabase.createClient){ return setTimeout(boot, 150); }
+    try { init(); } catch(e){ console.error("[notes] init failed", e); }
+  }
+
+  function init(){
+    var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    var signedIn = false;
+
+    /* ---------- styles ---------- */
+    var css = document.createElement("style");
+    css.textContent = ""
+      + ".authbtn{cursor:pointer;font-size:12px;font-weight:700;background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;transition:.15s;}"
+      + ".authbtn:hover{background:rgba(255,255,255,.28);}"
+      + ".authbtn.in{background:#1f9d55;border-color:#26b866;}.authbtn.in:hover{background:#1a874a;}"
+      + ".cnotes{margin-top:9px;padding-top:9px;border-top:1px dashed #e3e7ee;}"
+      + ".note-list{display:flex;flex-direction:column;gap:7px;}"
+      + ".note-item{background:#eef5ff;border:1px solid #d5e4fb;border-left:3px solid #2563eb;border-radius:8px;padding:7px 9px;position:relative;}"
+      + ".note-item .note-text{color:#243b53;white-space:pre-wrap;font-size:12.5px;line-height:1.45;}"
+      + ".note-item .note-meta{font-size:10px;color:#6b7f97;margin-top:4px;display:flex;align-items:center;gap:6px;}"
+      + ".note-item .note-meta .av{width:15px;height:15px;border-radius:50%;background:#2563eb;color:#fff;font-size:8px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;}"
+      + ".note-del{position:absolute;top:5px;right:6px;cursor:pointer;color:#9aa0ab;font-size:12px;font-weight:800;line-height:1;display:none;}"
+      + ".note-del:hover{color:#b4232a;}"
+      + ".addnote{display:none;margin-top:8px;cursor:pointer;font-size:11.5px;font-weight:700;color:#2563eb;background:#e8f0fe;border:1px dashed #b7cdf6;padding:6px 10px;border-radius:8px;align-items:center;gap:5px;}"
+      + ".addnote:hover{background:#dbe8fd;}"
+      + ".locked-hint{display:none;margin-top:6px;font-size:11px;color:#aab0bc;align-items:center;gap:5px;}"
+      + ".note-editor{margin-top:8px;display:flex;flex-direction:column;gap:6px;}"
+      + ".note-editor textarea{width:100%;border:1px solid #cdd6e4;border-radius:8px;padding:8px 9px;font:inherit;font-size:12.5px;resize:vertical;min-height:56px;outline:none;}"
+      + ".note-editor textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12);}"
+      + ".ne-row{display:flex;gap:7px;}"
+      + ".nbtn{cursor:pointer;font-size:12px;font-weight:700;border-radius:7px;padding:6px 12px;border:1px solid transparent;}"
+      + ".nbtn.save{background:#2563eb;color:#fff;}.nbtn.save:hover{background:#1d4fd0;}.nbtn.save[disabled]{opacity:.6;cursor:default;}"
+      + ".nbtn.cancel{background:#fff;color:#6b7280;border-color:#dfe3ea;}.nbtn.cancel:hover{background:#f4f6fa;}"
+      + "body.n-editing .addnote{display:inline-flex;}"
+      + "body:not(.n-editing) .locked-hint{display:inline-flex;}"
+      + "body.n-editing .note-del{display:inline;}"
+      + ".n-modal-bg{position:fixed;inset:0;background:rgba(15,25,40,.55);display:none;align-items:center;justify-content:center;z-index:1000;padding:16px;}"
+      + ".n-modal-bg.show{display:flex;}"
+      + ".n-modal{background:#fff;border-radius:16px;padding:26px 26px 22px;width:350px;max-width:100%;box-shadow:0 24px 60px rgba(15,25,40,.35);}"
+      + ".n-modal .mlogo{width:44px;height:44px;border-radius:12px;background:#e8f0fe;color:#2563eb;display:flex;align-items:center;justify-content:center;margin-bottom:13px;}"
+      + ".n-modal h3{margin:0 0 5px;font-size:17px;color:#13314f;font-weight:800;}"
+      + ".n-modal p{margin:0 0 16px;font-size:12.5px;color:#6b7280;line-height:1.5;}"
+      + ".n-modal label{font-size:11px;font-weight:700;color:#5b6573;text-transform:uppercase;letter-spacing:.4px;}"
+      + ".n-modal input{width:100%;margin-top:6px;border:1px solid #cdd6e4;border-radius:9px;padding:11px 12px;font:inherit;font-size:14px;outline:none;}"
+      + ".n-modal input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12);}"
+      + ".n-modal .err{color:#b4232a;font-size:12px;font-weight:600;margin-top:8px;display:none;}"
+      + ".n-modal .err.show{display:block;}"
+      + ".n-modal .mrow{display:flex;gap:9px;margin-top:16px;}"
+      + ".n-modal .nbtn.save{flex:1;text-align:center;padding:11px;}"
+      + ".n-signed{background:#e7f6ec;border:1px solid #b7e4c6;color:#15803d;border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:600;margin:12px 0 0;display:none;align-items:center;gap:8px;}"
+      + ".n-signed.show{display:flex;}";
+    document.head.appendChild(css);
+
+    /* ---------- header sign-in button ---------- */
+    var headRight = document.querySelector(".head-right") || document.querySelector(".topbar");
+    var btn = document.createElement("span");
+    btn.className = "authbtn";
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="authlabel">Sign in to add notes</span>';
+    if(headRight) headRight.appendChild(btn);
+
+    /* ---------- signed-in banner ---------- */
+    var banner = document.createElement("div");
+    banner.className = "n-signed";
+    banner.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> You’re signed in — note boxes are now editable. Sign out when you’re done.';
+    var topbar = document.querySelector(".topbar");
+    if(topbar && topbar.parentNode) topbar.parentNode.insertBefore(banner, topbar.nextSibling);
+
+    /* ---------- modal ---------- */
+    var modal = document.createElement("div");
+    modal.className = "n-modal-bg";
+    modal.innerHTML = ''
+      + '<div class="n-modal">'
+      + '<div class="mlogo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>'
+      + '<h3>Sign in to add notes</h3>'
+      + '<p>Enter the shared password to unlock note editing. Anyone can view the dashboard, but only signed-in users can add or edit notes.</p>'
+      + '<label for="n-pw">Password</label>'
+      + '<input id="n-pw" type="password" placeholder="Enter password" autocomplete="off">'
+      + '<div class="err" id="n-pwerr">Wrong password — try again.</div>'
+      + '<div class="mrow"><button class="nbtn cancel" id="n-cancel" style="flex:0 0 auto;">Cancel</button><button class="nbtn save" id="n-signin">Sign in</button></div>'
+      + '</div>';
+    document.body.appendChild(modal);
+    var pw = modal.querySelector("#n-pw"), pwerr = modal.querySelector("#n-pwerr");
+
+    function openModal(){ modal.classList.add("show"); pwerr.classList.remove("show"); pw.value=""; setTimeout(function(){pw.focus();},50); }
+    function closeModal(){ modal.classList.remove("show"); }
+    modal.querySelector("#n-cancel").addEventListener("click", closeModal);
+    modal.addEventListener("click", function(e){ if(e.target===modal) closeModal(); });
+    pw.addEventListener("keydown", function(e){ if(e.key==="Enter") doSignIn(); });
+    modal.querySelector("#n-signin").addEventListener("click", doSignIn);
+
+    async function doSignIn(){
+      var val = pw.value;
+      if(!val){ pw.focus(); return; }
+      var sbtn = modal.querySelector("#n-signin");
+      sbtn.disabled = true; sbtn.textContent = "Signing in…";
+      var res = await sb.auth.signInWithPassword({ email: SHARED_EMAIL, password: val });
+      sbtn.disabled = false; sbtn.textContent = "Sign in";
+      if(res.error){ pwerr.classList.add("show"); return; }
+      closeModal();
+      setSigned(true);
+    }
+    async function doSignOut(){ await sb.auth.signOut(); setSigned(false); }
+
+    btn.addEventListener("click", function(){ if(signedIn) doSignOut(); else openModal(); });
+
+    function setSigned(on){
+      signedIn = on;
+      document.body.classList.toggle("n-editing", on);
+      btn.classList.toggle("in", on);
+      btn.querySelector(".authlabel").textContent = on ? "Signed in — Sign out" : "Sign in to add notes";
+      banner.classList.toggle("show", on);
+      if(!on){ document.querySelectorAll(".note-editor").forEach(function(ed){ var c=ed.closest(".cnotes"); ed.remove(); var a=c&&c.querySelector(".addnote"); if(a) a.style.display=""; }); }
+    }
+
+    /* ---------- lead key + rows ---------- */
+    function slug(s){ return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
+    function leadKey(row){
+      var date = row.getAttribute("data-date") || "";
+      var nameEl = row.querySelector(".name");
+      var name = "";
+      if(nameEl){ var c = nameEl.cloneNode(true); var av=c.querySelector(".avatar"); if(av) av.remove(); name = c.textContent.trim(); }
+      var callerCell = row.querySelector("td:nth-child(3)");
+      var digits = callerCell ? callerCell.textContent.replace(/\D/g,"") : "";
+      var last4 = digits.slice(-4);
+      return "call:" + date + ":" + slug(name) + (last4 ? ":"+last4 : "");
+    }
+
+    var callRows = Array.prototype.slice.call(document.querySelectorAll("#calls tbody tr"));
+    var byKey = {};
+    callRows.forEach(function(row){
+      var key = leadKey(row);
+      row.setAttribute("data-lead-id", key);
+      byKey[key] = row;
+      var cell = row.querySelector("td:last-child") || row.querySelector(".ntcell");
+      if(!cell) return;
+      var box = document.createElement("div");
+      box.className = "cnotes";
+      box.innerHTML = '<div class="note-list"></div>'
+        + '<button class="addnote" type="button">+ Add note</button>'
+        + '<div class="locked-hint">🔒 Sign in to add notes</div>';
+      cell.appendChild(box);
+      box.querySelector(".addnote").addEventListener("click", function(){ openEditor(box, key); });
+    });
+
+    function fmtDate(iso){
+      var d = new Date(iso), m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      if(isNaN(d)) return "";
+      return m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
+    }
+    function renderNote(listEl, n){
+      var item = document.createElement("div");
+      item.className = "note-item";
+      item.setAttribute("data-note-id", n.id);
+      var meta = (n.author || "Client") + " · " + fmtDate(n.created_at);
+      item.innerHTML = '<div class="note-text"></div><div class="note-meta"><span class="av">C</span> <span class="mtxt"></span> <span class="note-del" title="Delete note">✕</span></div>';
+      item.querySelector(".note-text").textContent = n.body || "";
+      item.querySelector(".mtxt").textContent = meta;
+      item.querySelector(".note-del").addEventListener("click", function(){ delNote(n.id, item); });
+      listEl.appendChild(item);
+    }
+
+    function openEditor(box, key){
+      if(!signedIn) return;
+      if(box.querySelector(".note-editor")) return;
+      var add = box.querySelector(".addnote"); add.style.display="none";
+      var ed = document.createElement("div");
+      ed.className="note-editor";
+      ed.innerHTML = '<textarea placeholder="What the customer said, follow-up, budget, objections…"></textarea>'
+        + '<div class="ne-row"><button class="nbtn save" type="button">Save note</button><button class="nbtn cancel" type="button">Cancel</button></div>';
+      box.appendChild(ed);
+      var ta = ed.querySelector("textarea"); ta.focus();
+      ed.querySelector(".cancel").addEventListener("click", function(){ ed.remove(); add.style.display=""; });
+      ed.querySelector(".save").addEventListener("click", function(){ saveNote(box, key, ed, ta, add); });
+    }
+
+    async function saveNote(box, key, ed, ta, add){
+      var txt = (ta.value||"").trim();
+      if(!txt){ ta.focus(); return; }
+      var svb = ed.querySelector(".save"); svb.disabled=true; svb.textContent="Saving…";
+      var res = await sb.from("notes").insert({ lead_id:key, lead_type:"call", body:txt, author:"Client" }).select().single();
+      svb.disabled=false; svb.textContent="Save note";
+      if(res.error){ console.error("[notes] save failed", res.error); alert("Could not save note. Please try again."); return; }
+      renderNote(box.querySelector(".note-list"), res.data);
+      ed.remove(); add.style.display="";
+    }
+
+    async function delNote(id, item){
+      if(!signedIn) return;
+      var res = await sb.from("notes").delete().eq("id", id);
+      if(res.error){ console.error("[notes] delete failed", res.error); alert("Could not delete note."); return; }
+      item.remove();
+    }
+
+    /* ---------- load existing notes ---------- */
+    async function loadNotes(){
+      var keys = Object.keys(byKey);
+      if(!keys.length) return;
+      var res = await sb.from("notes").select("*").in("lead_id", keys).order("created_at", { ascending:true });
+      if(res.error){ console.error("[notes] load failed", res.error); return; }
+      (res.data||[]).forEach(function(n){
+        var row = byKey[n.lead_id]; if(!row) return;
+        var listEl = row.querySelector(".cnotes .note-list"); if(listEl) renderNote(listEl, n);
+      });
+    }
+
+    /* ---------- restore session ---------- */
+    sb.auth.getSession().then(function(r){ setSigned(!!(r && r.data && r.data.session)); });
+    loadNotes();
+    console.log("[notes] ready — " + callRows.length + " call rows enhanced");
+  }
+
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+</script>
+<!-- ===== END CLIENT NOTES FEATURE ===== -->
+
+</body>
+</html>
