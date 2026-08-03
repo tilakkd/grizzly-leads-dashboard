@@ -358,6 +358,266 @@ if(cell) cell.innerHTML += ' <span class="new">NEW</span>';
 function copyIp(el){ try{ navigator.clipboard.writeText(el.getAttribute('data-ip')); var o=el.innerHTML; el.innerHTML='Copied!'; setTimeout(function(){ el.innerHTML=o; },1200); }catch(e){} }
 updateKPIs();
 </script>
+<!-- ===== EXCEL EXPORT (all months, one sheet per month) — added 2026-08-03 · KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
+<!-- Self-contained: injects its own style + header button. Reads the live table for the current
+     month and fetches every file listed in the Archives menu for the past months, then writes a
+     single .xlsx with one sheet per month. The daily automation does NOT need to touch it —
+     it discovers months from the Archives menu and re-reads the tables on every click. -->
+<script>
+(function(){
+  "use strict";
+
+  var SHEETJS = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+
+  var COLS = ["Lead type","#","Date","Date (ISO)","Time (MST)","Time (IST)","Name","Phone","City",
+              "Source","Form","Campaign","Keyword / Topic","Search term","Service","Landing page",
+              "Tracking line (CTM)","Duration","Status","Notes"];
+  var WIDTHS = [10,5,15,12,12,20,24,16,20,20,20,36,30,28,22,46,30,10,13,46];
+
+  /* header label -> canonical field. Covers every variant used across June/July/August. */
+  var HEAD = {
+    "#":"num",
+    "date":"datecell", "date & time":"datecell", "date & time (mst)":"datecell",
+    "lead name":"name", "caller":"name",
+    "type":"form", "form":"form",
+    "source":"source",
+    "campaign":"campaign",
+    "keyword":"keyword", "topic / keyword":"keyword",
+    "search term":"searchterm",
+    "city":"city",
+    "service":"service",
+    "landing page":"landing",
+    "tracking line (ctm)":"tracking",
+    "duration":"duration",
+    "status":"status",
+    "notes":"notes"
+  };
+
+  var MON = {january:"01",february:"02",march:"03",april:"04",may:"05",june:"06",july:"07",
+             august:"08",september:"09",october:"10",november:"11",december:"12"};
+
+  function norm(s){ return (s||"").replace(/\s+/g," ").trim().toLowerCase(); }
+
+  function clean(v){
+    v = String(v==null?"":v).replace(/\s+/g," ").trim();
+    if(/^[—–-]+$/.test(v)) return "";      /* a lone em-dash placeholder = empty */
+    return v;
+  }
+
+  function monthKey(label){
+    var m = norm(label).match(/([a-z]+)\s+(\d{4})/);
+    return (m && MON[m[1]]) ? (m[2] + "-" + MON[m[1]]) : "9999-99";
+  }
+
+  /* Split a cell into its main text plus each .tiny sub-line, so "Aug 2, 2026" and
+     "12:05 PM MST (…)" don't run together. Drops UI-only bits (avatars, NEW badges,
+     the injected client-notes box). */
+  function parts(td){
+    var c = td.cloneNode(true);
+    Array.prototype.forEach.call(c.querySelectorAll(".avatar,.new,.cnotes,.lobtn,.sample"),
+      function(e){ if(e.parentNode) e.parentNode.removeChild(e); });
+    var out = [], buf = "";
+    Array.prototype.forEach.call(c.childNodes, function(n){
+      var isTiny = n.nodeType===1 && n.className && (" "+n.className+" ").indexOf(" tiny ") > -1;
+      if(isTiny){
+        if(clean(buf)) out.push(clean(buf));
+        buf = "";
+        var t = clean(n.textContent);
+        if(t) out.push(t);
+      } else {
+        buf += (n.textContent || "");
+      }
+    });
+    if(clean(buf)) out.push(clean(buf));
+    return out;
+  }
+
+  function phoneOf(s){
+    var m = (s||"").match(/\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4}/);
+    return m ? m[0] : "";
+  }
+
+  function rowsFrom(doc, tableId, leadType){
+    var t = doc.querySelector("#" + tableId);
+    if(!t) return [];
+    var keys = Array.prototype.map.call(t.querySelectorAll("thead th"), function(th){
+      return HEAD[norm(th.textContent)] || null;
+    });
+    var out = [];
+    Array.prototype.forEach.call(t.querySelectorAll("tbody tr"), function(tr){
+      var r = {};
+      Array.prototype.forEach.call(tr.children, function(td, i){
+        var k = keys[i];
+        if(!k) return;
+        var p = parts(td);
+        if(k === "datecell"){
+          r.date = p[0] || "";
+          var d = p.slice(1).join(" ");
+          var mst = d.match(/(\d{1,2}:\d{2}\s*[AP]M)\s*MST/i);
+          var ist = d.match(/\(([^)]*?)\s*IST\)/i);
+          r.tmst = mst ? mst[1] : (d && !/IST/i.test(d) ? d : "");
+          r.tist = ist ? clean(ist[1]) : "";
+        } else if(k === "name"){
+          r.name = p[0] || "";
+          var extra = p.slice(1).join(" ");
+          r.phone = phoneOf(extra);
+          r.city  = clean(extra.replace(r.phone, "").replace(/[·|]/g, ""));
+        } else if(k === "city"){
+          r.city = p.join(" ");
+        } else if(k === "landing"){
+          var a = td.querySelector("a");
+          r.landing = a ? (a.getAttribute("href") || a.href || "") : p.join(" ");
+        } else {
+          r[k] = p.join(" · ");
+        }
+      });
+      out.push([leadType, r.num, r.date, tr.getAttribute("data-date"), r.tmst, r.tist,
+                r.name, r.phone, r.city, r.source, r.form, r.campaign, r.keyword,
+                r.searchterm, r.service, r.landing, r.tracking, r.duration, r.status,
+                r.notes].map(clean));
+    });
+    return out;
+  }
+
+  function sheetFor(doc){
+    return rowsFrom(doc, "leads", "Form").concat(rowsFrom(doc, "calls", "Call"));
+  }
+
+  /* Every month we can export: each entry in the Archives menu + the month on screen. */
+  function monthList(){
+    var list = [];
+    Array.prototype.forEach.call(document.querySelectorAll(".arch-menu a.arch-item[href]"), function(a){
+      var label = clean(a.textContent);
+      if(!label) return;
+      list.push({ label: label, href: a.getAttribute("href"), key: monthKey(label) });
+    });
+    var cur = document.querySelector(".period");
+    var curLabel = cur ? clean(cur.textContent) : "Current";
+    list.push({ label: curLabel, href: null, key: monthKey(curLabel) });
+    list.sort(function(a,b){ return a.key < b.key ? -1 : (a.key > b.key ? 1 : 0); });
+    return list;
+  }
+
+  function withXLSX(cb, onErr){
+    if(window.XLSX) return cb();
+    var s = document.createElement("script");
+    s.src = SHEETJS;
+    s.onload  = function(){ cb(); };
+    s.onerror = function(){ onErr("Could not load the Excel library. Check your internet connection and try again."); };
+    document.head.appendChild(s);
+  }
+
+  function boot(){
+    /* ---------- style ---------- */
+    var css = document.createElement("style");
+    css.textContent = ""
+      + ".xlbtn{cursor:pointer;font-size:12px;font-weight:700;background:rgba(255,255,255,.16);color:#fff;"
+      +   "border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;display:inline-flex;"
+      +   "align-items:center;gap:6px;transition:.15s;white-space:nowrap;}"
+      + ".xlbtn:hover{background:rgba(255,255,255,.28);}"
+      + ".xlbtn.busy{opacity:.65;cursor:default;}"
+      + ".xlbtn.done{background:#1f9d55;border-color:#26b866;}"
+      + ".xlbtn.err{background:#b4232a;border-color:#d2454c;}";
+    document.head.appendChild(css);
+
+    /* ---------- button ---------- */
+    var host = document.querySelector(".head-right") || document.querySelector(".topbar");
+    if(!host) return;
+    var btn = document.createElement("span");
+    btn.className = "xlbtn";
+    var ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+             + 'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'
+             + '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>'
+             + '<path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>';
+    function label(txt, cls){
+      btn.className = "xlbtn" + (cls ? " " + cls : "");
+      btn.innerHTML = ICON + '<span class="xllabel">' + txt + '</span>';
+    }
+    label("Download Excel");
+    host.appendChild(btn);
+
+    var busy = false;
+
+    function reset(){ busy = false; label("Download Excel"); }
+    function fail(msg){
+      busy = false;
+      label("Download failed", "err");
+      setTimeout(reset, 3500);
+      console.error("[export] " + msg);
+      alert(msg);
+    }
+
+    btn.addEventListener("click", function(){
+      if(busy) return;
+      busy = true;
+      label("Preparing…", "busy");
+      withXLSX(build, fail);
+    });
+
+    async function build(){
+      try{
+        var months = monthList();
+        var sheets = [], missing = [];
+
+        for(var i = 0; i < months.length; i++){
+          var m = months[i];
+          if(!m.href){
+            sheets.push({ label: m.label, rows: sheetFor(document) });
+            continue;
+          }
+          try{
+            var res = await fetch(m.href, { cache: "no-store" });
+            if(!res.ok) throw new Error("HTTP " + res.status);
+            var doc = new DOMParser().parseFromString(await res.text(), "text/html");
+            sheets.push({ label: m.label, rows: sheetFor(doc) });
+          }catch(e){
+            missing.push(m.label);
+          }
+        }
+
+        if(!sheets.length){ return fail("No lead data could be read."); }
+
+        var wb = XLSX.utils.book_new();
+        var used = {};
+        sheets.forEach(function(s){
+          var name = s.label.replace(/[\\\/\?\*\[\]:]/g, " ").replace(/\s+/g," ").trim().slice(0,31) || "Sheet";
+          while(used[name.toLowerCase()]) name = (name + " ").slice(0,30) + (Object.keys(used).length);
+          used[name.toLowerCase()] = 1;
+
+          var ws = XLSX.utils.aoa_to_sheet([COLS].concat(s.rows));
+          ws["!cols"] = WIDTHS.map(function(w){ return { wch: w }; });
+          ws["!autofilter"] = { ref: XLSX.utils.encode_range({
+            s:{ r:0, c:0 }, e:{ r: Math.max(s.rows.length, 1), c: COLS.length - 1 }
+          })};
+          ws["!freeze"] = { xSplit:"0", ySplit:"1", topLeftCell:"A2", activePane:"bottomLeft", state:"frozen" };
+          XLSX.utils.book_append_sheet(wb, ws, name);
+        });
+
+        var d = new Date();
+        var stamp = d.getFullYear() + "-" +
+                    ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
+                    ("0" + d.getDate()).slice(-2);
+        XLSX.writeFile(wb, "Grizzly-Leads-" + stamp + ".xlsx");
+
+        busy = false;
+        label(missing.length ? "Downloaded (" + missing.length + " month missed)" : "Downloaded", "done");
+        setTimeout(reset, 3000);
+        if(missing.length){
+          alert("Downloaded, but these months could not be read and were left out: " + missing.join(", "));
+        }
+      }catch(e){
+        fail("Something went wrong building the file: " + (e && e.message ? e.message : e));
+      }
+    }
+
+    console.log("[export] ready — months: " + monthList().map(function(m){ return m.label; }).join(", "));
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+</script>
+<!-- ===== END EXCEL EXPORT ===== -->
+
 <!-- ===== CLIENT NOTES FEATURE (Supabase) — added 2026-07-21 · KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
 <!-- Self-contained: injects its own styles, sign-in button, modal, and per-call note boxes at runtime.
      The daily automation does NOT need to touch it — it re-enhances every call row on load. -->
