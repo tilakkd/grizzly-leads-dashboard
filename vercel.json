@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/gate.js": {
+      "includeFiles": "{index.html,archives/**}"
+    }
+  },
+  "routes": [
+    { "src": "/(.*)", "dest": "/api/gate" }
+  ]
+}
