@@ -150,6 +150,71 @@ tbody tr:hover td{background:#f9fbff;}
 #kwtab td:nth-child(2){white-space:normal;}
 #kwtab tfoot td{background:#f7f9fc;border-top:2px solid var(--line);}
 .kw-note{margin-top:14px;}
+/* ============ DIRECTION B — light precision ============ */
+:root{--acc:#e0561f;--ink:#101a28;--mut2:#7b8a9c;--hair:#eef1f6;}
+.topbar{border-radius:12px 12px 0 0;}
+.wrap .topbar + .kstrip{border-top:0;}
+/* KPI strip: one panel divided by hairlines, not floating cards */
+.kstrip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--line);border-top:2px solid var(--ink);border-radius:0 0 12px 12px;margin:0 0 8px;overflow:hidden;}
+.kcell{padding:15px 17px;border-right:1px solid var(--hair);display:flex;flex-direction:column;}
+.kcell:last-child{border-right:0;}
+.krule{height:3px;width:26px;background:var(--ink);margin-bottom:10px;}
+.krule.acc{background:var(--acc);}
+.klbl{font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--mut2);margin-bottom:8px;font-weight:700;}
+.kval{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:29px;font-weight:600;letter-spacing:-1.4px;line-height:1;color:var(--ink);}
+.kmeta{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;color:var(--mut2);margin-top:auto;padding-top:9px;}
+.kspark{display:flex;align-items:flex-end;gap:1.5px;height:22px;margin-top:auto;padding-top:9px;}
+.kspark i{flex:1;background:#9aabc0;border-radius:1px;min-height:1px;}
+.kspark i.z{background:#e8edf3;height:2px;}
+@media(max-width:760px){.kstrip{grid-template-columns:repeat(2,1fr);}.kcell:nth-child(2){border-right:0;}}
+/* Tables: fixed 40px rows, truncate instead of wrap */
+#leads tbody td,#calls tbody td{height:40px;padding:0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:0;vertical-align:middle;}
+#leads thead th,#calls thead th,#kwtab thead th,#sttab thead th{border-bottom:1px solid var(--ink);font-size:9px;letter-spacing:.7px;padding:9px 10px;}
+#leads tbody tr:hover td,#calls tbody tr:hover td,#kwtab tbody tr:hover td,#sttab tbody tr:hover td{background:#fbfcfe;}
+#leads .tiny,#calls .tiny{display:none;}
+#leads .avatar,#calls .avatar{display:none;}
+#leads .name,#calls .name{font-weight:700;}
+#leads tbody tr td:first-child,#calls tbody tr td:first-child{color:var(--mut2);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;}
+#leads tbody tr[data-source="paid"] td:first-child,#calls tbody tr[data-source="paid"] td:first-child{box-shadow:inset 3px 0 0 var(--acc);}
+#leads tbody tr[data-source="organic"] td:first-child,#calls tbody tr[data-source="organic"] td:first-child{box-shadow:inset 3px 0 0 var(--green);}
+#leads tbody td:nth-child(2),#calls tbody td:nth-child(2){font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;color:#55677d;}
+/* pills recede; only the channel keeps colour */
+#leads .pill.form,#calls .pill.form{background:transparent;color:var(--mut2);padding:0;font-weight:600;font-size:11px;text-transform:none;letter-spacing:0;}
+#leads .pill.paid,#leads .pill.organic,#calls .pill.paid,#calls .pill.organic{background:transparent;padding:0;font-size:11px;letter-spacing:0;text-transform:none;font-weight:700;}
+#leads .kw,#calls .kw,#kwtab .kw,#sttab .kw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;background:#f2f5f9;color:#41546b;padding:2px 6px;border-radius:4px;}
+.lp{font-size:11px;}
+/* numerics line up */
+#kwtab td:nth-child(4),#kwtab td:nth-child(5),#sttab td:nth-child(3),
+#kwtab th:nth-child(4),#kwtab th:nth-child(5),#sttab th:nth-child(3){text-align:right;font-variant-numeric:tabular-nums;}
+#kwtab tfoot td:nth-child(4),#kwtab tfoot td:nth-child(5),#sttab tfoot td:nth-child(3){text-align:right;font-variant-numeric:tabular-nums;}
+/* match type */
+.mt{font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:4px;}
+.mt-p{background:#eef1f6;color:#5a6b80;}
+.mt-e{background:#fdf1de;color:#9c5a06;}
+.mt-b{background:#e7eefb;color:#2f6fd0;}
+#sttab td,#sttab th,#kwtab td,#kwtab th{height:38px;padding-top:0;padding-bottom:0;}
+#sttab tfoot .kw-hid td{color:var(--mut2);font-style:italic;background:#fbfcfe;}
+/* inner spans inherited white-space:normal from the no-scroll fix, which beat the td nowrap */
+#leads tbody .kw,#calls tbody .kw,#leads tbody .lp,#calls tbody .lp,#leads tbody .name,#calls tbody .name,#leads tbody .pill,#calls tbody .pill{white-space:nowrap;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
+/* Column widths: the earlier blanket max-width:0 let long columns starve the
+   name column (63px at 1100px wide, so 14 names were clipped). Fixed layout with
+   explicit widths gives names the room; only genuinely long text still truncates. */
+#leads,#calls{table-layout:fixed;width:100%;}
+#leads tbody td,#calls tbody td{max-width:none;}
+/* Column widths measured, not guessed: at 11px the Date cell needs 127px once the
+   NEW badge is in it and Form needs 110px, but they had 94px and 77px, so both clipped.
+   Font drops to 10.5px and the columns that must never truncate — date+NEW badge, name,
+   form, source, duration, status — are given their measured width first; the long free-text
+   columns absorb what is left and truncate with the full value on row hover. */
+#leads tbody td,#calls tbody td{font-size:10.5px;}
+#leads th:nth-child(1){width:3.3%}#leads th:nth-child(2){width:11.8%}#leads th:nth-child(3){width:12.9%}
+#leads th:nth-child(4){width:11%}#leads th:nth-child(5){width:11.2%}#leads th:nth-child(6){width:9%}
+#leads th:nth-child(7){width:8.3%}#leads th:nth-child(8){width:8.3%}#leads th:nth-child(9){width:8%}
+#leads th:nth-child(10){width:8.2%}#leads th:nth-child(11){width:8%}
+#calls th:nth-child(1){width:3.3%}#calls th:nth-child(2){width:11.8%}#calls th:nth-child(3){width:9.6%}
+#calls th:nth-child(4){width:11%}#calls th:nth-child(5){width:12.2%}#calls th:nth-child(6){width:10.4%}
+#calls th:nth-child(7){width:7.2%}#calls th:nth-child(8){width:6.5%}#calls th:nth-child(9){width:16.5%}
+#calls th:nth-child(10){width:11.5%}
 </style>
 </head>
 <body>
@@ -184,39 +249,35 @@ tbody tr:hover td{background:#f9fbff;}
 </div>
 </div>
 
-<!-- Source blocks -->
-<div class="totline"><b id="total-leads">7</b> total leads &nbsp;&middot;&nbsp; split by source below</div>
-<div class="blocks">
-<div class="block paid">
-<div class="bhead"><span class="btag paid">Paid &middot; Google Ads</span><span class="btot" id="paid-total">4</span></div>
-<div class="bstats">
-<div class="bstat"><div class="bs-lbl">Form leads</div><div class="bs-val" id="paid-form">3</div></div>
-<div class="bstat"><div class="bs-lbl">Call leads</div><div class="bs-val" id="paid-call">1</div></div>
+<!-- ===== KPI STRIP ===== -->
+<div class="kstrip">
+<div class="kcell">
+<div class="krule acc"></div>
+<div class="klbl">Total leads</div>
+<div class="kval" id="total-leads">60</div>
+<div class="kspark" id="kspark" aria-hidden="true"></div>
+</div>
+<div class="kcell">
+<div class="krule acc"></div>
+<div class="klbl">Paid &middot; Google Ads</div>
+<div class="kval" id="paid-total">39</div>
+<div class="kmeta"><span id="paid-form">23</span> form &middot; <span id="paid-call">16</span> call</div>
+</div>
+<div class="kcell">
+<div class="krule"></div>
+<div class="klbl">Organic &middot; GMB</div>
+<div class="kval" id="org-total">21</div>
+<div class="kmeta"><span id="org-form">9</span> form &middot; <span id="org-call">12</span> call</div>
+</div>
+<div class="kcell">
+<div class="krule"></div>
+<div class="klbl">Ads spend &middot; <span id="ads-period">Aug 1&ndash;31, 2026</span></div>
+<div class="kval" id="ads-cost">$14,906.11</div>
+<div class="kmeta"><span id="ads-clicks">841</span> clicks &middot; <span id="ads-cpc">$17.72</span> cpc</div>
 </div>
 </div>
-<div class="block organic">
-<div class="bhead"><span class="btag organic">Organic / GMB</span><span class="btot" id="org-total">3</span></div>
-<div class="bstats">
-<div class="bstat"><div class="bs-lbl">Form leads</div><div class="bs-val" id="org-form">1</div></div>
-<div class="bstat"><div class="bs-lbl">Call leads</div><div class="bs-val" id="org-call">2</div></div>
-</div>
-</div>
-</div>
-
-<!-- ===== GOOGLE ADS MTD ===== -->
-<div class="totline">Google Ads &mdash; <b>month to date</b></div>
-<div class="blocks ads-mtd">
-<div class="block ads">
-<div class="bhead"><span class="btag ads">Google Ads &middot; MTD</span><span class="ads-per" id="ads-period">Aug 1&ndash;31, 2026</span></div>
-<div class="bstats">
-<div class="bstat"><div class="bs-lbl">Cost</div><div class="bs-val" id="ads-cost">$14,906.11</div></div>
-<div class="bstat"><div class="bs-lbl">Clicks</div><div class="bs-val" id="ads-clicks">841</div></div>
-<div class="bstat"><div class="bs-lbl">Avg. CPC</div><div class="bs-val" id="ads-cpc">$17.72</div></div>
-</div>
-</div>
-</div>
-<div class="ads-note">Whole Google Ads account, Mountain Time. Read straight from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so the current day&rsquo;s spend can still move.</div>
-<!-- ===== END GOOGLE ADS MTD ===== -->
+<div class="ads-note kw-note">Lead counts are computed from the tables below. Ads spend is the whole Google Ads account, Mountain Time, read from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so today&rsquo;s figure can still move.</div>
+<!-- ===== END KPI STRIP ===== -->
 <div class="totline" style="margin-top:2px;">⏱ All times in <b>Arizona time (MST, GMT−7)</b> — <b>India time (IST)</b> shown in brackets.</div>
 <!-- Controls -->
 <div class="controls">
@@ -720,107 +781,192 @@ Call Leads <span class="cnt">manually logged from CTM</span>
 <!-- ===== KEYWORD ANALYSIS ===== -->
 <div class="sec-title">
 <span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-Which searches brought the leads <span class="cnt" id="kw-cnt">14 keywords &middot; 29 leads</span>
+Keywords that brought leads <span class="cnt" id="kw-cnt">14 keywords &middot; 29 leads</span>
 </div>
 <div class="card">
 <div class="tablewrap">
 <table id="kwtab">
 <thead>
-<tr><th>#</th><th>Keyword</th><th>Leads</th><th>Clicks</th></tr>
+<tr><th>#</th><th>Keyword</th><th>Match type</th><th>Leads</th><th>Clicks</th></tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
 <td><span class="kw">spray insulation</span></td>
+<td><span class="mt mt-p">Phrase</span></td>
 <td><b>5</b></td>
 <td>217</td>
 </tr>
 <tr>
 <td>2</td>
 <td><span class="kw">insulation services</span></td>
+<td><span class="mt mt-p">Phrase</span></td>
 <td><b>4</b></td>
 <td>66</td>
 </tr>
 <tr>
 <td>3</td>
 <td><span class="kw">home insulation denver</span></td>
+<td><span class="mt mt-b">Phrase + Exact</span></td>
 <td><b>3</b></td>
 <td>22</td>
 </tr>
 <tr>
 <td>4</td>
 <td><span class="kw">insulation companies near me</span></td>
+<td><span class="mt mt-e">Exact</span></td>
 <td><b>3</b></td>
 <td>32</td>
 </tr>
 <tr>
 <td>5</td>
 <td><span class="kw">spray foam insulation</span></td>
+<td><span class="mt mt-e">Exact</span></td>
 <td><b>3</b></td>
 <td>50</td>
 </tr>
 <tr>
 <td>6</td>
 <td><span class="kw">attic insulation removal</span></td>
+<td><span class="mt mt-p">Phrase</span></td>
 <td><b>2</b></td>
 <td>9</td>
 </tr>
 <tr>
 <td>7</td>
 <td><span class="kw">insulation company</span></td>
+<td><span class="mt mt-e">Exact</span></td>
 <td><b>2</b></td>
 <td>10</td>
 </tr>
 <tr>
 <td>8</td>
 <td><span class="kw">attic insulation denver</span></td>
+<td><span class="mt mt-e">Exact</span></td>
 <td><b>1</b></td>
 <td>8</td>
 </tr>
 <tr>
 <td>9</td>
 <td><span class="kw">blow in insulation</span></td>
+<td><span class="mt mt-e">Exact</span></td>
 <td><b>1</b></td>
 <td>15</td>
 </tr>
 <tr>
 <td>10</td>
 <td><span class="kw">blown in insulation denver</span></td>
+<td><span class="mt mt-e">Exact</span></td>
 <td><b>1</b></td>
 <td>2</td>
 </tr>
 <tr>
 <td>11</td>
 <td><span class="kw">home insulation services</span></td>
+<td><span class="mt mt-e">Exact</span></td>
 <td><b>1</b></td>
 <td>7</td>
 </tr>
 <tr>
 <td>12</td>
 <td><span class="kw">insulation contractors near me</span></td>
+<td><span class="mt mt-b">Phrase + Exact</span></td>
 <td><b>1</b></td>
 <td>4</td>
 </tr>
 <tr>
 <td>13</td>
 <td><span class="kw">spray foam contractors</span></td>
+<td><span class="mt mt-p">Phrase</span></td>
 <td><b>1</b></td>
 <td>3</td>
 </tr>
 <tr>
 <td>14</td>
 <td><span class="kw">spray foam insulation near me</span></td>
+<td><span class="mt mt-b">Exact + Phrase</span></td>
 <td><b>1</b></td>
 <td>13</td>
 </tr>
 </tbody>
 <tfoot>
-<tr class="kw-tot"><td></td><td><b>Total</b></td><td><b>29</b></td><td><b>458</b></td></tr>
+<tr class="kw-tot"><td></td><td><b>Total</b></td><td></td><td><b>29</b></td><td><b>458</b></td></tr>
 </tfoot>
 </table>
 </div>
 </div>
-<div class="ads-note kw-note">Google Ads keywords that brought at least one lead in <b id="kw-period">Aug 1&ndash;31, 2026</b> &mdash; form leads and call leads together. Click any heading to sort. Refreshed weekly.</div>
+<div class="ads-note kw-note">Keyword is what we bid on. <b>Match type</b> is how loosely Google may match it &mdash; exact fires only on that phrase, phrase allows wording around it. This account currently runs no broad-match keywords. Refreshed weekly.</div>
+
+<div class="sec-title">
+<span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg></span>
+What people actually typed <span class="cnt" id="st-cnt">10 search terms &middot; 11 leads</span>
+</div>
+<div class="card">
+<div class="tablewrap">
+<table id="sttab">
+<thead>
+<tr><th>#</th><th>Search term</th><th>Leads</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><span class="kw">spray foam insulation</span></td>
+<td><b>2</b></td>
+</tr>
+<tr>
+<td>2</td>
+<td><span class="kw">attic insulation denver</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>4</td>
+<td><span class="kw">home insulation companies near me</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>5</td>
+<td><span class="kw">insulation contractors</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>6</td>
+<td><span class="kw">blown in insulation</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>7</td>
+<td><span class="kw">insulation experts</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>8</td>
+<td><span class="kw">spray insulation near me</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>9</td>
+<td><span class="kw">spray insulation</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>10</td>
+<td><span class="kw">spray foam contractors near me</span></td>
+<td><b>1</b></td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="kw-tot"><td></td><td><b>Shown above</b></td><td><b>11</b></td></tr>
+<tr class="kw-hid"><td></td><td>Search term withheld by Google</td><td><b>12</b></td></tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="ads-note kw-note">The search term is the real query someone typed. Google only discloses it on a portion of clicks &mdash; for privacy it withholds the rest, so <b>12 of our 23 paid leads have no search term available</b>. That is a Google limit, not missing data on our side.</div>
 <!-- ===== END KEYWORD ANALYSIS ===== -->
 
 <div class="foot">Prepared by <b>Lefko Digital</b> &nbsp;|&nbsp; Showing <b>August 2026</b> &mdash; older months in Archives &nbsp;&middot;&nbsp; Form leads: Lucky Orange + Gravity Forms &middot; Call leads: manual from CTM &nbsp;&middot;&nbsp; Times: Arizona MST (India IST in brackets)</div>
@@ -1724,6 +1870,7 @@ updateKPIs();
     enhance("leads");
     enhance("calls");
     enhance("kwtab");   // keyword summary; its Total row lives in <tfoot> so it never moves
+    enhance("sttab");   // search terms, same arrangement
   }
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
@@ -1812,6 +1959,55 @@ updateKPIs();
 })();
 </script>
 <!-- ===== END SHOW MORE ===== -->
+<!-- ===== SPARKLINE + ROW TITLES ===== -->
+<script>
+(function(){
+  "use strict";
+  // Built from the rows themselves, so it stays correct on every daily refresh.
+  function boot(){
+    var rows = document.querySelectorAll("#leads tbody tr, #calls tbody tr");
+    if(!rows.length) return;
+
+    // 1. the .tiny second line (IST time) is hidden by CSS to keep rows at 40px,
+    //    so move its text onto the row as a tooltip rather than losing it.
+    Array.prototype.forEach.call(rows, function(tr){
+      var t = tr.querySelector(".tiny");
+      if(t && !tr.title) tr.title = t.textContent.replace(/\s+/g," ").trim();
+    });
+
+    // 2. daily sparkline
+    var el = document.getElementById("kspark");
+    if(!el) return;
+    var counts = {}, any = null;
+    Array.prototype.forEach.call(rows, function(tr){
+      var d = tr.getAttribute("data-date");
+      if(!d) return;
+      counts[d] = (counts[d]||0) + 1;
+      if(!any) any = d;
+    });
+    if(!any) return;
+    var y = +any.slice(0,4), m = +any.slice(5,7);
+    var last = new Date(Date.UTC(y, m, 0)).getUTCDate();
+    var max = 0, i, key;
+    for(key in counts) if(counts[key] > max) max = counts[key];
+    if(!max) return;
+    var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][m-1];
+    for(i = 1; i <= last; i++){
+      var dd = (i<10?"0":"") + i;
+      var n = counts[y + "-" + (m<10?"0":"") + m + "-" + dd] || 0;
+      var b = document.createElement("i");
+      if(n === 0){ b.className = "z"; b.title = i + " " + MON + " — no leads"; }
+      else { b.style.height = Math.max(3, (n/max)*22) + "px";
+             b.title = i + " " + MON + " — " + n + " lead" + (n===1?"":"s"); }
+      el.appendChild(b);
+    }
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+<!-- ===== END SPARKLINE + ROW TITLES ===== -->
+
 
 
 
