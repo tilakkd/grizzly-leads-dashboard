@@ -200,16 +200,21 @@ tbody tr:hover td{background:#f9fbff;}
    name column (63px at 1100px wide, so 14 names were clipped). Fixed layout with
    explicit widths gives names the room; only genuinely long text still truncates. */
 #leads,#calls{table-layout:fixed;width:100%;}
-#leads tbody td,#calls tbody td{max-width:none;font-size:11px;}
-#leads th:nth-child(1){width:3.5%}#leads th:nth-child(2){width:8.5%}#leads th:nth-child(3){width:14%}
-#leads th:nth-child(4){width:7%}#leads th:nth-child(5){width:11%}#leads th:nth-child(6){width:10.5%}
-#leads th:nth-child(7){width:9.5%}#leads th:nth-child(8){width:9.5%}#leads th:nth-child(9){width:8%}
-#leads th:nth-child(10){width:8%}#leads th:nth-child(11){width:10.5%}
-#calls th:nth-child(1){width:3.5%}#calls th:nth-child(2){width:8.5%}#calls th:nth-child(3){width:14.5%}
-#calls th:nth-child(4){width:11%}#calls th:nth-child(5){width:11.5%}#calls th:nth-child(6){width:9%}
-#calls th:nth-child(7){width:6%}#calls th:nth-child(8){width:7.5%}#calls th:nth-child(9){width:16%}
-#calls th:nth-child(10){width:12.5%}
-@media(max-width:1000px){#leads tbody td,#calls tbody td{font-size:10.5px;}}
+#leads tbody td,#calls tbody td{max-width:none;}
+/* Column widths measured, not guessed: at 11px the Date cell needs 127px once the
+   NEW badge is in it and Form needs 110px, but they had 94px and 77px, so both clipped.
+   Font drops to 10.5px and the columns that must never truncate — date+NEW badge, name,
+   form, source, duration, status — are given their measured width first; the long free-text
+   columns absorb what is left and truncate with the full value on row hover. */
+#leads tbody td,#calls tbody td{font-size:10.5px;}
+#leads th:nth-child(1){width:3.3%}#leads th:nth-child(2){width:11.8%}#leads th:nth-child(3){width:12.9%}
+#leads th:nth-child(4){width:11%}#leads th:nth-child(5){width:11.2%}#leads th:nth-child(6){width:9%}
+#leads th:nth-child(7){width:8.3%}#leads th:nth-child(8){width:8.3%}#leads th:nth-child(9){width:8%}
+#leads th:nth-child(10){width:8.2%}#leads th:nth-child(11){width:8%}
+#calls th:nth-child(1){width:3.3%}#calls th:nth-child(2){width:11.8%}#calls th:nth-child(3){width:9.6%}
+#calls th:nth-child(4){width:11%}#calls th:nth-child(5){width:12.2%}#calls th:nth-child(6){width:10.4%}
+#calls th:nth-child(7){width:7.2%}#calls th:nth-child(8){width:6.5%}#calls th:nth-child(9){width:16.5%}
+#calls th:nth-child(10){width:11.5%}
 </style>
 </head>
 <body>
