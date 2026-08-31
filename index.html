@@ -137,6 +137,15 @@ tbody tr:hover td{background:#f9fbff;}
 .blocks{grid-template-columns:1fr;}
 .brand h1{font-size:16px;}
 }
+/* Google Ads month-to-date block */
+.ads-mtd{grid-template-columns:1fr;}
+.block.ads:before{background:#e08a1e;}
+.btag.ads{background:#fdf1de;color:#9c5a06;}
+.ads-per{font-size:12px;font-weight:700;color:var(--muted);}
+.ads-mtd .bstats{grid-template-columns:1fr 1fr 1fr;}
+.ads-mtd .bs-val{color:#9c5a06;}
+.ads-note{font-size:11.5px;color:var(--muted);margin:-12px 2px 18px;line-height:1.55;}
+@media(max-width:760px){.ads-mtd .bstats{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -190,6 +199,20 @@ tbody tr:hover td{background:#f9fbff;}
 </div>
 </div>
 
+<!-- ===== GOOGLE ADS MTD ===== -->
+<div class="totline">Google Ads &mdash; <b>month to date</b></div>
+<div class="blocks ads-mtd">
+<div class="block ads">
+<div class="bhead"><span class="btag ads">Google Ads &middot; MTD</span><span class="ads-per" id="ads-period">Aug 1&ndash;31, 2026</span></div>
+<div class="bstats">
+<div class="bstat"><div class="bs-lbl">Cost</div><div class="bs-val" id="ads-cost">$14,906.11</div></div>
+<div class="bstat"><div class="bs-lbl">Clicks</div><div class="bs-val" id="ads-clicks">841</div></div>
+<div class="bstat"><div class="bs-lbl">Avg. CPC</div><div class="bs-val" id="ads-cpc">$17.72</div></div>
+</div>
+</div>
+</div>
+<div class="ads-note">Whole Google Ads account, Mountain Time. Read straight from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so the current day&rsquo;s spend can still move.</div>
+<!-- ===== END GOOGLE ADS MTD ===== -->
 <div class="totline" style="margin-top:2px;">⏱ All times in <b>Arizona time (MST, GMT−7)</b> — <b>India time (IST)</b> shown in brackets.</div>
 <!-- Controls -->
 <div class="controls">
