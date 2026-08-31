@@ -204,6 +204,8 @@ tbody tr:hover td{background:#f9fbff;}
 </div>
 </div>
 
+<p class="sort-hint">Tip: click any column heading to sort the table. Click the <b>#</b> heading to go back to the original order.</p>
+
 <!-- ===== FORM LEADS ===== -->
 <div class="sec-title">
 <span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></span>
@@ -1410,6 +1412,179 @@ updateKPIs();
 })();
 </script>
 <!-- ===== END CLIENT NOTES FEATURE ===== -->
+<!-- ===== TABLE SORTING (click any column heading) ===== -->
+<style>
+#leads thead th,#calls thead th{cursor:pointer;user-select:none;white-space:normal;}
+#leads thead th:hover,#calls thead th:hover{background:#eef3fa;color:#13314f;}
+#leads thead th .sort-ar,#calls thead th .sort-ar{opacity:.25;font-size:10px;margin-left:4px;}
+#leads thead th:hover .sort-ar,#calls thead th:hover .sort-ar{opacity:.6;}
+#leads thead th.sorted,#calls thead th.sorted{background:#e7eefb;color:#13314f;}
+#leads thead th.sorted .sort-ar,#calls thead th.sorted .sort-ar{opacity:1;}
+.sort-hint{margin:2px 0 14px;font-size:12px;color:#6b7c93;}
+</style>
+<script>
+(function(){
+  "use strict";
+
+  /* Sort key helpers -------------------------------------------------- */
+
+  // Text of a cell WITHOUT the round avatar initials, so "Edward Wolff"
+  // sorts under E-d and not under its "EW" badge.
+  function cellText(td){
+    if(!td) return "";
+    var clone = td.cloneNode(true);
+    var av = clone.querySelectorAll(".avatar");
+    for(var i=0;i<av.length;i++) av[i].parentNode.removeChild(av[i]);
+    return clone.textContent.replace(/\s+/g," ").trim();
+  }
+
+  function isBlank(s){ return s === "" || s === "—" || s === "-" || s === "–"; }
+
+  // "4:02" -> 242.  Anything else -> null.
+  function durationSeconds(s){
+    var m = /^(\d+):([0-5]\d)$/.exec(s);
+    return m ? (parseInt(m[1],10)*60 + parseInt(m[2],10)) : null;
+  }
+
+  // Row date: the data-date attribute is day-level, so add the MST clock
+  // time from the .tiny line to keep same-day rows in the right order.
+  function rowDateValue(tr){
+    var d = tr.getAttribute("data-date") || "";
+    var base = Date.parse(d + "T00:00:00Z");
+    if(isNaN(base)) return null;
+    var tiny = tr.querySelector(".tiny");
+    var mins = 0;
+    if(tiny){
+      var t = /(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(tiny.textContent||"");
+      if(t){
+        var h = parseInt(t[1],10) % 12;
+        if(/PM/i.test(t[3])) h += 12;
+        mins = h*60 + parseInt(t[2],10);
+      }
+    }
+    return base + mins*60000;
+  }
+
+  // Returns { blank, cmp }. Blank detection is kept OUT of cmp so that
+  // "—" rows can be pinned to the bottom in BOTH directions — if the blank
+  // test lived inside cmp it would get flipped by the descending multiplier
+  // and every empty cell would jump to the top.
+  function makeSorter(colIndex){
+    var isDateCol = colIndex === 1;
+    return {
+      blank: function(tr){ return isBlank(cellText(tr.cells[colIndex])); },
+      cmp: function(a, b){
+        if(isDateCol){
+          var da = rowDateValue(a), db = rowDateValue(b);
+          if(da !== null && db !== null) return da - db;
+        }
+        var sa = cellText(a.cells[colIndex]), sb = cellText(b.cells[colIndex]);
+        var na = durationSeconds(sa), nb = durationSeconds(sb);
+        if(na !== null && nb !== null) return na - nb;
+        var fa = parseFloat(sa.replace(/[^0-9.\-]/g,"")), fb = parseFloat(sb.replace(/[^0-9.\-]/g,""));
+        if(sa !== "" && sb !== "" && !isNaN(fa) && !isNaN(fb) && /^[^A-Za-z]*$/.test(sa) && /^[^A-Za-z]*$/.test(sb)) return fa - fb;
+        return sa.localeCompare(sb, "en", {sensitivity:"base", numeric:true});
+      }
+    };
+  }
+
+  /* Wiring ------------------------------------------------------------ */
+
+  function enhance(tableId){
+    var table = document.getElementById(tableId);
+    if(!table) return;
+    var head = table.tHead, body = table.tBodies[0];
+    if(!head || !body) return;
+    var ths = head.rows[0] ? head.rows[0].cells : [];
+    if(!ths.length) return;
+
+    // Remember the order the page shipped with, so the # heading can undo.
+    var original = Array.prototype.slice.call(body.rows);
+    var state = { col: -1, dir: 1 };
+
+    function renumber(){
+      var rows = body.rows;
+      for(var i=0;i<rows.length;i++){
+        if(rows[i].cells[0]) rows[i].cells[0].textContent = String(i+1);
+      }
+    }
+
+    function paintHeaders(){
+      for(var i=0;i<ths.length;i++){
+        var ar = ths[i].querySelector(".sort-ar");
+        ths[i].classList.remove("sorted");
+        ths[i].removeAttribute("aria-sort");
+        if(ar) ar.textContent = "↕";
+      }
+      if(state.col >= 0 && ths[state.col]){
+        ths[state.col].classList.add("sorted");
+        ths[state.col].setAttribute("aria-sort", state.dir === 1 ? "ascending" : "descending");
+        var a = ths[state.col].querySelector(".sort-ar");
+        if(a) a.textContent = state.dir === 1 ? "▲" : "▼";
+      }
+    }
+
+    // Re-insert existing <tr> nodes. Never rebuild them: the client-notes
+    // feature holds references to these rows and their inputs.
+    function apply(rows){
+      var frag = document.createDocumentFragment();
+      for(var i=0;i<rows.length;i++) frag.appendChild(rows[i]);
+      body.appendChild(frag);
+      renumber();
+      paintHeaders();
+    }
+
+    function sortBy(col){
+      if(col === 0){                       // the # heading = back to original
+        state.col = -1; state.dir = 1;
+        apply(original.slice());
+        return;
+      }
+      state.dir = (state.col === col && state.dir === 1) ? -1 : 1;
+      state.col = col;
+      var rows = Array.prototype.slice.call(body.rows);
+      var s = makeSorter(col);
+      rows.sort(function(a,b){
+        var ba = s.blank(a), bb = s.blank(b);
+        if(ba && bb) return 0;
+        if(ba) return 1;              // empty cells stay at the bottom
+        if(bb) return -1;             // in ascending AND descending
+        return s.cmp(a,b) * state.dir;
+      });
+      apply(rows);
+    }
+
+    for(var i=0;i<ths.length;i++){
+      (function(idx){
+        var th = ths[idx];
+        if(!th.querySelector(".sort-ar")){
+          var s = document.createElement("span");
+          s.className = "sort-ar";
+          s.textContent = "↕";
+          th.appendChild(s);
+        }
+        th.setAttribute("role","button");
+        th.setAttribute("tabindex","0");
+        th.addEventListener("click", function(){ sortBy(idx); });
+        th.addEventListener("keydown", function(e){
+          if(e.key === "Enter" || e.key === " "){ e.preventDefault(); sortBy(idx); }
+        });
+      })(i);
+    }
+    paintHeaders();
+  }
+
+  function boot(){
+    enhance("leads");
+    enhance("calls");
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+<!-- ===== END TABLE SORTING ===== -->
+
 
 </body>
 </html>
