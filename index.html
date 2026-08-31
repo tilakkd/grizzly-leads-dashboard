@@ -194,6 +194,8 @@ tbody tr:hover td{background:#f9fbff;}
 .mt-b{background:#e7eefb;color:#2f6fd0;}
 #sttab td,#sttab th,#kwtab td,#kwtab th{height:38px;padding-top:0;padding-bottom:0;}
 #sttab tfoot .kw-hid td{color:var(--mut2);font-style:italic;background:#fbfcfe;}
+/* inner spans inherited white-space:normal from the no-scroll fix, which beat the td nowrap */
+#leads tbody .kw,#calls tbody .kw,#leads tbody .lp,#calls tbody .lp,#leads tbody .name,#calls tbody .name,#leads tbody .pill,#calls tbody .pill{white-space:nowrap;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
 </style>
 </head>
 <body>
