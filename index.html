@@ -146,6 +146,9 @@ tbody tr:hover td{background:#f9fbff;}
 .ads-mtd .bs-val{color:#9c5a06;}
 .ads-note{font-size:11.5px;color:var(--muted);margin:-12px 2px 18px;line-height:1.55;}
 @media(max-width:760px){.ads-mtd .bstats{grid-template-columns:1fr;}}
+#kwtab td,#kwtab th{white-space:nowrap;}
+#kwtab td:nth-child(2){white-space:normal;}
+#kwtab tfoot td{background:#f7f9fc;border-top:2px solid var(--line);}
 </style>
 </head>
 <body>
@@ -712,6 +715,112 @@ Call Leads <span class="cnt">manually logged from CTM</span>
 </table>
 </div>
 </div>
+
+<!-- ===== KEYWORD ANALYSIS ===== -->
+<div class="sec-title">
+<span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+Which searches brought the leads <span class="cnt" id="kw-cnt">14 keywords &middot; 29 leads</span>
+</div>
+<div class="card">
+<div class="tablewrap">
+<table id="kwtab">
+<thead>
+<tr><th>#</th><th>Keyword</th><th>Leads</th><th>Clicks</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><span class="kw">spray insulation</span></td>
+<td><b>5</b></td>
+<td>217</td>
+</tr>
+<tr>
+<td>2</td>
+<td><span class="kw">insulation services</span></td>
+<td><b>4</b></td>
+<td>66</td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="kw">home insulation denver</span></td>
+<td><b>3</b></td>
+<td>22</td>
+</tr>
+<tr>
+<td>4</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><b>3</b></td>
+<td>32</td>
+</tr>
+<tr>
+<td>5</td>
+<td><span class="kw">spray foam insulation</span></td>
+<td><b>3</b></td>
+<td>50</td>
+</tr>
+<tr>
+<td>6</td>
+<td><span class="kw">attic insulation removal</span></td>
+<td><b>2</b></td>
+<td>9</td>
+</tr>
+<tr>
+<td>7</td>
+<td><span class="kw">insulation company</span></td>
+<td><b>2</b></td>
+<td>10</td>
+</tr>
+<tr>
+<td>8</td>
+<td><span class="kw">attic insulation denver</span></td>
+<td><b>1</b></td>
+<td>8</td>
+</tr>
+<tr>
+<td>9</td>
+<td><span class="kw">blow in insulation</span></td>
+<td><b>1</b></td>
+<td>15</td>
+</tr>
+<tr>
+<td>10</td>
+<td><span class="kw">blown in insulation denver</span></td>
+<td><b>1</b></td>
+<td>2</td>
+</tr>
+<tr>
+<td>11</td>
+<td><span class="kw">home insulation services</span></td>
+<td><b>1</b></td>
+<td>7</td>
+</tr>
+<tr>
+<td>12</td>
+<td><span class="kw">insulation contractors near me</span></td>
+<td><b>1</b></td>
+<td>4</td>
+</tr>
+<tr>
+<td>13</td>
+<td><span class="kw">spray foam contractors</span></td>
+<td><b>1</b></td>
+<td>3</td>
+</tr>
+<tr>
+<td>14</td>
+<td><span class="kw">spray foam insulation near me</span></td>
+<td><b>1</b></td>
+<td>13</td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="kw-tot"><td></td><td><b>Total</b></td><td><b>29</b></td><td><b>458</b></td></tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="ads-note">Google Ads keywords that brought at least one lead in <b id="kw-period">Aug 1&ndash;31, 2026</b> &mdash; form leads and call leads together. Click any heading to sort. Refreshed weekly.</div>
+<!-- ===== END KEYWORD ANALYSIS ===== -->
 
 <div class="foot">Prepared by <b>Lefko Digital</b> &nbsp;|&nbsp; Showing <b>August 2026</b> &mdash; older months in Archives &nbsp;&middot;&nbsp; Form leads: Lucky Orange + Gravity Forms &middot; Call leads: manual from CTM &nbsp;&middot;&nbsp; Times: Arizona MST (India IST in brackets)</div>
 
@@ -1613,6 +1722,7 @@ updateKPIs();
   function boot(){
     enhance("leads");
     enhance("calls");
+    enhance("kwtab");   // keyword summary; its Total row lives in <tfoot> so it never moves
   }
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
