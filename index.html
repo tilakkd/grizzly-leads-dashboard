@@ -149,6 +149,7 @@ tbody tr:hover td{background:#f9fbff;}
 #kwtab td,#kwtab th{white-space:nowrap;}
 #kwtab td:nth-child(2){white-space:normal;}
 #kwtab tfoot td{background:#f7f9fc;border-top:2px solid var(--line);}
+.kw-note{margin-top:14px;}
 </style>
 </head>
 <body>
@@ -819,7 +820,7 @@ Which searches brought the leads <span class="cnt" id="kw-cnt">14 keywords &midd
 </table>
 </div>
 </div>
-<div class="ads-note">Google Ads keywords that brought at least one lead in <b id="kw-period">Aug 1&ndash;31, 2026</b> &mdash; form leads and call leads together. Click any heading to sort. Refreshed weekly.</div>
+<div class="ads-note kw-note">Google Ads keywords that brought at least one lead in <b id="kw-period">Aug 1&ndash;31, 2026</b> &mdash; form leads and call leads together. Click any heading to sort. Refreshed weekly.</div>
 <!-- ===== END KEYWORD ANALYSIS ===== -->
 
 <div class="foot">Prepared by <b>Lefko Digital</b> &nbsp;|&nbsp; Showing <b>August 2026</b> &mdash; older months in Archives &nbsp;&middot;&nbsp; Form leads: Lucky Orange + Gravity Forms &middot; Call leads: manual from CTM &nbsp;&middot;&nbsp; Times: Arizona MST (India IST in brackets)</div>
@@ -1730,6 +1731,88 @@ updateKPIs();
 })();
 </script>
 <!-- ===== END TABLE SORTING ===== -->
+<!-- ===== SHOW MORE (long tables collapsed to 10 rows) ===== -->
+<style>
+.row-collapsed{display:none;}
+.show-more{display:block;width:100%;margin:0;padding:11px 14px;border:0;border-top:1px solid var(--line);background:#f7f9fc;color:var(--blue);font-size:12.5px;font-weight:800;letter-spacing:.2px;cursor:pointer;font-family:inherit;}
+.show-more:hover{background:#eaf1fb;}
+</style>
+<script>
+(function(){
+  "use strict";
+  var LIMIT = 10;
+
+  // Rows are hidden with a CSS CLASS, never with style.display.
+  // The search/filter script owns style.display and the KPI counter treats
+  // style.display==="none" as "not a lead", so hiding rows that way would
+  // knock the headline lead totals down to 10. The Excel export reads every
+  // tbody row regardless, so collapsing never shortens a download either.
+  function setup(tableId, noun){
+    var table = document.getElementById(tableId);
+    if(!table) return;
+    var body = table.tBodies[0];
+    var card = table.closest(".card");
+    if(!body || !card) return;
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "show-more";
+    card.appendChild(btn);
+
+    var expanded = false, busy = false, timer = null;
+
+    function passesFilter(tr){ return tr.style.display !== "none"; }
+
+    function render(){
+      busy = true;
+      var shown = 0;
+      Array.prototype.forEach.call(body.rows, function(tr){
+        if(!passesFilter(tr)){ tr.classList.remove("row-collapsed"); return; }
+        shown++;
+        if(!expanded && shown > LIMIT) tr.classList.add("row-collapsed");
+        else tr.classList.remove("row-collapsed");
+      });
+      if(shown <= LIMIT){
+        btn.style.display = "none";
+      } else {
+        btn.style.display = "";
+        btn.textContent = expanded
+          ? ("Show fewer " + noun)
+          : ("Show all " + shown + " " + noun);
+      }
+      busy = false;
+    }
+
+    btn.addEventListener("click", function(){ expanded = !expanded; render(); });
+
+    // Re-apply after a sort (rows are moved => childList) and after a
+    // search/filter change (style attribute is rewritten on each row).
+    var obs = new MutationObserver(function(){
+      if(busy) return;
+      clearTimeout(timer);
+      timer = setTimeout(render, 0);
+    });
+    obs.observe(body, {childList:true});
+    Array.prototype.forEach.call(body.rows, function(tr){
+      obs.observe(tr, {attributes:true, attributeFilter:["style"]});
+    });
+
+    render();
+  }
+
+  function boot(){
+    setup("leads", "leads");
+    setup("calls", "calls");
+    // the keyword summary is short and is the thing people scroll TO, so it is
+    // deliberately left uncollapsed
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+<!-- ===== END SHOW MORE ===== -->
+
 
 
 </body>
