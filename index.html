@@ -196,6 +196,20 @@ tbody tr:hover td{background:#f9fbff;}
 #sttab tfoot .kw-hid td{color:var(--mut2);font-style:italic;background:#fbfcfe;}
 /* inner spans inherited white-space:normal from the no-scroll fix, which beat the td nowrap */
 #leads tbody .kw,#calls tbody .kw,#leads tbody .lp,#calls tbody .lp,#leads tbody .name,#calls tbody .name,#leads tbody .pill,#calls tbody .pill{white-space:nowrap;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
+/* Column widths: the earlier blanket max-width:0 let long columns starve the
+   name column (63px at 1100px wide, so 14 names were clipped). Fixed layout with
+   explicit widths gives names the room; only genuinely long text still truncates. */
+#leads,#calls{table-layout:fixed;width:100%;}
+#leads tbody td,#calls tbody td{max-width:none;font-size:11px;}
+#leads th:nth-child(1){width:3.5%}#leads th:nth-child(2){width:8.5%}#leads th:nth-child(3){width:14%}
+#leads th:nth-child(4){width:7%}#leads th:nth-child(5){width:11%}#leads th:nth-child(6){width:10.5%}
+#leads th:nth-child(7){width:9.5%}#leads th:nth-child(8){width:9.5%}#leads th:nth-child(9){width:8%}
+#leads th:nth-child(10){width:8%}#leads th:nth-child(11){width:10.5%}
+#calls th:nth-child(1){width:3.5%}#calls th:nth-child(2){width:8.5%}#calls th:nth-child(3){width:14.5%}
+#calls th:nth-child(4){width:11%}#calls th:nth-child(5){width:11.5%}#calls th:nth-child(6){width:9%}
+#calls th:nth-child(7){width:6%}#calls th:nth-child(8){width:7.5%}#calls th:nth-child(9){width:16%}
+#calls th:nth-child(10){width:12.5%}
+@media(max-width:1000px){#leads tbody td,#calls tbody td{font-size:10.5px;}}
 </style>
 </head>
 <body>
