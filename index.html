@@ -204,7 +204,7 @@ tbody tr:hover td{background:#f9fbff;}
 </div>
 </div>
 
-<p class="sort-hint">Tip: click any column heading to sort the table. Click the <b>#</b> heading to go back to the original order.</p>
+<p class="sort-hint">Tip: click a column heading to sort it &mdash; once for A&ndash;Z, again for Z&ndash;A, a third time to put the table back the way it was.</p>
 
 <!-- ===== FORM LEADS ===== -->
 <div class="sec-title">
@@ -1534,14 +1534,27 @@ updateKPIs();
       paintHeaders();
     }
 
+    function reset(){                      // back to the order the page shipped with
+      state.col = -1; state.dir = 1;
+      apply(original.slice());
+    }
+
+    // Each heading cycles through three states:
+    //   1st click  A→Z
+    //   2nd click  Z→A
+    //   3rd click  back to as-is (no sort), then the cycle starts over.
     function sortBy(col){
-      if(col === 0){                       // the # heading = back to original
-        state.col = -1; state.dir = 1;
-        apply(original.slice());
-        return;
+      if(col === 0){ reset(); return; }    // the # heading always resets
+      if(state.col === col){
+        if(state.dir === 1){
+          state.dir = -1;                  // 2nd click
+        } else {
+          reset();                         // 3rd click
+          return;
+        }
+      } else {
+        state.col = col; state.dir = 1;    // 1st click on a new column
       }
-      state.dir = (state.col === col && state.dir === 1) ? -1 : 1;
-      state.col = col;
       var rows = Array.prototype.slice.call(body.rows);
       var s = makeSorter(col);
       rows.sort(function(a,b){
