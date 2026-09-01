@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Leads Dashboard — Grizzly Insulations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+--navy:#13314f; --navy2:#1d4d77; --blue:#2563eb; --blue-bg:#e8f0fe;
+--green:#15803d; --green-bg:#e7f6ec; --amber:#b45309; --amber-bg:#fdf0dd;
+--ink:#1f2937; --muted:#6b7280; --line:#e6e9ef; --bg:#f4f6fa; --card:#ffffff;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,Arial,sans-serif;font-size:14px;}
+.wrap{max-width:1140px;margin:0 auto;padding:20px 18px 40px;}
+
+/* Header */
+.topbar{background:#13314f;background:linear-gradient(100deg,#13314f,#1d4d77);color:#fff;border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 6px 18px rgba(19,49,79,.18);}
+.brand{display:flex;align-items:center;gap:12px;}
+.logo{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;}
+.brand h1{margin:0;font-size:18px;font-weight:800;letter-spacing:.2px;}
+.brand .sub{font-size:12px;color:#c9d8e8;margin-top:1px;}
+.head-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.live{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);padding:6px 11px;border-radius:999px;}
+.dot{width:8px;height:8px;border-radius:50%;background:#36d399;box-shadow:0 0 0 0 rgba(54,211,153,.7);animation:pulse 1.8s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(54,211,153,.6)}70%{box-shadow:0 0 0 7px rgba(54,211,153,0)}100%{box-shadow:0 0 0 0 rgba(54,211,153,0)}}
+.updated{font-size:12px;color:#c9d8e8;}
+.period{font-size:12px;font-weight:700;color:#fff;background:rgba(255,255,255,.12);padding:6px 11px;border-radius:999px;}
+.arch{position:relative;}
+.arch summary{list-style:none;cursor:pointer;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);color:#fff;padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;}
+.arch summary::-webkit-details-marker{display:none;}
+.arch[open] summary{background:rgba(255,255,255,.24);}
+.arch-menu{position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 10px 28px rgba(20,30,50,.2);padding:6px;min-width:215px;z-index:30;}
+.arch-item{display:block;padding:8px 11px;border-radius:7px;font-size:13px;color:#13314f;text-decoration:none;font-weight:600;}
+.arch-item:hover{background:#f2f6fc;}
+.arch-item.current{color:#15803d;}
+.arch-empty{font-size:11px;color:#9aa0ab;padding:8px 11px;line-height:1.45;}
+
+/* KPI cards */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0;}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px 16px;box-shadow:0 2px 6px rgba(20,30,50,.04);position:relative;overflow:hidden;}
+.kpi .lbl{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+.kpi .val{font-size:30px;font-weight:800;line-height:1.1;margin-top:6px;}
+.kpi .ico{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.kpi.total .ico{background:#e8f0fe;color:#2563eb;} .kpi.total .val{color:#13314f;}
+.kpi.paid .ico{background:var(--blue-bg);color:var(--blue);} .kpi.paid .val{color:var(--blue);}
+.kpi.organic .ico{background:var(--green-bg);color:var(--green);} .kpi.organic .val{color:var(--green);}
+.kpi.calls .ico{background:#fdf0dd;color:#b45309;} .kpi.calls .val{color:#b45309;}
+
+/* Source blocks (Paid vs Organic, each split into Form + Call) */
+.totline{font-size:12.5px;color:var(--muted);margin:18px 2px 8px;font-weight:600;}
+.totline b{color:#13314f;font-size:15px;}
+.blocks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 18px;}
+.block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px 16px 22px;box-shadow:0 2px 6px rgba(20,30,50,.04);position:relative;overflow:hidden;}
+.block:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;}
+.block.paid:before{background:var(--blue);}
+.block.organic:before{background:var(--green);}
+.bhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;}
+.btag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:5px 11px;border-radius:999px;}
+.btag.paid{background:var(--blue-bg);color:var(--blue);}
+.btag.organic{background:var(--green-bg);color:var(--green);}
+.btot{font-size:32px;font-weight:800;line-height:1;}
+.block.paid .btot{color:var(--blue);}
+.block.organic .btot{color:var(--green);}
+.bstats{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.bstat{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:9px 12px;}
+.bs-lbl{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+.bs-val{font-size:21px;font-weight:800;color:#13314f;margin-top:2px;}
+
+/* Controls */
+.controls{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:240px;flex:1;max-width:340px;}
+.search input{border:0;outline:0;font:inherit;width:100%;background:transparent;color:var(--ink);}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;}
+.chip.active{background:#13314f;color:#fff;border-color:#13314f;}
+
+/* Section title */
+.sec-title{display:flex;align-items:center;gap:9px;margin:26px 2px 12px;font-size:15px;font-weight:800;color:#13314f;}
+.sec-title .ic{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;}
+.sec-title .ic.f{background:#e8f0fe;color:#2563eb;} .sec-title .ic.c{background:#fdf0dd;color:#b45309;}
+.sec-title .cnt{margin-left:auto;font-size:12px;font-weight:700;color:#6b7280;background:#eef1f5;padding:4px 11px;border-radius:999px;}
+
+/* Source legend */
+.legend{display:flex;flex-wrap:wrap;gap:12px 20px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:12px;font-size:12.5px;line-height:1.5;}
+.legend .li{display:flex;align-items:flex-start;gap:9px;max-width:250px;}
+.legend .li b{color:#374151;}
+.legend .li .muted{color:#8a909c;}
+
+/* Table card */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 14px rgba(20,30,50,.05);overflow:hidden;}
+.tablewrap{overflow-x:auto;}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;min-width:0;table-layout:auto;}
+thead th{position:sticky;top:0;background:#f7f9fc;color:#5b6573;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.3px;padding:10px 9px;border-bottom:1px solid var(--line);white-space:normal;vertical-align:bottom;}
+tbody td{padding:10px 9px;border-bottom:1px solid #f0f2f6;vertical-align:top;}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr:hover td{background:#f9fbff;}
+.name{font-weight:700;color:#13314f;display:flex;align-items:center;gap:8px;}
+.avatar{width:26px;height:26px;border-radius:50%;background:#e8f0fe;color:#2563eb;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.avatar.c{background:#fdf0dd;color:#b45309;}
+.muted{color:var(--muted);}
+.tiny{font-size:11px;color:#9aa0ab;margin-top:2px;}
+.kw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#374151;background:#f3f4f6;padding:2px 7px;border-radius:6px;display:inline-block;overflow-wrap:anywhere;white-space:normal;}
+.name{overflow-wrap:normal;word-break:normal;}
+.lp{overflow-wrap:anywhere;}
+#leads td,#calls td{overflow-wrap:break-word;}
+#calls th:nth-child(6),#calls td:nth-child(6){min-width:150px;}
+#calls td:nth-child(6) .kw{overflow-wrap:normal;word-break:normal;}
+.stq{font-size:12px;color:#4b5563;font-style:italic;} .stq-empty{color:#c2c7d0;font-weight:700;}
+.lp{color:#2563eb;text-decoration:none;font-weight:600;} .lp:hover{text-decoration:underline;}
+.lobtn{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:11px;font-weight:700;color:#b45309;background:#fdf0dd;border:1px solid #f3d4a8;padding:3px 9px;border-radius:7px;text-decoration:none;white-space:nowrap;cursor:pointer;} .lobtn:hover{background:#fbe6c8;}
+
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;}
+.pill.form{background:var(--blue-bg);color:#1e40af;}
+.pill.call{background:#fdf0dd;color:#9a5400;}
+.pill.paid{background:var(--blue-bg);color:var(--blue);}
+.pill.organic{background:var(--green-bg);color:var(--green);}
+.pill.gmb{background:var(--amber-bg);color:var(--amber);}
+.pill.direct{background:#eef1f5;color:#4b5563;}
+.new{background:#fde68a;color:#92400e;font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;letter-spacing:.4px;}
+.sample{background:#eef1f5;color:#9aa0ab;font-size:9px;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:.5px;}
+.st-ans{color:#15803d;font-weight:700;} .st-vm{color:#b45309;font-weight:700;}
+.ntcell{font-size:12.5px;color:#374151;max-width:260px;line-height:1.45;} .nt-empty{color:#c2c7d0;font-weight:700;}
+
+.note{font-size:12px;color:#7a808c;line-height:1.6;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.note b{color:#374151;}
+.foot{text-align:center;color:#9aa0ab;font-size:12px;margin-top:18px;}
+.foot b{color:#6b7280;}
+
+@media(max-width:760px){
+.kpis{grid-template-columns:repeat(2,1fr);}
+.blocks{grid-template-columns:1fr;}
+.brand h1{font-size:16px;}
+}
+/* Google Ads month-to-date block */
+.ads-mtd{grid-template-columns:1fr;}
+.block.ads:before{background:#e08a1e;}
+.btag.ads{background:#fdf1de;color:#9c5a06;}
+.ads-per{font-size:12px;font-weight:700;color:var(--muted);}
+.ads-mtd .bstats{grid-template-columns:1fr 1fr 1fr;}
+.ads-mtd .bs-val{color:#9c5a06;}
+.ads-note{font-size:11.5px;color:var(--muted);margin:-12px 2px 18px;line-height:1.55;}
+@media(max-width:760px){.ads-mtd .bstats{grid-template-columns:1fr;}}
+#kwtab td,#kwtab th{white-space:nowrap;}
+#kwtab td:nth-child(2){white-space:normal;}
+#kwtab tfoot td{background:#f7f9fc;border-top:2px solid var(--line);}
+.kw-note{margin-top:14px;}
+/* ============ DIRECTION B — light precision ============ */
+:root{--acc:#e0561f;--ink:#101a28;--mut2:#7b8a9c;--hair:#eef1f6;}
+.topbar{border-radius:12px 12px 0 0;}
+.wrap .topbar + .kstrip{border-top:0;}
+/* KPI strip: one panel divided by hairlines, not floating cards */
+.kstrip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--line);border-top:2px solid var(--ink);border-radius:0 0 12px 12px;margin:0 0 8px;overflow:hidden;}
+.kcell{padding:15px 17px;border-right:1px solid var(--hair);display:flex;flex-direction:column;}
+.kcell:last-child{border-right:0;}
+.krule{height:3px;width:26px;background:var(--ink);margin-bottom:10px;}
+.krule.acc{background:var(--acc);}
+.klbl{font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--mut2);margin-bottom:8px;font-weight:700;}
+.kval{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:29px;font-weight:600;letter-spacing:-1.4px;line-height:1;color:var(--ink);}
+.kmeta{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;color:var(--mut2);margin-top:auto;padding-top:9px;}
+.kspark{display:flex;align-items:flex-end;gap:1.5px;height:22px;margin-top:auto;padding-top:9px;}
+.kspark i{flex:1;background:#9aabc0;border-radius:1px;min-height:1px;}
+.kspark i.z{background:#e8edf3;height:2px;}
+@media(max-width:760px){.kstrip{grid-template-columns:repeat(2,1fr);}.kcell:nth-child(2){border-right:0;}}
+/* Tables: fixed 40px rows, truncate instead of wrap */
+#leads tbody td,#calls tbody td{height:40px;padding:0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:0;vertical-align:middle;}
+#leads thead th,#calls thead th,#kwtab thead th,#sttab thead th{border-bottom:1px solid var(--ink);font-size:9px;letter-spacing:.7px;padding:9px 10px;}
+#leads tbody tr:hover td,#calls tbody tr:hover td,#kwtab tbody tr:hover td,#sttab tbody tr:hover td{background:#fbfcfe;}
+#leads .tiny,#calls .tiny{display:none;}
+#leads .avatar,#calls .avatar{display:none;}
+#leads .name,#calls .name{font-weight:700;}
+#leads tbody tr td:first-child,#calls tbody tr td:first-child{color:var(--mut2);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;}
+#leads tbody tr[data-source="paid"] td:first-child,#calls tbody tr[data-source="paid"] td:first-child{box-shadow:inset 3px 0 0 var(--acc);}
+#leads tbody tr[data-source="organic"] td:first-child,#calls tbody tr[data-source="organic"] td:first-child{box-shadow:inset 3px 0 0 var(--green);}
+#leads tbody td:nth-child(2),#calls tbody td:nth-child(2){font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;color:#55677d;}
+/* pills recede; only the channel keeps colour */
+#leads .pill.form,#calls .pill.form{background:transparent;color:var(--mut2);padding:0;font-weight:600;font-size:11px;text-transform:none;letter-spacing:0;}
+#leads .pill.paid,#leads .pill.organic,#calls .pill.paid,#calls .pill.organic{background:transparent;padding:0;font-size:11px;letter-spacing:0;text-transform:none;font-weight:700;}
+#leads .kw,#calls .kw,#kwtab .kw,#sttab .kw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;background:#f2f5f9;color:#41546b;padding:2px 6px;border-radius:4px;}
+.lp{font-size:11px;}
+/* numerics line up */
+#kwtab td:nth-child(4),#kwtab td:nth-child(5),#sttab td:nth-child(3),
+#kwtab th:nth-child(4),#kwtab th:nth-child(5),#sttab th:nth-child(3){text-align:right;font-variant-numeric:tabular-nums;}
+#kwtab tfoot td:nth-child(4),#kwtab tfoot td:nth-child(5),#sttab tfoot td:nth-child(3){text-align:right;font-variant-numeric:tabular-nums;}
+/* match type */
+.mt{font-size:9.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:4px;}
+.mt-p{background:#eef1f6;color:#5a6b80;}
+.mt-e{background:#fdf1de;color:#9c5a06;}
+.mt-b{background:#e7eefb;color:#2f6fd0;}
+#sttab td,#sttab th,#kwtab td,#kwtab th{height:38px;padding-top:0;padding-bottom:0;}
+#sttab tfoot .kw-hid td{color:var(--mut2);font-style:italic;background:#fbfcfe;}
+/* inner spans inherited white-space:normal from the no-scroll fix, which beat the td nowrap */
+#leads tbody .kw,#calls tbody .kw,#leads tbody .lp,#calls tbody .lp,#leads tbody .name,#calls tbody .name,#leads tbody .pill,#calls tbody .pill{white-space:nowrap;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;}
+/* Column widths: the earlier blanket max-width:0 let long columns starve the
+   name column (63px at 1100px wide, so 14 names were clipped). Fixed layout with
+   explicit widths gives names the room; only genuinely long text still truncates. */
+#leads,#calls{table-layout:fixed;width:100%;}
+#leads tbody td,#calls tbody td{max-width:none;}
+/* Column widths measured, not guessed: at 11px the Date cell needs 127px once the
+   NEW badge is in it and Form needs 110px, but they had 94px and 77px, so both clipped.
+   Font drops to 10.5px and the columns that must never truncate — date+NEW badge, name,
+   form, source, duration, status — are given their measured width first; the long free-text
+   columns absorb what is left and truncate with the full value on row hover. */
+#leads tbody td,#calls tbody td{font-size:10.5px;}
+#leads th:nth-child(1){width:3.3%}#leads th:nth-child(2){width:11.8%}#leads th:nth-child(3){width:12.9%}
+#leads th:nth-child(4){width:11%}#leads th:nth-child(5){width:11.2%}#leads th:nth-child(6){width:9%}
+#leads th:nth-child(7){width:8.3%}#leads th:nth-child(8){width:8.3%}#leads th:nth-child(9){width:8%}
+#leads th:nth-child(10){width:8.2%}#leads th:nth-child(11){width:8%}
+#calls th:nth-child(1){width:3.3%}#calls th:nth-child(2){width:11.8%}#calls th:nth-child(3){width:9.6%}
+#calls th:nth-child(4){width:11%}#calls th:nth-child(5){width:12.2%}#calls th:nth-child(6){width:10.4%}
+#calls th:nth-child(7){width:7.2%}#calls th:nth-child(8){width:6.5%}#calls th:nth-child(9){width:16.5%}
+#calls th:nth-child(10){width:11.5%}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- Header -->
+<div class="topbar">
+<div class="brand">
+<div class="logo">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5 5.5.5-4 4 1 5.5L12 19l-5 3 1-5.5-4-4 5.5-.5z"/></svg>
+</div>
+<div>
+<h1>Leads Dashboard</h1>
+<div class="sub">Grizzly Insulations &middot; grizzlyinsulationco.com</div>
+</div>
+</div>
+<div class="head-right">
+<span class="live"><span class="dot"></span> Live</span>
+<span class="period">August 2026</span>
+<details class="arch">
+<summary>Archives <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+<div class="arch-menu">
+<a class="arch-item" href="../index.html">September 2026 &middot; current</a>
+<a class="arch-item current">August 2026 &middot; archived</a>
+<a class="arch-item" href="Leads-2026-07.html">July 2026</a>
+<a class="arch-item" href="Leads-2026-06.html">June 2026</a>
+<div class="arch-empty">Older months are saved as files in <b>/archives</b> and linked here.</div>
+</div>
+</details>
+<span class="updated">Last updated: <b style="color:#fff">Aug 31, 2026</b></span>
+</div>
+</div>
+
+<!-- ===== KPI STRIP ===== -->
+<div class="kstrip">
+<div class="kcell">
+<div class="krule acc"></div>
+<div class="klbl">Total leads</div>
+<div class="kval" id="total-leads">60</div>
+<div class="kspark" id="kspark" aria-hidden="true"></div>
+</div>
+<div class="kcell">
+<div class="krule acc"></div>
+<div class="klbl">Paid &middot; Google Ads</div>
+<div class="kval" id="paid-total">39</div>
+<div class="kmeta"><span id="paid-form">23</span> form &middot; <span id="paid-call">16</span> call</div>
+</div>
+<div class="kcell">
+<div class="krule"></div>
+<div class="klbl">Organic &middot; GMB</div>
+<div class="kval" id="org-total">21</div>
+<div class="kmeta"><span id="org-form">9</span> form &middot; <span id="org-call">12</span> call</div>
+</div>
+<div class="kcell">
+<div class="krule"></div>
+<div class="klbl">Ads spend &middot; <span id="ads-period">Aug 1&ndash;31, 2026</span></div>
+<div class="kval" id="ads-cost">$15,329.45</div>
+<div class="kmeta"><span id="ads-clicks">867</span> clicks &middot; <span id="ads-cpc">$17.68</span> cpc</div>
+</div>
+</div>
+<div class="ads-note kw-note">Lead counts are computed from the tables below. Ads spend is the whole Google Ads account, Mountain Time, read from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so today&rsquo;s figure can still move.</div>
+<!-- ===== END KPI STRIP ===== -->
+<div class="totline" style="margin-top:2px;">⏱ All times in <b>Arizona time (MST, GMT−7)</b> — <b>India time (IST)</b> shown in brackets.</div>
+<!-- Controls -->
+<div class="controls">
+<div class="search">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa0ab" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+<input id="q" type="text" placeholder="Search name, keyword, city…">
+</div>
+<div class="chips">
+<span class="chip active" data-f="all">All</span>
+<span class="chip" data-f="paid">Paid</span>
+<span class="chip" data-f="organic">Organic / GMB</span>
+</div>
+</div>
+
+<p class="sort-hint">Tip: click a column heading to sort it &mdash; once for A&ndash;Z, again for Z&ndash;A, a third time to put the table back the way it was.</p>
+
+<!-- ===== FORM LEADS ===== -->
+<div class="sec-title">
+<span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></span>
+Form Leads <span class="cnt" id="form-cnt">4 leads</span>
+</div>
+<div class="card">
+<div class="tablewrap">
+<table id="leads">
+<thead>
+<tr>
+<th>#</th><th>Date &amp; time (MST)</th><th>Lead name</th><th>Form</th><th>Source</th>
+<th>Campaign</th><th>Keyword</th><th>Search term</th><th>City</th><th>Service</th><th>Landing page</th>
+</tr>
+</thead>
+<tbody>
+<tr data-source="organic" data-date="2026-08-31">
+<td>1</td>
+<td>Aug 31, 2026<div class="tiny">8:49 AM MST (Aug 31, 9:19 PM IST)</div></td>
+<td><span class="name"><span class="avatar">SD</span>Stacey Dixon</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-30">
+<td>2</td>
+<td>Aug 30, 2026<div class="tiny">7:11 PM MST (Aug 31, 7:41 AM IST)</div></td>
+<td><span class="name"><span class="avatar">TA</span>Tim Arndt</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation services</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Colorado Springs, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-28">
+<td>3</td>
+<td>Aug 28, 2026<div class="tiny">7:34 AM MST (Aug 28, 8:04 PM IST)</div></td>
+<td><span class="name"><span class="avatar">VP</span>Vatsal Patel</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Attic | Denver</td>
+<td><span class="kw">attic insulation denver</span></td>
+<td><span class="stq">attic insulation denver</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-denver-lp/" target="_blank" rel="noopener">/attic-insulation-denver-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-28">
+<td>4</td>
+<td>Aug 28, 2026<div class="tiny">6:41 AM MST (Aug 28, 7:11 PM IST)</div></td>
+<td><span class="name"><span class="avatar">MF</span>Maddax Farrer</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation services</span></td>
+<td><span class="stq-empty">—</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-27">
+<td>5</td>
+<td>Aug 27, 2026<div class="tiny">5:59 PM MST (Aug 28, 6:29 AM IST)</div></td>
+<td><span class="name"><span class="avatar">JW</span>Jonathan Winkler</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><span class="stq">insulation companies near me</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-27">
+<td>6</td>
+<td>Aug 27, 2026<div class="tiny">12:14 PM MST (Aug 28, 12:44 AM IST)</div></td>
+<td><span class="name"><span class="avatar">RF</span>Rob Frank</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation services</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-27">
+<td>7</td>
+<td>Aug 27, 2026<div class="tiny">10:34 AM MST (Aug 27, 11:04 PM IST)</div></td>
+<td><span class="name"><span class="avatar">JK</span>Jerry Kolassa</span></td>
+<td><span class="pill form">City Popup</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Colorado Springs, CO</td>
+<td>Crawl Space Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/denver-crawl-space-insulation/" target="_blank" rel="noopener">/denver-crawl-space-insulation/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-26">
+<td>8</td>
+<td>Aug 26, 2026<div class="tiny">10:35 AM MST (Aug 26, 11:05 PM IST)</div></td>
+<td><span class="name"><span class="avatar">RM</span>Robert Martinez</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Elizabeth, CO</td>
+<td>Blown-In Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/parker-attic-insulation/" target="_blank" rel="noopener">/parker-attic-insulation/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-26">
+<td>9</td>
+<td>Aug 26, 2026<div class="tiny">9:46 AM MST (Aug 26, 10:16 PM IST)</div></td>
+<td><span class="name"><span class="avatar">SA</span>Steve Adolf</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-removal/" target="_blank" rel="noopener">/insulation-removal/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-22">
+<td>10</td>
+<td>Aug 22, 2026<div class="tiny">9:43 PM MST (Aug 23, 9:13 AM IST)</div></td>
+<td><span class="name"><span class="avatar">SN</span>Sean Newlin</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Longmont, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-21">
+<td>11</td>
+<td>Aug 21, 2026<div class="tiny">9:14 PM MST (Aug 22, 9:44 AM IST)</div></td>
+<td><span class="name"><span class="avatar">JF</span>Jason W Figlewicz</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><span class="stq">home insulation companies near me</span></td>
+<td>Fort Collins, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-18">
+<td>12</td>
+<td>Aug 18, 2026<div class="tiny">7:34 AM MST (Aug 18, 8:04 PM IST)</div></td>
+<td><span class="name"><span class="avatar">WS</span>William Schulze</span></td>
+<td><span class="pill form">Contact Us</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">home insulation services</span></td>
+<td><span class="stq">insulation contractors</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-17">
+<td>13</td>
+<td>Aug 17, 2026<div class="tiny">9:03 AM MST (Aug 17, 9:33 PM IST)</div></td>
+<td><span class="name"><span class="avatar">AL</span>Abbey LaSota</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid · Google Ads</span></td>
+<td>Grizzly | Search | General | Denver</td>
+<td><span class="kw">blown in insulation denver</span></td>
+<td><span class="stq-empty">—</span></td>
+<td>Houston, TX</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-denver-lp/" target="_blank" rel="noopener">/insulation-company-denver-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-16">
+<td>14</td>
+<td>Aug 16, 2026<div class="tiny">6:49 PM MST (Aug 17, 7:19 AM IST)</div></td>
+<td><span class="name"><span class="avatar">JT</span>Jason Tracey</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Insulation Removal</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/insulation-removal/" target="_blank" rel="noopener">/insulation-removal/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-16">
+<td>15</td>
+<td>Aug 16, 2026<div class="tiny">1:05 PM MST (Aug 17, 1:35 AM IST)</div></td>
+<td><span class="name"><span class="avatar">EW</span>Edward Wolff</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Attic | Denver</td>
+<td><span class="kw">blow in insulation</span></td>
+<td><span class="stq">blown in insulation</span></td>
+<td>Scottsdale, AZ</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-denver-lp/" target="_blank" rel="noopener">/attic-insulation-denver-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-15">
+<td>16</td>
+<td>Aug 15, 2026<div class="tiny">12:04 PM MST (Aug 16, 12:34 AM IST)</div></td>
+<td><span class="name"><span class="avatar">AS</span>Andrew Schofield</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Denver, CO</td>
+<td>Crawl Space Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-12">
+<td>17</td>
+<td>Aug 12, 2026<div class="tiny">7:30 PM MST (Aug 13, 8:00 AM IST)</div></td>
+<td><span class="name"><span class="avatar">JR</span>Joe Romano</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | General | Denver</td>
+<td><span class="kw">insulation contractors near me</span></td>
+<td><span class="stq">insulation experts</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-near-me-lp/" target="_blank" rel="noopener">/insulation-company-near-me-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-12">
+<td>18</td>
+<td>Aug 12, 2026<div class="tiny">1:50 PM MST (Aug 13, 2:20 AM IST)</div></td>
+<td><span class="name"><span class="avatar">JN</span>Jennifer Neal</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-12">
+<td>19</td>
+<td>Aug 12, 2026<div class="tiny">11:04 AM MST (Aug 12, 11:34 PM IST)</div></td>
+<td><span class="name"><span class="avatar">RN</span>Rebecca Newson</span></td>
+<td><span class="pill form">Services</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/call-thank-you/" target="_blank" rel="noopener">/call-thank-you/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-10">
+<td>20</td>
+<td>Aug 10, 2026<div class="tiny">6:04 PM MST (Aug 11, 6:34 AM IST)</div></td>
+<td><span class="name"><span class="avatar">PL</span>Paul Lopez</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Broomfield, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-09">
+<td>21</td>
+<td>Aug 9, 2026<div class="tiny">11:46 AM MST (Aug 10, 12:16 AM IST)</div></td>
+<td><span class="name"><span class="avatar">SR</span>Sankara Raman</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Grand Junction, CO</td>
+<td>Not Sure / Needs Advice</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-08">
+<td>22</td>
+<td>Aug 8, 2026<div class="tiny">10:08 AM MST (Aug 8, 10:38 PM IST)</div></td>
+<td><span class="name"><span class="avatar">MT</span>Mary Ann Trujillo</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray foam insulation near me</span></td>
+<td><span class="stq">spray insulation near me</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-07">
+<td>23</td>
+<td>Aug 7, 2026<div class="tiny">1:40 PM MST (Aug 8, 2:10 AM IST)</div></td>
+<td><span class="name"><span class="avatar">NE</span>Nathan Elwick</span></td>
+<td><span class="pill form">Contact Us</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Colorado Springs, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/colorado-springs-spray-foam-insulation/" target="_blank" rel="noopener">/colorado-springs-spray-foam-insulation/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-07">
+<td>24</td>
+<td>Aug 7, 2026<div class="tiny">9:45 AM MST (Aug 7, 10:15 PM IST)</div></td>
+<td><span class="name"><span class="avatar">KH</span>Kathy Hinkle</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">home insulation denver</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-06">
+<td>25</td>
+<td>Aug 6, 2026<div class="tiny">7:57 AM MST (Aug 6, 8:27 PM IST)</div></td>
+<td><span class="name"><span class="avatar">VP</span>Vatsal Patel</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">insulation company</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-05">
+<td>26</td>
+<td>Aug 5, 2026<div class="tiny">6:17 PM MST (Aug 6, 6:47 AM IST)</div></td>
+<td><span class="name"><span class="avatar">NS</span>Nicholas Santellpowers</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray foam insulation</span></td>
+<td><span class="stq">spray foam insulation</span></td>
+<td>Aurora, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-05">
+<td>27</td>
+<td>Aug 5, 2026<div class="tiny">4:03 PM MST (Aug 6, 4:33 AM IST)</div></td>
+<td><span class="name"><span class="avatar">JD</span>Jeb S Denniston</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="stq">spray insulation</span></td>
+<td>Denver, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-05">
+<td>28</td>
+<td>Aug 5, 2026<div class="tiny">10:11 AM MST (Aug 5, 10:41 PM IST)</div></td>
+<td><span class="name"><span class="avatar">SD</span>Sarenah DeHart</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Aurora, CO</td>
+<td>Pest &amp; Rodent Prevention</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/contact/" target="_blank" rel="noopener">/contact/</a></td>
+</tr>
+<tr data-source="organic" data-date="2026-08-03">
+<td>29</td>
+<td>Aug 3, 2026<div class="tiny">9:47 AM MST (Aug 3, 10:17 PM IST)</div></td>
+<td><span class="name"><span class="avatar">WR</span>Witold Roman</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/denver-insulation-removal/" target="_blank" rel="noopener">/denver-insulation-removal/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-02">
+<td>30</td>
+<td>Aug 2, 2026<div class="tiny">12:05 PM MST (Aug 3, 12:35 AM IST)</div></td>
+<td><span class="name"><span class="avatar">RA</span>Raul Aramburu</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Attic Insulation</td>
+<td><span class="kw">attic insulation removal</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Denver, CO</td>
+<td>Insulation Removal</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-lp/" target="_blank" rel="noopener">/attic-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-02">
+<td>31</td>
+<td>Aug 2, 2026<div class="tiny">11:56 AM MST (Aug 3, 12:26 AM IST)</div></td>
+<td><span class="name"><span class="avatar">EV</span>Eric Vonde</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Search - Grizzly - Insulation (General)</td>
+<td><span class="kw">home insulation denver</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Colorado Springs, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-02">
+<td>32</td>
+<td>Aug 2, 2026<div class="tiny">11:14 AM MST (Aug 2, 11:44 PM IST)</div></td>
+<td><span class="name"><span class="avatar">NS</span>Nicholas Strawn</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray foam insulation</span></td>
+<td><span class="stq">spray foam insulation</span></td>
+<td>Colorado</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+<tr data-source="paid" data-date="2026-08-01">
+<td>33</td>
+<td>Aug 1, 2026<div class="tiny">2:15 PM MST (Aug 2, 2:45 AM IST)</div></td>
+<td><span class="name"><span class="avatar">EB</span>Earl Bostain</span></td>
+<td><span class="pill form">Subdomain Page</span></td>
+<td><span class="pill paid">Paid &middot; Google Ads</span></td>
+<td>Grizzly | Search | Spray Foam Insulation</td>
+<td><span class="kw">spray foam contractors</span></td>
+<td><span class="stq">spray foam contractors near me</span></td>
+<td>Denver, CO</td>
+<td>Spray Foam Insulation</td>
+<td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ===== CALL LEADS ===== -->
+<div class="sec-title">
+<span class="ic c"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.94.36 1.86.68 2.74a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.34-1.34a2 2 0 0 1 2.11-.45c.88.32 1.8.55 2.74.68A2 2 0 0 1 22 16.92z"/></svg></span>
+Call Leads <span class="cnt">manually logged from CTM</span>
+</div>
+
+<div class="card">
+<div class="tablewrap">
+<table id="calls">
+<thead>
+<tr>
+<th>#</th><th>Date &amp; time (MST)</th><th>Caller</th><th>Source</th>
+<th>Tracking line (CTM)</th><th>Keyword</th><th>Duration</th><th>Status</th><th>Topic</th><th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr data-source="paid" data-date="2026-08-28"><td>1</td><td>Aug 28, 2026<div class="tiny">10:35 AM MST (Aug 28, 11:05 PM IST)</div></td><td><span class="name"><span class="avatar c">MT</span>McMinnville TN</span><div class="tiny">Mc Minnville, TN &middot; (931) 271-9405</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads &ndash; SERP<div class="tiny"><span class="kw">(303) 217-5970</span></div></td><td class="muted">&mdash;</td><td>1:04</td><td><span class="st-vm">Voicemail</span><div class="tiny">No message left</div></td><td class="muted">Call-ad click straight from a Google Ads search result. The call connected and ran a full minute but reached Mercede&rsquo;s voicemail &mdash; the greeting asked for a name and callback number and the caller hung up without leaving one, so there are no job details on record. CTM captures no keyword or campaign for SERP call-asset calls. Caller ID shows Mc Minnville, TN</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-27"><td>2</td><td>Aug 27, 2026<div class="tiny">4:41 PM MST (Aug 28, 5:11 AM IST)</div></td><td><span class="name"><span class="avatar c">LC</span>Longmont CO</span><div class="tiny">Longmont, CO &middot; (303) 848-9922</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Grizzly Sat GMB #1<div class="tiny"><span class="kw">(303) 219-1445</span></div></td><td class="muted">&mdash;</td><td>0:42</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left</div></td><td class="muted">Call to the Grizzly Sat GMB #1 line went to Mercede&rsquo;s voicemail and the caller left a message. CTM&rsquo;s summary now confirms a message was left but still has no message content or transcript, so the job details are not on record</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-27"><td>3</td><td>Aug 27, 2026<div class="tiny">10:35 AM MST (Aug 27, 11:05 PM IST)</div></td><td><span class="name"><span class="avatar c">JE</span>JVK Enterprises</span><div class="tiny">Denver, CO &middot; (303) 916-0638</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>3:54</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Aug 31</div></td><td class="muted">Asked for an estimate on crawl space insulation &mdash; the existing insulation was poorly installed and needs cleaning out first. Mercede booked a free inspection for Monday between 1:00 and 3:00 PM at a Greenwood Village address, and noted the property is gated so the crew should call on arrival</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-27"><td>4</td><td>Aug 27, 2026<div class="tiny">9:35 AM MST (Aug 27, 10:05 PM IST)</div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Castle Rock, CO &middot; (615) 525-6182</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>2:42</td><td><span class="st-ans">Answered</span><div class="tiny">Will call back</div></td><td class="muted">Wants spray foam in the rim joists of a 380 sq ft Castle Rock basement, before an electrical inspection the next day. Mercede explained spray foam costs more than fiberglass or cellulose and offered an inspection next Friday 2&ndash;4 PM; the caller said he would call back</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-26"><td>5</td><td>Aug 26, 2026<div class="tiny">1:52 PM MST (Aug 27, 2:22 AM IST)</div></td><td><span class="name"><span class="avatar c">CS</span>Corey Sandell</span><div class="tiny">Sedalia, CO &middot; (720) 226-6412</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>1:13</td><td><span class="st-ans">Answered</span><div class="tiny">Spoke with Mercede</div></td><td class="muted">Live answered call to the Denver GMB line &mdash; just over a minute of two-way conversation with Mercede. CTM has no recording summary or transcript for this call, so the exact job details are not on record</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-26"><td>6</td><td>Aug 26, 2026<div class="tiny">1:43 PM MST (Aug 27, 2:13 AM IST)</div></td><td><span class="name"><span class="avatar c">EG</span>Eric Gemelli</span><div class="tiny">Laveen, AZ &middot; (602) 561-2784</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Grizzly Sat GMB #5<div class="tiny"><span class="kw">(720) 954-1103</span></div></td><td class="muted">&mdash;</td><td>1:41</td><td><span class="st-ans">Answered</span><div class="tiny">Will call back</div></td><td class="muted">Asked to speak with the owner about a couple of non-urgent commercial projects; Mercede explained she handles scheduling and bidding, and confirmed Grizzly does commercial work across the Denver area and regularly works with subcontractors. He will call back once he knows when the projects need to be bid</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-26"><td>7</td><td>Aug 26, 2026<div class="tiny">11:30 AM MST (Aug 27, 12:00 AM IST)</div></td><td><span class="name"><span class="avatar c">CD</span>Charles Danna</span><div class="tiny">Denver, CO &middot; (303) 880-9697</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">insulation companies near me</span></td><td>4:02</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Sep 2</div></td><td class="muted">Wants blown-in insulation for the garage ceiling of his Lakewood home, where there is not enough insulation between the garage and the upstairs bedroom; free inspection booked for Wednesday the 2nd, 2&ndash;4 PM with a call ahead. Came in from the Google Ads landing page after searching &quot;insulation companies near me&quot;</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-26"><td>8</td><td>Aug 26, 2026<div class="tiny">7:02 AM MST (Aug 26, 7:32 PM IST)</div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Detroit Zone 5, MI &middot; (313) 654-6635</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>1:02</td><td><span class="st-vm">Voicemail</span><div class="tiny">Callback requested</div></td><td class="muted">Daniel from a construction company left a voicemail about a project near Park Meadows in Centennial and asked for a return call on (303) 631-6635 to talk through what the project needs</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-25"><td>9</td><td>Aug 25, 2026<div class="tiny">1:01 PM MST (Aug 26, 1:31 AM IST)</div></td><td><span class="name"><span class="avatar c">DD</span>Douglas A Deam</span><div class="tiny">Broomfield, CO &middot; (786) 547-6557</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">home insulation denver</span></td><td>4:58</td><td><span class="st-ans">Answered</span><div class="tiny">Spoke with Mercede</div></td><td class="muted">Called the Google Ads landing page line after searching &quot;home insulation denver&quot; and landing on the insulation company LP; almost 5 minutes of two-way conversation with Mercede (both sides talking). CTM has no recording summary or transcript for this call, so the exact job details are not on record</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-25"><td>10</td><td>Aug 25, 2026<div class="tiny">11:53 AM MST (Aug 26, 12:23 AM IST)</div></td><td><span class="name"><span class="avatar c">LJ</span>Linda Jacobson</span><div class="tiny">Denver, CO &middot; (720) 732-4967</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">insulation services</span></td><td>1:11</td><td><span class="st-ans">Answered</span><div class="tiny">Spoke with Mercede</div></td><td class="muted">Called the Google Ads landing page line after searching &quot;insulation services&quot; and landing on the insulation company LP; a short but real two-way call with Mercede. CTM has no recording summary or transcript for this call, so the exact job details are not on record</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-25"><td>11</td><td>Aug 25, 2026<div class="tiny">8:30 AM MST (Aug 25, 9:00 PM IST)</div></td><td><span class="name"><span class="avatar c">SM</span>Spence Marlys</span><div class="tiny">Salida, CO &middot; (719) 530-1141</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>6:42</td><td><span class="st-ans">Answered</span><div class="tiny">Estimate in progress</div></td><td class="muted">Wants roughly 10 inches of insulation added to the attic of a townhome in Thornton (about 950 sq ft attic, inspection found 4 inches or less of blown fiberglass); confirmed access the same day 2&ndash;4 PM. Mercede created an account, confirmed Grizzly takes part in the Xcel rebate programme and was contacting the estimator for a same-day on-site visit, otherwise a quote from the square footage. Caller rang back at 3:28 PM the same day</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-21"><td>12</td><td>Aug 21, 2026<div class="tiny">5:26 PM MST (Aug 22, 5:56 AM IST)</div></td><td><span class="name"><span class="avatar c">TS</span>Teresa Self</span><div class="tiny">Denver, CO · (720) 366-7379</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td>—</td><td>1:18</td><td><span class="st-vm">Voicemail</span><div class="tiny">Callback requested</div></td><td>Left a voicemail asking for an estimate to restore or replace the insulation and overlay in her crawl space, as part of selling the home. Asked for a call back on (720) 366-7379.</td><td><span class="nt-empty">—</span></td></tr>
+<tr data-source="organic" data-date="2026-08-21"><td>13</td><td>Aug 21, 2026<div class="tiny">3:22 PM MST (Aug 22, 3:52 AM IST)</div></td><td><span class="name"><span class="avatar c">RB</span>Ryan Boyle</span><div class="tiny">Grand Junction, CO · (970) 640-4392</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td>—</td><td>5:29</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Aug 26</div></td><td>Wants an attic insulation estimate — upstairs runs much warmer than downstairs and the 26–27 year old insulation is not doing its job. Free inspection booked Wed Aug 26, 12–2 PM at 9584 E Louisiana Pl, southeast Denver 80247.</td><td><span class="nt-empty">—</span></td></tr>
+<tr data-source="organic" data-date="2026-08-21"><td>14</td><td>Aug 21, 2026<div class="tiny">9:14 AM MST (Aug 21, 9:44 PM IST)</div></td><td><span class="name"><span class="avatar c">LC</span>Lance Chayet</span><div class="tiny">Denver, CO · (303) 689-9000</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td>—</td><td>11:31</td><td><span class="st-ans">Answered</span><div class="tiny">Callback pending</div></td><td>Calling for property owner Leah Emmanuel — needs the garage door weather strip replaced where a one inch gap is letting rodents in, at a Broomfield property, plus a spare strip in case the inner door needs one. Wants the work at 9:00 AM the next morning; team to check availability and call back.</td><td><span class="nt-empty">—</span></td></tr>
+<tr data-source="organic" data-date="2026-08-21"><td>15</td><td>Aug 21, 2026<div class="tiny">8:13 AM MST (Aug 21, 8:43 PM IST)</div></td><td><span class="name"><span class="avatar c">CM</span>Connie Manning</span><div class="tiny">South Padre Island, TX · (303) 803-3690</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td>—</td><td>2:59</td><td><span class="st-ans">Answered</span><div class="tiny">Inspector to confirm time</div></td><td>Wants an inspection and estimate for attic insulation — the space over the garage gets extremely hot and she wants the main attic checked too. Home at 21132 Hawthorne Ln, Parker, CO 80138; office to text her the arrival time.</td><td><span class="nt-empty">—</span></td></tr>
+<tr data-source="paid" data-date="2026-08-18"><td>16</td><td>Aug 18, 2026<div class="tiny">7:03 AM MST (Aug 18, 7:33 PM IST)</div></td><td><span class="name"><span class="avatar c">JM</span>John Mellema</span><div class="tiny">Denver, CO &middot; (303) 748-2085</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">spray foam insulation</span></td><td>0:55</td><td><span class="st-vm">Voicemail</span><div class="tiny">Callback requested</div></td><td class="muted">Left a voicemail asking about putting a 1&ndash;1.5 inch layer of urethane foam inside a freight container; left (303) 748-2085 for a callback</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+
+<tr data-source="paid" data-date="2026-08-17"><td>17</td><td>Aug 17, 2026<div class="tiny">3:12 PM MST (Aug 18, 3:42 AM IST)</div></td><td><span class="name"><span class="avatar c">GC</span>George Collins</span><div class="tiny">Denver, CO &middot; (720) 885-8080</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">attic insulation removal</span></td><td>3:43</td><td><span class="st-ans">Answered</span><div class="tiny">Estimate to send</div></td><td class="muted">Wants blown-in insulation removed from the attic of his roughly 1,100 sq ft home, about 6&ndash;8 inches deep, as soon as possible so he can redo the electrical; does not want new insulation put back for now. Mercede took his contact and property details and will send a formal estimate</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr><tr data-source="paid" data-date="2026-08-14"><td>18</td><td>Aug 14, 2026<div class="tiny">9:58 AM MST (Aug 14, 10:28 PM IST)</div></td><td><span class="name"><span class="avatar c">DN</span>Douglas Nichols</span><div class="tiny">Moab, UT &middot; (970) 683-1517</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">insulation company</span></td><td>0:54</td><td><span class="st-vm">Voicemail</span><div class="tiny">Callback requested</div></td><td class="muted">Left a voicemail asking for bids on insulation for a cabin addition near Bailey, CO; gave (970) 683-1517 for a callback</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="organic" data-date="2026-08-13"><td>19</td><td>Aug 13, 2026<div class="tiny">10:46 AM MST (Aug 13, 11:16 PM IST)</div></td><td><span class="name"><span class="avatar c">RC</span>Regina Castro</span><div class="tiny">Culver City, CA · (310) 621-7895</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>12:22</td><td><span class="st-ans">Answered</span><div class="tiny">Estimate to email</div></td><td class="muted">Asked whether Grizzly serves Colorado Springs and wants a quote for a suspected rodent-contaminated attic, about 1,150 sq ft; Mercede explained the attic remediation process, offered a free inspection and an email estimate below the competing $8,500–9,500 quote</td><td class="ntcell"><span class="nt-empty">—</span></td></tr><tr data-source="paid" data-date="2026-08-11"><td>20</td><td>Aug 11, 2026<div class="tiny">7:51 AM MST (Aug 11, 8:21 PM IST)</div></td><td><span class="name"><span class="avatar c">AT</span>Andrew Truett</span><div class="tiny">Tuscaloosa, AL &middot; (205) 723-8044</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>4:15</td><td><span class="st-ans">Answered</span><div class="tiny">Estimate set</div></td><td class="muted">Wants a free quote to improve insulation and soundproofing in his vaulted-ceiling master bedroom &mdash; on-site estimate booked for Mon Aug 17, 12&ndash;2 PM at his Arvada home</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-10"><td>21</td><td>Aug 10, 2026<div class="tiny">1:42 PM MST (Aug 11, 2:12 AM IST)</div></td><td><span class="name"><span class="avatar c">RW</span>Robert Wilson</span><div class="tiny">Littleton, CO &middot; (303) 819-6481</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3610</span></div></td><td class="muted">&mdash;</td><td>4:15</td><td><span class="st-ans">Answered</span><div class="tiny">Will call back</div></td><td class="muted">Asked if foam can be injected into a finished attic above his garage (drywall already up); drill-and-fill with cellulose suggested as the cheapest option &mdash; property is in Iowa (out of area); will send dimensions for a quote</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-10"><td>22</td><td>Aug 10, 2026<div class="tiny">10:58 AM MST (Aug 10, 11:28 PM IST)</div></td><td><span class="name"><span class="avatar c">ES</span>Esther</span><div class="tiny">Denver, CO &middot; (720) 483-1438</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>0:55</td><td><span class="st-vm">Voicemail</span><div class="tiny">Callback req.</div></td><td class="muted">Voicemail &mdash; asked for a callback about Grizzly Insulation and left her number</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-10"><td>23</td><td>Aug 10, 2026<div class="tiny">10:30 AM MST (Aug 10, 11:00 PM IST)</div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Denver, CO &middot; (720) 305-8161</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>6:18</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection set</div></td><td class="muted">Attic insulation for a Denver home with existing fiberglass (attic hitting ~130&deg;F); free inspection booked for the next day 1&ndash;3 PM; was texted so he can send an attic video</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-10"><td>24</td><td>Aug 10, 2026<div class="tiny">8:48 AM MST (Aug 10, 9:18 PM IST)</div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Denver, CO &middot; (720) 234-0930</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3610</span></div></td><td class="muted">&mdash;</td><td>12:49</td><td><span class="st-ans">Answered</span><div class="tiny">Estimate promised</div></td><td class="muted">Wants 2&quot; closed-cell spray foam on metal barn walls &mdash; 2,130 sq ft project near Parker; gave dimensions and urgency, formal estimate being prepared, work possibly the same week</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-10"><td>25</td><td>Aug 10, 2026<div class="tiny">7:42 AM MST (Aug 10, 8:12 PM IST)</div></td><td><span class="name"><span class="avatar c">LH</span>Lindsey Hanna</span><div class="tiny">Costa Mesa, CA &middot; (714) 504-1463</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>1:11</td><td><span class="st-vm">Voicemail</span><div class="tiny">Callback req.</div></td><td class="muted">Voicemail &mdash; wants cat-urine-contaminated attic insulation removed and new insulation installed in a house she is buying; asked for a quote and left her number</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-07"><td>26</td><td>Aug 7, 2026<div class="tiny">10:03 AM MST (Aug 7, 10:33 PM IST)</div></td><td><span class="name"><span class="avatar c">RE</span>Ramblin Express</span><div class="tiny">Denver, CO &middot; (720) 780-2682</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>3:20</td><td><span class="st-ans">Answered</span><div class="tiny">Estimate set</div></td><td class="muted">Danny from Ramblin Express wants a quote for an uninsulated steel shop/warehouse used for commercial vehicle work in Aurora &mdash; on-site estimate booked for Mon Aug 10, 12&ndash;2 PM; gave phone, email and property address</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-04"><td>27</td><td>Aug 4, 2026<div class="tiny">11:35 AM MST (Aug 5, 12:05 AM IST)</div></td><td><span class="name"><span class="avatar c">LA</span>Livina Arvada</span><div class="tiny">Arvada, CO &middot; (303) 819-7958</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>2:32</td><td><span class="st-vm">Voicemail</span><div class="tiny">Callback req.</div></td><td class="muted">Voicemail &mdash; wants foam insulation for a roughly 260 sq ft roof at 6&quot; thickness and asked for a callback; left her number</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+<tr data-source="paid" data-date="2026-08-04"><td>28</td><td>Aug 4, 2026<div class="tiny">10:45 AM MST (Aug 4, 11:15 PM IST)</div></td><td><span class="name"><span class="avatar c">JE</span>Jeffrey Edmonds</span><div class="tiny">Denver, CO &middot; (303) 505-8007</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>5:00</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection set</div></td><td class="muted">Wants sound-dampening insulation for a dividing wall between duplex units and the attic (wall already prepped, asked which option cuts the most noise); found Grizzly on Google &mdash; on-site visit booked for Fri Aug 7, 1&ndash;3 PM</td><td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ===== KEYWORD ANALYSIS ===== -->
+<div class="sec-title">
+<span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+Keywords that brought leads <span class="cnt" id="kw-cnt">14 keywords &middot; 29 leads</span>
+</div>
+<div class="card">
+<div class="tablewrap">
+<table id="kwtab">
+<thead>
+<tr><th>#</th><th>Keyword</th><th>Match type</th><th>Leads</th><th>Clicks</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><span class="kw">spray insulation</span></td>
+<td><span class="mt mt-p">Phrase</span></td>
+<td><b>5</b></td>
+<td>217</td>
+</tr>
+<tr>
+<td>2</td>
+<td><span class="kw">insulation services</span></td>
+<td><span class="mt mt-p">Phrase</span></td>
+<td><b>4</b></td>
+<td>66</td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="kw">home insulation denver</span></td>
+<td><span class="mt mt-b">Phrase + Exact</span></td>
+<td><b>3</b></td>
+<td>22</td>
+</tr>
+<tr>
+<td>4</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><span class="mt mt-e">Exact</span></td>
+<td><b>3</b></td>
+<td>32</td>
+</tr>
+<tr>
+<td>5</td>
+<td><span class="kw">spray foam insulation</span></td>
+<td><span class="mt mt-e">Exact</span></td>
+<td><b>3</b></td>
+<td>50</td>
+</tr>
+<tr>
+<td>6</td>
+<td><span class="kw">attic insulation removal</span></td>
+<td><span class="mt mt-p">Phrase</span></td>
+<td><b>2</b></td>
+<td>9</td>
+</tr>
+<tr>
+<td>7</td>
+<td><span class="kw">insulation company</span></td>
+<td><span class="mt mt-e">Exact</span></td>
+<td><b>2</b></td>
+<td>10</td>
+</tr>
+<tr>
+<td>8</td>
+<td><span class="kw">attic insulation denver</span></td>
+<td><span class="mt mt-e">Exact</span></td>
+<td><b>1</b></td>
+<td>8</td>
+</tr>
+<tr>
+<td>9</td>
+<td><span class="kw">blow in insulation</span></td>
+<td><span class="mt mt-e">Exact</span></td>
+<td><b>1</b></td>
+<td>15</td>
+</tr>
+<tr>
+<td>10</td>
+<td><span class="kw">blown in insulation denver</span></td>
+<td><span class="mt mt-e">Exact</span></td>
+<td><b>1</b></td>
+<td>2</td>
+</tr>
+<tr>
+<td>11</td>
+<td><span class="kw">home insulation services</span></td>
+<td><span class="mt mt-e">Exact</span></td>
+<td><b>1</b></td>
+<td>7</td>
+</tr>
+<tr>
+<td>12</td>
+<td><span class="kw">insulation contractors near me</span></td>
+<td><span class="mt mt-b">Phrase + Exact</span></td>
+<td><b>1</b></td>
+<td>4</td>
+</tr>
+<tr>
+<td>13</td>
+<td><span class="kw">spray foam contractors</span></td>
+<td><span class="mt mt-p">Phrase</span></td>
+<td><b>1</b></td>
+<td>3</td>
+</tr>
+<tr>
+<td>14</td>
+<td><span class="kw">spray foam insulation near me</span></td>
+<td><span class="mt mt-b">Exact + Phrase</span></td>
+<td><b>1</b></td>
+<td>13</td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="kw-tot"><td></td><td><b>Total</b></td><td></td><td><b>29</b></td><td><b>458</b></td></tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="ads-note kw-note">Keyword is what we bid on. <b>Match type</b> is how loosely Google may match it &mdash; exact fires only on that phrase, phrase allows wording around it. This account currently runs no broad-match keywords. Refreshed weekly.</div>
+
+<div class="sec-title">
+<span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg></span>
+What people actually typed <span class="cnt" id="st-cnt">10 search terms &middot; 11 leads</span>
+</div>
+<div class="card">
+<div class="tablewrap">
+<table id="sttab">
+<thead>
+<tr><th>#</th><th>Search term</th><th>Leads</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><span class="kw">spray foam insulation</span></td>
+<td><b>2</b></td>
+</tr>
+<tr>
+<td>2</td>
+<td><span class="kw">attic insulation denver</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="kw">insulation companies near me</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>4</td>
+<td><span class="kw">home insulation companies near me</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>5</td>
+<td><span class="kw">insulation contractors</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>6</td>
+<td><span class="kw">blown in insulation</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>7</td>
+<td><span class="kw">insulation experts</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>8</td>
+<td><span class="kw">spray insulation near me</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>9</td>
+<td><span class="kw">spray insulation</span></td>
+<td><b>1</b></td>
+</tr>
+<tr>
+<td>10</td>
+<td><span class="kw">spray foam contractors near me</span></td>
+<td><b>1</b></td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="kw-tot"><td></td><td><b>Shown above</b></td><td><b>11</b></td></tr>
+<tr class="kw-hid"><td></td><td>Search term withheld by Google</td><td><b>12</b></td></tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="ads-note kw-note">The search term is the real query someone typed. Google only discloses it on a portion of clicks &mdash; for privacy it withholds the rest, so <b>12 of our 23 paid leads have no search term available</b>. That is a Google limit, not missing data on our side.</div>
+<!-- ===== END KEYWORD ANALYSIS ===== -->
+
+<div class="foot">Prepared by <b>Lefko Digital</b> &nbsp;|&nbsp; Showing <b>August 2026</b> &mdash; older months in Archives &nbsp;&middot;&nbsp; Form leads: Lucky Orange + Gravity Forms &middot; Call leads: manual from CTM &nbsp;&middot;&nbsp; Times: Arizona MST (India IST in brackets)</div>
+
+</div>
+
+<script>
+// Search + source filter across both tables, with live KPI counts
+var q = document.getElementById('q');
+var leadRows = Array.prototype.slice.call(document.querySelectorAll('#leads tbody tr'));
+var callRows = Array.prototype.slice.call(document.querySelectorAll('#calls tbody tr'));
+var rows = leadRows.concat(callRows);
+var activeFilter = 'all';
+
+function setVal(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+function vis(r){ return r.style.display !== 'none'; }
+
+function updateKPIs(){
+var pf=0,pc=0,of=0,oc=0,forms=0;
+leadRows.forEach(function(r){
+if(!vis(r)) return; forms++;
+var s=r.getAttribute('data-source');
+if(s==='paid') pf++; else if(s==='organic') of++;
+});
+callRows.forEach(function(r){
+if(!vis(r)) return;
+var s=r.getAttribute('data-source');
+if(s==='paid') pc++; else if(s==='organic') oc++;
+});
+setVal('paid-form',pf); setVal('paid-call',pc); setVal('paid-total',pf+pc);
+setVal('org-form',of); setVal('org-call',oc); setVal('org-total',of+oc);
+setVal('total-leads',pf+pc+of+oc);
+var fc=document.getElementById('form-cnt'); if(fc) fc.textContent = forms + (forms===1?' lead':' leads');
+}
+
+function apply(){
+var t = (q.value||'').toLowerCase();
+rows.forEach(function(r){
+var matchText = r.innerText.toLowerCase().indexOf(t) > -1;
+var matchSrc = activeFilter === 'all' || r.getAttribute('data-source') === activeFilter;
+r.style.display = (matchText && matchSrc) ? '' : 'none';
+});
+updateKPIs();
+}
+q.addEventListener('input', apply);
+document.querySelectorAll('.chip').forEach(function(c){
+c.addEventListener('click', function(){
+document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('active');});
+c.classList.add('active');
+activeFilter = c.getAttribute('data-f');
+apply();
+});
+});
+// Auto NEW badge for leads within last 2 days
+var now = new Date();
+rows.forEach(function(r){
+var d = r.getAttribute('data-date'); if(!d) return;
+var diff = (now - new Date(d)) / 86400000;
+if(diff >= 0 && diff <= 2 && r.querySelector('td:nth-child(2) .new') === null){
+var cell = r.querySelector('td:nth-child(2)');
+if(cell) cell.innerHTML += ' <span class="new">NEW</span>';
+}
+});
+function copyIp(el){ try{ navigator.clipboard.writeText(el.getAttribute('data-ip')); var o=el.innerHTML; el.innerHTML='Copied!'; setTimeout(function(){ el.innerHTML=o; },1200); }catch(e){} }
+updateKPIs();
+</script>
+<!-- ===== EXCEL EXPORT (own section: From/To date range + all-months download) — added 2026-08-03, date range + own section 2026-08-10 · KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
+<!-- Self-contained: injects its own style + header button. Reads the live table for the current
+     month and fetches every file listed in the Archives menu for the past months, then writes a
+     single .xlsx with one sheet per month. The daily automation does NOT need to touch it —
+     it discovers months from the Archives menu and re-reads the tables on every click. -->
+<script>
+(function(){
+  "use strict";
+
+  var SHEETJS = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+
+  var COLS = ["Lead type","#","Date","Date (ISO)","Time (MST)","Time (IST)","Name","Phone","City",
+              "Source","Form","Campaign","Keyword / Topic","Search term","Service","Landing page",
+              "Tracking line (CTM)","Duration","Status","Topic","Notes"];
+  var WIDTHS = [10,5,15,12,12,20,24,16,20,20,20,36,30,28,22,46,30,10,13,46,46];
+
+  /* header label -> canonical field. Covers every variant used across June/July/August. */
+  var HEAD = {
+    "#":"num",
+    "date":"datecell", "date & time":"datecell", "date & time (mst)":"datecell",
+    "lead name":"name", "caller":"name",
+    "type":"form", "form":"form",
+    "source":"source",
+    "campaign":"campaign",
+    "keyword":"keyword", "topic / keyword":"keyword", "topic":"topic",
+    "search term":"searchterm",
+    "city":"city",
+    "service":"service",
+    "landing page":"landing",
+    "tracking line (ctm)":"tracking",
+    "duration":"duration",
+    "status":"status",
+    "notes":"notes"
+  };
+
+  var MON = {january:"01",february:"02",march:"03",april:"04",may:"05",june:"06",july:"07",
+             august:"08",september:"09",october:"10",november:"11",december:"12"};
+
+  function norm(s){ return (s||"").replace(/\s+/g," ").trim().toLowerCase(); }
+
+  function clean(v){
+    v = String(v==null?"":v).replace(/\s+/g," ").trim();
+    if(/^[—–-]+$/.test(v)) return "";      /* a lone em-dash placeholder = empty */
+    return v;
+  }
+
+  function monthKey(label){
+    var m = norm(label).match(/([a-z]+)\s+(\d{4})/);
+    return (m && MON[m[1]]) ? (m[2] + "-" + MON[m[1]]) : "9999-99";
+  }
+
+  /* Split a cell into its main text plus each .tiny sub-line, so "Aug 2, 2026" and
+     "12:05 PM MST (…)" don't run together. Drops UI-only bits (avatars, NEW badges,
+     the injected client-notes box). */
+  function parts(td){
+    var c = td.cloneNode(true);
+    Array.prototype.forEach.call(c.querySelectorAll(".avatar,.new,.cnotes,.lobtn,.sample"),
+      function(e){ if(e.parentNode) e.parentNode.removeChild(e); });
+    var out = [], buf = "";
+    Array.prototype.forEach.call(c.childNodes, function(n){
+      var isTiny = n.nodeType===1 && n.className && (" "+n.className+" ").indexOf(" tiny ") > -1;
+      if(isTiny){
+        if(clean(buf)) out.push(clean(buf));
+        buf = "";
+        var t = clean(n.textContent);
+        if(t) out.push(t);
+      } else {
+        buf += (n.textContent || "");
+      }
+    });
+    if(clean(buf)) out.push(clean(buf));
+    return out;
+  }
+
+  function phoneOf(s){
+    var m = (s||"").match(/\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4}/);
+    return m ? m[0] : "";
+  }
+
+  function rowsFrom(doc, tableId, leadType){
+    var t = doc.querySelector("#" + tableId);
+    if(!t) return [];
+    var keys = Array.prototype.map.call(t.querySelectorAll("thead th"), function(th){
+      return HEAD[norm(th.textContent)] || null;
+    });
+    var out = [];
+    Array.prototype.forEach.call(t.querySelectorAll("tbody tr"), function(tr){
+      var r = {};
+      Array.prototype.forEach.call(tr.children, function(td, i){
+        var k = keys[i];
+        if(!k) return;
+        var p = parts(td);
+        if(k === "datecell"){
+          r.date = p[0] || "";
+          var d = p.slice(1).join(" ");
+          var mst = d.match(/(\d{1,2}:\d{2}\s*[AP]M)\s*MST/i);
+          var ist = d.match(/\(([^)]*?)\s*IST\)/i);
+          r.tmst = mst ? mst[1] : (d && !/IST/i.test(d) ? d : "");
+          r.tist = ist ? clean(ist[1]) : "";
+        } else if(k === "name"){
+          r.name = p[0] || "";
+          var extra = p.slice(1).join(" ");
+          r.phone = phoneOf(extra);
+          r.city  = clean(extra.replace(r.phone, "").replace(/[·|]/g, ""));
+        } else if(k === "city"){
+          r.city = p.join(" ");
+        } else if(k === "landing"){
+          var a = td.querySelector("a");
+          r.landing = a ? (a.getAttribute("href") || a.href || "") : p.join(" ");
+        } else {
+          r[k] = p.join(" · ");
+        }
+      });
+      out.push([leadType, r.num, r.date, tr.getAttribute("data-date"), r.tmst, r.tist,
+                r.name, r.phone, r.city, r.source, r.form, r.campaign, r.keyword,
+                r.searchterm, r.service, r.landing, r.tracking, r.duration, r.status,
+                r.topic, r.notes].map(clean));
+    });
+    return out;
+  }
+
+  function sheetFor(doc){
+    return rowsFrom(doc, "leads", "Form").concat(rowsFrom(doc, "calls", "Call"));
+  }
+
+  /* Every month we can export: the month on screen (read straight from this page) plus every
+     entry in the Archives menu. Works the same on the live dashboard and on an archive page,
+     because the menu links are relative to whichever page is open. */
+  function monthList(){
+    var list = [], seen = {};
+    function add(label, href){
+      var l = clean(String(label).split("·")[0]);   /* "August 2026 · current" -> "August 2026" */
+      if(!l) return;
+      var key = monthKey(l);
+      if(seen[key]) return;                          /* the page we're on always wins */
+      seen[key] = 1;
+      list.push({ label: l, href: href, key: key });
+    }
+    var cur = document.querySelector(".period");
+    add(cur ? cur.textContent : "Current", null);
+    Array.prototype.forEach.call(document.querySelectorAll(".arch-menu a.arch-item[href]"), function(a){
+      add(a.textContent, a.getAttribute("href"));
+    });
+    list.sort(function(a,b){ return a.key < b.key ? -1 : (a.key > b.key ? 1 : 0); });
+    return list;
+  }
+
+  var xlsxWait = null;
+  function withXLSX(cb, onErr){
+    if(window.XLSX) return cb();
+    if(!xlsxWait){
+      xlsxWait = new Promise(function(res, rej){
+        var s = document.createElement("script");
+        s.src = SHEETJS;
+        s.onload  = function(){ res(); };
+        s.onerror = function(){ xlsxWait = null; rej(new Error("sheetjs")); };
+        document.head.appendChild(s);
+      });
+    }
+    xlsxWait.then(function(){
+      if(window.XLSX) cb();
+      else onErr("Could not load the Excel library. Check your internet connection and try again.");
+    }, function(){
+      onErr("Could not load the Excel library. Check your internet connection and try again.");
+    });
+  }
+
+  function boot(){
+    /* ---------- style ---------- */
+    var css = document.createElement("style");
+    css.textContent = ""
+      + ".xlbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;"
+      +   "background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 16px;"
+      +   "margin:0 0 14px;}"
+      + ".xlbar-l{display:flex;align-items:center;gap:11px;min-width:0;}"
+      + ".xlbar-ic{width:34px;height:34px;flex:none;border-radius:10px;background:#eef4fc;color:#13314f;"
+      +   "display:flex;align-items:center;justify-content:center;}"
+      + ".xlbar-t{font-size:13px;font-weight:800;color:#13314f;letter-spacing:.1px;}"
+      + ".xlbar-s{font-size:11.5px;color:#6b7280;margin-top:2px;line-height:1.45;}"
+      + ".xlbar-r{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}"
+      + ".xlrange{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}"
+      + ".xlfield{display:flex;align-items:center;gap:6px;}"
+      + ".xlr-lbl{font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#6b7280;}"
+      + ".xlrange input[type=date]{font-family:inherit;font-size:12px;font-weight:600;color:#1f2937;"
+      +   "background:#f7f9fc;border:1px solid var(--line);border-radius:9px;padding:6px 9px;line-height:1.25;}"
+      + ".xlrange input[type=date]:focus{outline:none;border-color:#2563eb;background:#fff;}"
+      + ".xlbtn{cursor:pointer;font-size:12px;font-weight:700;background:#13314f;color:#fff;"
+      +   "border:1px solid #13314f;padding:7px 14px;border-radius:999px;display:inline-flex;"
+      +   "align-items:center;gap:6px;transition:.15s;white-space:nowrap;}"
+      + ".xlbtn:hover{background:#1d4d77;border-color:#1d4d77;}"
+      + ".xlbtn.busy{opacity:.65;cursor:default;}"
+      + ".xlbtn.done{background:#15803d;border-color:#15803d;}"
+      + ".xlbtn.err{background:#b4232a;border-color:#b4232a;}"
+      + ".xlmsg{font-size:11.5px;font-weight:700;color:#b4232a;flex-basis:100%;text-align:right;}"
+      + "@media(max-width:640px){.xlbar{align-items:flex-start;}.xlbar-r{width:100%;}"
+      +   ".xlmsg{text-align:left;}}";
+    document.head.appendChild(css);
+
+    /* ---------- its own section, so it is obvious what the two dates are for ----------
+       One bordered strip holding the title, the plain-English hint, the two date boxes and
+       the button. It sits under the search and filter row, above the tables it exports, and
+       never inside a table, so it adds no sideways scrolling. */
+    var ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+             + 'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'
+             + '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>'
+             + '<path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>';
+
+    var bar = document.createElement("div");
+    bar.className = "xlbar";
+    bar.innerHTML =
+        '<div class="xlbar-l">'
+      +   '<span class="xlbar-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" '
+      +     'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+      +     '<rect x="3" y="4" width="18" height="18" rx="2"/>'
+      +     '<path d="M16 2v4M8 2v4M3 10h18"/></svg></span>'
+      +   '<div>'
+      +     '<div class="xlbar-t">Download leads to Excel</div>'
+      +     '<div class="xlbar-s">Pick a start and end date to get only those days, including '
+      +     'past months. Leave both dates empty to download every month, one sheet per month.</div>'
+      +   '</div>'
+      + '</div>'
+      + '<div class="xlbar-r">'
+      +   '<span class="xlrange">'
+      +     '<span class="xlfield"><span class="xlr-lbl">From</span>'
+      +       '<input type="date" class="xlr-from" aria-label="Download from date"></span>'
+      +     '<span class="xlfield"><span class="xlr-lbl">To</span>'
+      +       '<input type="date" class="xlr-to" aria-label="Download to date"></span>'
+      +   '</span>'
+      + '</div>';
+
+    var btn = document.createElement("span");
+    btn.className = "xlbtn";
+    function label(txt, cls){
+      btn.className = "xlbtn" + (cls ? " " + cls : "");
+      btn.innerHTML = ICON + '<span class="xllabel">' + txt + '</span>';
+    }
+
+    var fromIn = bar.querySelector(".xlr-from");
+    var toIn   = bar.querySelector(".xlr-to");
+
+    var msg = document.createElement("span");
+    msg.className = "xlmsg";
+    msg.style.display = "none";
+    var msgTimer = null;
+    function clearMsg(){ if(msgTimer) clearTimeout(msgTimer); msgTimer = null; msg.style.display = "none"; msg.textContent = ""; }
+    function showMsg(t){
+      msg.textContent = t;
+      msg.style.display = "";
+      if(msgTimer) clearTimeout(msgTimer);
+      msgTimer = setTimeout(clearMsg, 6000);
+    }
+
+    label("Download Excel");
+    var right = bar.querySelector(".xlbar-r");
+    right.appendChild(btn);
+    right.appendChild(msg);
+
+    var anchor = document.querySelector(".controls");
+    if(anchor && anchor.parentNode){
+      anchor.parentNode.insertBefore(bar, anchor.nextSibling);
+    } else {
+      var top = document.querySelector(".topbar");
+      if(!top || !top.parentNode) return;
+      top.parentNode.insertBefore(bar, top.nextSibling);
+    }
+
+    var busy = false;
+
+    function reset(){ busy = false; label("Download Excel"); }
+    function fail(msg){
+      busy = false;
+      label("Download failed", "err");
+      setTimeout(reset, 3500);
+      console.error("[export] " + msg);
+      alert(msg);
+    }
+
+    btn.addEventListener("click", function(){
+      if(busy) return;
+      busy = true;
+      clearMsg();
+      label("Preparing…", "busy");
+      withXLSX(run, fail);
+    });
+
+    /* Empty From and To = the old behaviour (every month, one sheet per month).
+       Either box filled = export just that stretch of days, across both tables. */
+    function run(){
+      var f = (fromIn.value || "").trim();
+      var t = (toIn.value  || "").trim();
+      if(!f && !t) return build();
+      if(f && t && f > t){
+        busy = false;
+        reset();
+        showMsg("The From date must be on or before the To date.");
+        return;
+      }
+      return buildRange(f || "0000-01-01", t || "9999-12-31", f, t);
+    }
+
+    async function buildRange(lo, hi, rawFrom, rawTo){
+      try{
+        /* Only the months the range actually touches. The month on screen is read straight
+           from this page; older months come from their file in the Archives menu. */
+        var months = monthList().filter(function(m){
+          return m.key >= lo.slice(0, 7) && m.key <= hi.slice(0, 7);
+        });
+
+        var forms = [], calls = [], missing = [], seen = {};
+
+        function take(doc){
+          [["leads", "Form", forms], ["calls", "Call", calls]].forEach(function(p){
+            rowsFrom(doc, p[0], p[1]).forEach(function(row){
+              var iso = row[3];
+              if(!iso || iso < lo || iso > hi) return;
+              var key = p[1] + "|" + iso + "|" + norm(row[6]);   /* date + name + which table */
+              if(seen[key]) return;
+              seen[key] = 1;
+              p[2].push(row);
+            });
+          });
+        }
+
+        for(var i = 0; i < months.length; i++){
+          var m = months[i];
+          if(!m.href){ take(document); continue; }
+          try{
+            var res = await fetch(m.href, { cache: "no-store" });
+            if(!res.ok) throw new Error("HTTP " + res.status);
+            take(new DOMParser().parseFromString(await res.text(), "text/html"));
+          }catch(e){
+            missing.push(m.label);
+          }
+        }
+
+        var rows = forms.concat(calls);
+        if(!rows.length){
+          busy = false;
+          reset();
+          showMsg(missing.length
+            ? "No leads in that date range (could not read: " + missing.join(", ") + ")."
+            : "No leads in that date range.");
+          return;
+        }
+
+        var dates = rows.map(function(r){ return r[3]; }).filter(Boolean).sort();
+        var a = rawFrom || dates[0];
+        var b = rawTo   || dates[dates.length - 1];
+
+        var wb = XLSX.utils.book_new();
+        var ws = XLSX.utils.aoa_to_sheet([COLS].concat(rows));
+        ws["!cols"] = WIDTHS.map(function(w){ return { wch: w }; });
+        ws["!autofilter"] = { ref: XLSX.utils.encode_range({
+          s:{ r:0, c:0 }, e:{ r: Math.max(rows.length, 1), c: COLS.length - 1 }
+        })};
+        ws["!freeze"] = { xSplit:"0", ySplit:"1", topLeftCell:"A2", activePane:"bottomLeft", state:"frozen" };
+        XLSX.utils.book_append_sheet(wb, ws, ("Leads " + a + " to " + b).slice(0, 31));
+        XLSX.writeFile(wb, "Grizzly-Leads_" + a + "_to_" + b + ".xlsx");
+
+        busy = false;
+        label(missing.length ? "Downloaded (" + missing.length + " month missed)" : "Downloaded", "done");
+        setTimeout(reset, 3000);
+        if(missing.length) showMsg("Some months could not be read: " + missing.join(", ") + ".");
+      }catch(e){
+        fail("Something went wrong building the file: " + (e && e.message ? e.message : e));
+      }
+    }
+
+    async function build(){
+      try{
+        var months = monthList();
+        var sheets = [], missing = [];
+
+        for(var i = 0; i < months.length; i++){
+          var m = months[i];
+          if(!m.href){
+            sheets.push({ label: m.label, rows: sheetFor(document) });
+            continue;
+          }
+          try{
+            var res = await fetch(m.href, { cache: "no-store" });
+            if(!res.ok) throw new Error("HTTP " + res.status);
+            var doc = new DOMParser().parseFromString(await res.text(), "text/html");
+            sheets.push({ label: m.label, rows: sheetFor(doc) });
+          }catch(e){
+            missing.push(m.label);
+          }
+        }
+
+        if(!sheets.length){ return fail("No lead data could be read."); }
+
+        var wb = XLSX.utils.book_new();
+        var used = {};
+        sheets.forEach(function(s){
+          var name = s.label.replace(/[\\\/\?\*\[\]:]/g, " ").replace(/\s+/g," ").trim().slice(0,31) || "Sheet";
+          while(used[name.toLowerCase()]) name = (name + " ").slice(0,30) + (Object.keys(used).length);
+          used[name.toLowerCase()] = 1;
+
+          var ws = XLSX.utils.aoa_to_sheet([COLS].concat(s.rows));
+          ws["!cols"] = WIDTHS.map(function(w){ return { wch: w }; });
+          ws["!autofilter"] = { ref: XLSX.utils.encode_range({
+            s:{ r:0, c:0 }, e:{ r: Math.max(s.rows.length, 1), c: COLS.length - 1 }
+          })};
+          ws["!freeze"] = { xSplit:"0", ySplit:"1", topLeftCell:"A2", activePane:"bottomLeft", state:"frozen" };
+          XLSX.utils.book_append_sheet(wb, ws, name);
+        });
+
+        var d = new Date();
+        var stamp = d.getFullYear() + "-" +
+                    ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
+                    ("0" + d.getDate()).slice(-2);
+        XLSX.writeFile(wb, "Grizzly-Leads-" + stamp + ".xlsx");
+
+        busy = false;
+        label(missing.length ? "Downloaded (" + missing.length + " month missed)" : "Downloaded", "done");
+        setTimeout(reset, 3000);
+        if(missing.length){
+          alert("Downloaded, but these months could not be read and were left out: " + missing.join(", "));
+        }
+      }catch(e){
+        fail("Something went wrong building the file: " + (e && e.message ? e.message : e));
+      }
+    }
+
+    console.log("[export] ready — months: " + monthList().map(function(m){ return m.label; }).join(", "));
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+</script>
+<!-- ===== END EXCEL EXPORT ===== -->
+
+<!-- ===== CLIENT NOTES FEATURE (Supabase) — added 2026-07-21 · KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
+<!-- Self-contained: injects its own styles, sign-in button, modal, and per-call note boxes at runtime.
+     The daily automation does NOT need to touch it — it re-enhances every call row on load. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  "use strict";
+  var SUPABASE_URL = "https://bbtcdrlsijshakcndglg.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_98de4_qs8nI1_wZf1XSX-A_ZliCKMDH";
+  var SHARED_EMAIL = "notes@grizzlyinsulationco.com";
+
+  function boot(){
+    if(!window.supabase || !window.supabase.createClient){ return setTimeout(boot, 150); }
+    try { init(); } catch(e){ console.error("[notes] init failed", e); }
+  }
+
+  function init(){
+    var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    var signedIn = false;
+
+    /* ---------- styles ---------- */
+    var css = document.createElement("style");
+    css.textContent = ""
+      + ".authbtn{cursor:pointer;font-size:12px;font-weight:700;background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;transition:.15s;}"
+      + ".authbtn:hover{background:rgba(255,255,255,.28);}"
+      + ".authbtn.in{background:#1f9d55;border-color:#26b866;}.authbtn.in:hover{background:#1a874a;}"
+      + ".cnotes{margin-top:9px;padding-top:9px;border-top:1px dashed #e3e7ee;}"
+      + ".note-list{display:flex;flex-direction:column;gap:7px;}"
+      + ".note-item{background:#eef5ff;border:1px solid #d5e4fb;border-left:3px solid #2563eb;border-radius:8px;padding:7px 9px;position:relative;}"
+      + ".note-item .note-text{color:#243b53;white-space:pre-wrap;font-size:12.5px;line-height:1.45;}"
+      + ".note-item .note-meta{font-size:10px;color:#6b7f97;margin-top:4px;display:flex;align-items:center;gap:6px;}"
+      + ".note-item .note-meta .av{width:15px;height:15px;border-radius:50%;background:#2563eb;color:#fff;font-size:8px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;}"
+      + ".note-del{position:absolute;top:5px;right:6px;cursor:pointer;color:#9aa0ab;font-size:12px;font-weight:800;line-height:1;display:none;}"
+      + ".note-del:hover{color:#b4232a;}"
+      + ".addnote{display:none;margin-top:8px;cursor:pointer;font-size:11.5px;font-weight:700;color:#2563eb;background:#e8f0fe;border:1px dashed #b7cdf6;padding:6px 10px;border-radius:8px;align-items:center;gap:5px;}"
+      + ".addnote:hover{background:#dbe8fd;}"
+      + ".locked-hint{display:none;margin-top:6px;font-size:11px;color:#aab0bc;align-items:center;gap:5px;}"
+      + ".note-editor{margin-top:8px;display:flex;flex-direction:column;gap:6px;}"
+      + ".note-editor textarea{width:100%;border:1px solid #cdd6e4;border-radius:8px;padding:8px 9px;font:inherit;font-size:12.5px;resize:vertical;min-height:56px;outline:none;}"
+      + ".note-editor textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12);}"
+      + ".ne-row{display:flex;gap:7px;}"
+      + ".nbtn{cursor:pointer;font-size:12px;font-weight:700;border-radius:7px;padding:6px 12px;border:1px solid transparent;}"
+      + ".nbtn.save{background:#2563eb;color:#fff;}.nbtn.save:hover{background:#1d4fd0;}.nbtn.save[disabled]{opacity:.6;cursor:default;}"
+      + ".nbtn.cancel{background:#fff;color:#6b7280;border-color:#dfe3ea;}.nbtn.cancel:hover{background:#f4f6fa;}"
+      + "body.n-editing .addnote{display:inline-flex;}"
+      + "body:not(.n-editing) .locked-hint{display:inline-flex;}"
+      + "body.n-editing .note-del{display:inline;}"
+      + ".n-modal-bg{position:fixed;inset:0;background:rgba(15,25,40,.55);display:none;align-items:center;justify-content:center;z-index:1000;padding:16px;}"
+      + ".n-modal-bg.show{display:flex;}"
+      + ".n-modal{background:#fff;border-radius:16px;padding:26px 26px 22px;width:350px;max-width:100%;box-shadow:0 24px 60px rgba(15,25,40,.35);}"
+      + ".n-modal .mlogo{width:44px;height:44px;border-radius:12px;background:#e8f0fe;color:#2563eb;display:flex;align-items:center;justify-content:center;margin-bottom:13px;}"
+      + ".n-modal h3{margin:0 0 5px;font-size:17px;color:#13314f;font-weight:800;}"
+      + ".n-modal p{margin:0 0 16px;font-size:12.5px;color:#6b7280;line-height:1.5;}"
+      + ".n-modal label{font-size:11px;font-weight:700;color:#5b6573;text-transform:uppercase;letter-spacing:.4px;}"
+      + ".n-modal input{width:100%;margin-top:6px;border:1px solid #cdd6e4;border-radius:9px;padding:11px 12px;font:inherit;font-size:14px;outline:none;}"
+      + ".n-modal input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12);}"
+      + ".n-modal .err{color:#b4232a;font-size:12px;font-weight:600;margin-top:8px;display:none;}"
+      + ".n-modal .err.show{display:block;}"
+      + ".n-modal .mrow{display:flex;gap:9px;margin-top:16px;}"
+      + ".n-modal .nbtn.save{flex:1;text-align:center;padding:11px;}"
+      + ".n-signed{background:#e7f6ec;border:1px solid #b7e4c6;color:#15803d;border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:600;margin:12px 0 0;display:none;align-items:center;gap:8px;}"
+      + ".n-signed.show{display:flex;}";
+    document.head.appendChild(css);
+
+    /* ---------- header sign-in button ---------- */
+    var headRight = document.querySelector(".head-right") || document.querySelector(".topbar");
+    var btn = document.createElement("span");
+    btn.className = "authbtn";
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="authlabel">Sign in to add notes</span>';
+    if(headRight) headRight.appendChild(btn);
+
+    /* ---------- signed-in banner ---------- */
+    var banner = document.createElement("div");
+    banner.className = "n-signed";
+    banner.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> You’re signed in — note boxes are now editable. Sign out when you’re done.';
+    var topbar = document.querySelector(".topbar");
+    if(topbar && topbar.parentNode) topbar.parentNode.insertBefore(banner, topbar.nextSibling);
+
+    /* ---------- modal ---------- */
+    var modal = document.createElement("div");
+    modal.className = "n-modal-bg";
+    modal.innerHTML = ''
+      + '<div class="n-modal">'
+      + '<div class="mlogo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>'
+      + '<h3>Sign in to add notes</h3>'
+      + '<p>Enter the shared password to unlock note editing. Anyone can view the dashboard, but only signed-in users can add or edit notes.</p>'
+      + '<label for="n-pw">Password</label>'
+      + '<input id="n-pw" type="password" placeholder="Enter password" autocomplete="off">'
+      + '<div class="err" id="n-pwerr">Wrong password — try again.</div>'
+      + '<div class="mrow"><button class="nbtn cancel" id="n-cancel" style="flex:0 0 auto;">Cancel</button><button class="nbtn save" id="n-signin">Sign in</button></div>'
+      + '</div>';
+    document.body.appendChild(modal);
+    var pw = modal.querySelector("#n-pw"), pwerr = modal.querySelector("#n-pwerr");
+
+    function openModal(){ modal.classList.add("show"); pwerr.classList.remove("show"); pw.value=""; setTimeout(function(){pw.focus();},50); }
+    function closeModal(){ modal.classList.remove("show"); }
+    modal.querySelector("#n-cancel").addEventListener("click", closeModal);
+    modal.addEventListener("click", function(e){ if(e.target===modal) closeModal(); });
+    pw.addEventListener("keydown", function(e){ if(e.key==="Enter") doSignIn(); });
+    modal.querySelector("#n-signin").addEventListener("click", doSignIn);
+
+    async function doSignIn(){
+      var val = pw.value;
+      if(!val){ pw.focus(); return; }
+      var sbtn = modal.querySelector("#n-signin");
+      sbtn.disabled = true; sbtn.textContent = "Signing in…";
+      var res = await sb.auth.signInWithPassword({ email: SHARED_EMAIL, password: val });
+      sbtn.disabled = false; sbtn.textContent = "Sign in";
+      if(res.error){ pwerr.classList.add("show"); return; }
+      closeModal();
+      setSigned(true);
+    }
+    async function doSignOut(){ await sb.auth.signOut(); setSigned(false); }
+
+    btn.addEventListener("click", function(){ if(signedIn) doSignOut(); else openModal(); });
+
+    function setSigned(on){
+      signedIn = on;
+      document.body.classList.toggle("n-editing", on);
+      btn.classList.toggle("in", on);
+      btn.querySelector(".authlabel").textContent = on ? "Signed in — Sign out" : "Sign in to add notes";
+      banner.classList.toggle("show", on);
+      if(!on){ document.querySelectorAll(".note-editor").forEach(function(ed){ var c=ed.closest(".cnotes"); ed.remove(); var a=c&&c.querySelector(".addnote"); if(a) a.style.display=""; }); }
+    }
+
+    /* ---------- lead key + rows ---------- */
+    function slug(s){ return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
+    function leadKey(row){
+      var date = row.getAttribute("data-date") || "";
+      var nameEl = row.querySelector(".name");
+      var name = "";
+      if(nameEl){ var c = nameEl.cloneNode(true); var av=c.querySelector(".avatar"); if(av) av.remove(); name = c.textContent.trim(); }
+      var callerCell = row.querySelector("td:nth-child(3)");
+      var digits = callerCell ? callerCell.textContent.replace(/\D/g,"") : "";
+      var last4 = digits.slice(-4);
+      return "call:" + date + ":" + slug(name) + (last4 ? ":"+last4 : "");
+    }
+
+    var callRows = Array.prototype.slice.call(document.querySelectorAll("#calls tbody tr"));
+    var byKey = {};
+    callRows.forEach(function(row){
+      var key = leadKey(row);
+      row.setAttribute("data-lead-id", key);
+      byKey[key] = row;
+      var cell = row.querySelector("td:last-child") || row.querySelector(".ntcell");
+      if(!cell) return;
+      var box = document.createElement("div");
+      box.className = "cnotes";
+      box.innerHTML = '<div class="note-list"></div>'
+        + '<button class="addnote" type="button">+ Add note</button>'
+        + '<div class="locked-hint">🔒 Sign in to add notes</div>';
+      cell.appendChild(box);
+      box.querySelector(".addnote").addEventListener("click", function(){ openEditor(box, key); });
+    });
+
+    function fmtDate(iso){
+      var d = new Date(iso), m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      if(isNaN(d)) return "";
+      return m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
+    }
+    function renderNote(listEl, n){
+      var item = document.createElement("div");
+      item.className = "note-item";
+      item.setAttribute("data-note-id", n.id);
+      var meta = (n.author || "Client") + " · " + fmtDate(n.created_at);
+      item.innerHTML = '<div class="note-text"></div><div class="note-meta"><span class="av">C</span> <span class="mtxt"></span> <span class="note-del" title="Delete note">✕</span></div>';
+      item.querySelector(".note-text").textContent = n.body || "";
+      item.querySelector(".mtxt").textContent = meta;
+      item.querySelector(".note-del").addEventListener("click", function(){ delNote(n.id, item); });
+      listEl.appendChild(item);
+    }
+
+    function openEditor(box, key){
+      if(!signedIn) return;
+      if(box.querySelector(".note-editor")) return;
+      var add = box.querySelector(".addnote"); add.style.display="none";
+      var ed = document.createElement("div");
+      ed.className="note-editor";
+      ed.innerHTML = '<textarea placeholder="What the customer said, follow-up, budget, objections…"></textarea>'
+        + '<div class="ne-row"><button class="nbtn save" type="button">Save note</button><button class="nbtn cancel" type="button">Cancel</button></div>';
+      box.appendChild(ed);
+      var ta = ed.querySelector("textarea"); ta.focus();
+      ed.querySelector(".cancel").addEventListener("click", function(){ ed.remove(); add.style.display=""; });
+      ed.querySelector(".save").addEventListener("click", function(){ saveNote(box, key, ed, ta, add); });
+    }
+
+    async function saveNote(box, key, ed, ta, add){
+      var txt = (ta.value||"").trim();
+      if(!txt){ ta.focus(); return; }
+      var svb = ed.querySelector(".save"); svb.disabled=true; svb.textContent="Saving…";
+      var res = await sb.from("notes").insert({ lead_id:key, lead_type:"call", body:txt, author:"Client" }).select().single();
+      svb.disabled=false; svb.textContent="Save note";
+      if(res.error){ console.error("[notes] save failed", res.error); alert("Could not save note. Please try again."); return; }
+      renderNote(box.querySelector(".note-list"), res.data);
+      ed.remove(); add.style.display="";
+    }
+
+    async function delNote(id, item){
+      if(!signedIn) return;
+      var res = await sb.from("notes").delete().eq("id", id);
+      if(res.error){ console.error("[notes] delete failed", res.error); alert("Could not delete note."); return; }
+      item.remove();
+    }
+
+    /* ---------- load existing notes ---------- */
+    async function loadNotes(){
+      var keys = Object.keys(byKey);
+      if(!keys.length) return;
+      var res = await sb.from("notes").select("*").in("lead_id", keys).order("created_at", { ascending:true });
+      if(res.error){ console.error("[notes] load failed", res.error); return; }
+      (res.data||[]).forEach(function(n){
+        var row = byKey[n.lead_id]; if(!row) return;
+        var listEl = row.querySelector(".cnotes .note-list"); if(listEl) renderNote(listEl, n);
+      });
+    }
+
+    /* ---------- restore session ---------- */
+    sb.auth.getSession().then(function(r){ setSigned(!!(r && r.data && r.data.session)); });
+    loadNotes();
+    console.log("[notes] ready — " + callRows.length + " call rows enhanced");
+  }
+
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+</script>
+<!-- ===== END CLIENT NOTES FEATURE ===== -->
+<!-- ===== TABLE SORTING (click any column heading) ===== -->
+<style>
+#leads thead th,#calls thead th{cursor:pointer;user-select:none;white-space:normal;}
+#leads thead th:hover,#calls thead th:hover{background:#eef3fa;color:#13314f;}
+#leads thead th .sort-ar,#calls thead th .sort-ar{opacity:.25;font-size:10px;margin-left:4px;}
+#leads thead th:hover .sort-ar,#calls thead th:hover .sort-ar{opacity:.6;}
+#leads thead th.sorted,#calls thead th.sorted{background:#e7eefb;color:#13314f;}
+#leads thead th.sorted .sort-ar,#calls thead th.sorted .sort-ar{opacity:1;}
+.sort-hint{margin:2px 0 14px;font-size:12px;color:#6b7c93;}
+</style>
+<script>
+(function(){
+  "use strict";
+
+  /* Sort key helpers -------------------------------------------------- */
+
+  // Text of a cell WITHOUT the round avatar initials, so "Edward Wolff"
+  // sorts under E-d and not under its "EW" badge.
+  function cellText(td){
+    if(!td) return "";
+    var clone = td.cloneNode(true);
+    var av = clone.querySelectorAll(".avatar");
+    for(var i=0;i<av.length;i++) av[i].parentNode.removeChild(av[i]);
+    return clone.textContent.replace(/\s+/g," ").trim();
+  }
+
+  function isBlank(s){ return s === "" || s === "—" || s === "-" || s === "–"; }
+
+  // "4:02" -> 242.  Anything else -> null.
+  function durationSeconds(s){
+    var m = /^(\d+):([0-5]\d)$/.exec(s);
+    return m ? (parseInt(m[1],10)*60 + parseInt(m[2],10)) : null;
+  }
+
+  // Row date: the data-date attribute is day-level, so add the MST clock
+  // time from the .tiny line to keep same-day rows in the right order.
+  function rowDateValue(tr){
+    var d = tr.getAttribute("data-date") || "";
+    var base = Date.parse(d + "T00:00:00Z");
+    if(isNaN(base)) return null;
+    var tiny = tr.querySelector(".tiny");
+    var mins = 0;
+    if(tiny){
+      var t = /(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(tiny.textContent||"");
+      if(t){
+        var h = parseInt(t[1],10) % 12;
+        if(/PM/i.test(t[3])) h += 12;
+        mins = h*60 + parseInt(t[2],10);
+      }
+    }
+    return base + mins*60000;
+  }
+
+  // Returns { blank, cmp }. Blank detection is kept OUT of cmp so that
+  // "—" rows can be pinned to the bottom in BOTH directions — if the blank
+  // test lived inside cmp it would get flipped by the descending multiplier
+  // and every empty cell would jump to the top.
+  function makeSorter(colIndex){
+    var isDateCol = colIndex === 1;
+    return {
+      blank: function(tr){ return isBlank(cellText(tr.cells[colIndex])); },
+      cmp: function(a, b){
+        if(isDateCol){
+          var da = rowDateValue(a), db = rowDateValue(b);
+          if(da !== null && db !== null) return da - db;
+        }
+        var sa = cellText(a.cells[colIndex]), sb = cellText(b.cells[colIndex]);
+        var na = durationSeconds(sa), nb = durationSeconds(sb);
+        if(na !== null && nb !== null) return na - nb;
+        var fa = parseFloat(sa.replace(/[^0-9.\-]/g,"")), fb = parseFloat(sb.replace(/[^0-9.\-]/g,""));
+        if(sa !== "" && sb !== "" && !isNaN(fa) && !isNaN(fb) && /^[^A-Za-z]*$/.test(sa) && /^[^A-Za-z]*$/.test(sb)) return fa - fb;
+        return sa.localeCompare(sb, "en", {sensitivity:"base", numeric:true});
+      }
+    };
+  }
+
+  /* Wiring ------------------------------------------------------------ */
+
+  function enhance(tableId){
+    var table = document.getElementById(tableId);
+    if(!table) return;
+    var head = table.tHead, body = table.tBodies[0];
+    if(!head || !body) return;
+    var ths = head.rows[0] ? head.rows[0].cells : [];
+    if(!ths.length) return;
+
+    // Remember the order the page shipped with, so the # heading can undo.
+    var original = Array.prototype.slice.call(body.rows);
+    var state = { col: -1, dir: 1 };
+
+    function renumber(){
+      var rows = body.rows;
+      for(var i=0;i<rows.length;i++){
+        if(rows[i].cells[0]) rows[i].cells[0].textContent = String(i+1);
+      }
+    }
+
+    function paintHeaders(){
+      for(var i=0;i<ths.length;i++){
+        var ar = ths[i].querySelector(".sort-ar");
+        ths[i].classList.remove("sorted");
+        ths[i].removeAttribute("aria-sort");
+        if(ar) ar.textContent = "↕";
+      }
+      if(state.col >= 0 && ths[state.col]){
+        ths[state.col].classList.add("sorted");
+        ths[state.col].setAttribute("aria-sort", state.dir === 1 ? "ascending" : "descending");
+        var a = ths[state.col].querySelector(".sort-ar");
+        if(a) a.textContent = state.dir === 1 ? "▲" : "▼";
+      }
+    }
+
+    // Re-insert existing <tr> nodes. Never rebuild them: the client-notes
+    // feature holds references to these rows and their inputs.
+    function apply(rows){
+      var frag = document.createDocumentFragment();
+      for(var i=0;i<rows.length;i++) frag.appendChild(rows[i]);
+      body.appendChild(frag);
+      renumber();
+      paintHeaders();
+    }
+
+    function reset(){                      // back to the order the page shipped with
+      state.col = -1; state.dir = 1;
+      apply(original.slice());
+    }
+
+    // Each heading cycles through three states:
+    //   1st click  A→Z
+    //   2nd click  Z→A
+    //   3rd click  back to as-is (no sort), then the cycle starts over.
+    function sortBy(col){
+      if(col === 0){ reset(); return; }    // the # heading always resets
+      if(state.col === col){
+        if(state.dir === 1){
+          state.dir = -1;                  // 2nd click
+        } else {
+          reset();                         // 3rd click
+          return;
+        }
+      } else {
+        state.col = col; state.dir = 1;    // 1st click on a new column
+      }
+      var rows = Array.prototype.slice.call(body.rows);
+      var s = makeSorter(col);
+      rows.sort(function(a,b){
+        var ba = s.blank(a), bb = s.blank(b);
+        if(ba && bb) return 0;
+        if(ba) return 1;              // empty cells stay at the bottom
+        if(bb) return -1;             // in ascending AND descending
+        return s.cmp(a,b) * state.dir;
+      });
+      apply(rows);
+    }
+
+    for(var i=0;i<ths.length;i++){
+      (function(idx){
+        var th = ths[idx];
+        if(!th.querySelector(".sort-ar")){
+          var s = document.createElement("span");
+          s.className = "sort-ar";
+          s.textContent = "↕";
+          th.appendChild(s);
+        }
+        th.setAttribute("role","button");
+        th.setAttribute("tabindex","0");
+        th.addEventListener("click", function(){ sortBy(idx); });
+        th.addEventListener("keydown", function(e){
+          if(e.key === "Enter" || e.key === " "){ e.preventDefault(); sortBy(idx); }
+        });
+      })(i);
+    }
+    paintHeaders();
+  }
+
+  function boot(){
+    enhance("leads");
+    enhance("calls");
+    enhance("kwtab");   // keyword summary; its Total row lives in <tfoot> so it never moves
+    enhance("sttab");   // search terms, same arrangement
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+<!-- ===== END TABLE SORTING ===== -->
+<!-- ===== SHOW MORE (long tables collapsed to 10 rows) ===== -->
+<style>
+.row-collapsed{display:none;}
+.show-more{display:block;width:100%;margin:0;padding:11px 14px;border:0;border-top:1px solid var(--line);background:#f7f9fc;color:var(--blue);font-size:12.5px;font-weight:800;letter-spacing:.2px;cursor:pointer;font-family:inherit;}
+.show-more:hover{background:#eaf1fb;}
+</style>
+<script>
+(function(){
+  "use strict";
+  var LIMIT = 10;
+
+  // Rows are hidden with a CSS CLASS, never with style.display.
+  // The search/filter script owns style.display and the KPI counter treats
+  // style.display==="none" as "not a lead", so hiding rows that way would
+  // knock the headline lead totals down to 10. The Excel export reads every
+  // tbody row regardless, so collapsing never shortens a download either.
+  function setup(tableId, noun){
+    var table = document.getElementById(tableId);
+    if(!table) return;
+    var body = table.tBodies[0];
+    var card = table.closest(".card");
+    if(!body || !card) return;
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "show-more";
+    card.appendChild(btn);
+
+    var expanded = false, busy = false, timer = null;
+
+    function passesFilter(tr){ return tr.style.display !== "none"; }
+
+    function render(){
+      busy = true;
+      var shown = 0;
+      Array.prototype.forEach.call(body.rows, function(tr){
+        if(!passesFilter(tr)){ tr.classList.remove("row-collapsed"); return; }
+        shown++;
+        if(!expanded && shown > LIMIT) tr.classList.add("row-collapsed");
+        else tr.classList.remove("row-collapsed");
+      });
+      if(shown <= LIMIT){
+        btn.style.display = "none";
+      } else {
+        btn.style.display = "";
+        btn.textContent = expanded
+          ? ("Show fewer " + noun)
+          : ("Show all " + shown + " " + noun);
+      }
+      busy = false;
+    }
+
+    btn.addEventListener("click", function(){ expanded = !expanded; render(); });
+
+    // Re-apply after a sort (rows are moved => childList) and after a
+    // search/filter change (style attribute is rewritten on each row).
+    var obs = new MutationObserver(function(){
+      if(busy) return;
+      clearTimeout(timer);
+      timer = setTimeout(render, 0);
+    });
+    obs.observe(body, {childList:true});
+    Array.prototype.forEach.call(body.rows, function(tr){
+      obs.observe(tr, {attributes:true, attributeFilter:["style"]});
+    });
+
+    render();
+  }
+
+  function boot(){
+    setup("leads", "leads");
+    setup("calls", "calls");
+    // the keyword summary is short and is the thing people scroll TO, so it is
+    // deliberately left uncollapsed
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+<!-- ===== END SHOW MORE ===== -->
+<!-- ===== SPARKLINE + ROW TITLES ===== -->
+<script>
+(function(){
+  "use strict";
+  // Built from the rows themselves, so it stays correct on every daily refresh.
+  function boot(){
+    var rows = document.querySelectorAll("#leads tbody tr, #calls tbody tr");
+    if(!rows.length) return;
+
+    // 1. the .tiny second line (IST time) is hidden by CSS to keep rows at 40px,
+    //    so move its text onto the row as a tooltip rather than losing it.
+    Array.prototype.forEach.call(rows, function(tr){
+      var t = tr.querySelector(".tiny");
+      if(t && !tr.title) tr.title = t.textContent.replace(/\s+/g," ").trim();
+    });
+
+    // 2. daily sparkline
+    var el = document.getElementById("kspark");
+    if(!el) return;
+    var counts = {}, any = null;
+    Array.prototype.forEach.call(rows, function(tr){
+      var d = tr.getAttribute("data-date");
+      if(!d) return;
+      counts[d] = (counts[d]||0) + 1;
+      if(!any) any = d;
+    });
+    if(!any) return;
+    var y = +any.slice(0,4), m = +any.slice(5,7);
+    var last = new Date(Date.UTC(y, m, 0)).getUTCDate();
+    var max = 0, i, key;
+    for(key in counts) if(counts[key] > max) max = counts[key];
+    if(!max) return;
+    var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][m-1];
+    for(i = 1; i <= last; i++){
+      var dd = (i<10?"0":"") + i;
+      var n = counts[y + "-" + (m<10?"0":"") + m + "-" + dd] || 0;
+      var b = document.createElement("i");
+      if(n === 0){ b.className = "z"; b.title = i + " " + MON + " — no leads"; }
+      else { b.style.height = Math.max(3, (n/max)*22) + "px";
+             b.title = i + " " + MON + " — " + n + " lead" + (n===1?"":"s"); }
+      el.appendChild(b);
+    }
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+<!-- ===== END SPARKLINE + ROW TITLES ===== -->
+
+
+
+
+</body>
+</html>
