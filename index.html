@@ -1438,6 +1438,103 @@ updateKPIs();
 })();
 </script>
 <!-- ===== END SPARKLINE + ROW TITLES ===== -->
+<!-- ===== READABLE TABLES + MOBILE LAYOUT (added 2026-09-03) - KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
+<style>
+/* 1 -- Number alignment. Every total used to sit 8px right of its own column
+        because tfoot cells kept the browser default 1px padding while tbody
+        used 9px and thead 10px. One grid for header, body and footer. */
+#kwtab thead th,#kwtab tbody td,#kwtab tfoot td,
+#sttab thead th,#sttab tbody td,#sttab tfoot td{padding-left:12px;padding-right:12px;}
+#kwtab thead th:first-child,#kwtab tbody td:first-child,#kwtab tfoot td:first-child,
+#sttab thead th:first-child,#sttab tbody td:first-child,#sttab tfoot td:first-child{width:46px;}
+
+/* 2 -- Nothing that carries meaning is cut off any more. Cells wrap and the row
+        grows to fit, so the full keyword, search term, campaign and call topic
+        are readable without hovering. Only the row number stays on one line. */
+#leads tbody td,#calls tbody td{height:auto;min-height:40px;padding:11px 10px 9px;line-height:1.45;
+  white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;vertical-align:top;}
+#leads tbody .kw,#calls tbody .kw,#leads tbody .lp,#calls tbody .lp,
+#leads tbody .name,#calls tbody .name,#leads tbody .pill,#calls tbody .pill{
+  white-space:normal;overflow:visible;text-overflow:clip;max-width:100%;overflow-wrap:anywhere;}
+#leads tbody .name,#calls tbody .name{overflow-wrap:normal;word-break:normal;}
+#leads tbody td:first-child,#calls tbody td:first-child{white-space:nowrap;}
+#leads tbody .pill,#calls tbody .pill,#leads tbody .st-ans,#calls tbody .st-ans,
+#leads tbody .st-vm,#calls tbody .st-vm,#leads tbody .mt,#calls tbody .mt,
+#leads tbody .new,#calls tbody .new{white-space:nowrap;}
+#leads thead th,#calls thead th{overflow-wrap:break-word;}
+/* widths rebalanced so every column has room for its longest real value */
+#leads th:nth-child(1){width:3.5%}#leads th:nth-child(2){width:10.5%}#leads th:nth-child(3){width:11%}
+#leads th:nth-child(4){width:9.5%}#leads th:nth-child(5){width:10%}#leads th:nth-child(6){width:11.5%}
+#leads th:nth-child(7){width:10%}#leads th:nth-child(8){width:9%}#leads th:nth-child(9){width:8%}
+#leads th:nth-child(10){width:9%}#leads th:nth-child(11){width:8%}
+#calls th:nth-child(1){width:3.5%}#calls th:nth-child(2){width:9.5%}#calls th:nth-child(3){width:9%}
+#calls th:nth-child(4){width:10.5%}#calls th:nth-child(5){width:10%}#calls th:nth-child(6){width:11.5%}
+#calls th:nth-child(7){width:8%}#calls th:nth-child(8){width:7%}#calls th:nth-child(9){width:19.5%}
+#calls th:nth-child(10){width:11.5%}
+
+/* 3 -- Phones and tablets. Below 1080px the two wide tables stop being a
+        10-column grid and become one labelled card per lead, with every value
+        in full. The column headings become tappable "Sort by" chips so sorting
+        still works. Pure CSS and no markup change, so the sorting, client
+        notes, Excel export and show-more scripts all keep working, and new
+        rows added by the daily refresh are laid out automatically. */
+@media(max-width:1080px){
+  .tablewrap:has(#leads),.tablewrap:has(#calls){overflow-x:visible;}
+  #leads,#calls{display:block;width:100%;table-layout:auto;}
+  #leads thead,#calls thead{display:block;border-bottom:1px solid var(--line);background:#f7f9fc;}
+  #leads thead tr,#calls thead tr{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;align-items:center;}
+  #leads thead tr:before,#calls thead tr:before{content:"Sort by";font-size:9px;font-weight:800;
+    letter-spacing:.7px;text-transform:uppercase;color:var(--mut2);}
+  #leads thead th,#calls thead th{position:static;display:inline-block;width:auto!important;
+    padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;
+    font-size:9px;letter-spacing:.5px;white-space:nowrap;vertical-align:middle;}
+  #leads tbody,#calls tbody{display:block;}
+  #leads tbody tr:not(.row-collapsed),#calls tbody tr:not(.row-collapsed){display:block;}
+  #leads tbody tr,#calls tbody tr{padding:12px 15px 14px 18px;border-bottom:1px solid var(--line);}
+  #leads tbody tr:last-child,#calls tbody tr:last-child{border-bottom:0;}
+  #leads tbody tr[data-source="paid"],#calls tbody tr[data-source="paid"]{box-shadow:inset 4px 0 0 var(--acc);}
+  #leads tbody tr[data-source="organic"],#calls tbody tr[data-source="organic"]{box-shadow:inset 4px 0 0 var(--green);}
+  #leads tbody tr:hover td,#calls tbody tr:hover td{background:transparent;}
+  #leads tbody td,#calls tbody td{display:block;position:relative;padding:6px 0 6px 90px;
+    border:0;box-shadow:none!important;height:auto;min-height:0;font-size:12.5px;background:transparent;}
+  #leads tbody td:before,#calls tbody td:before{position:absolute;left:0;top:7px;width:82px;
+    color:var(--mut2);font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;line-height:1.5;}
+  #calls tbody td:nth-child(9),#calls tbody td:nth-child(10),
+  #leads tbody td:nth-child(11){padding-left:0;padding-top:9px;}
+  #calls tbody td:nth-child(9):before,#calls tbody td:nth-child(10):before,
+  #leads tbody td:nth-child(11):before{position:static;display:block;width:auto;margin-bottom:3px;}
+  #leads tbody td .tiny,#calls tbody td .tiny{display:block;font-size:11px;margin-top:2px;}
+  #leads tbody td .new,#calls tbody td .new{margin-left:8px;}
+  #leads tbody td:nth-child(1):before{content:"Lead";}
+  #leads tbody td:nth-child(2):before{content:"Date";}
+  #leads tbody td:nth-child(3):before{content:"Name";}
+  #leads tbody td:nth-child(4):before{content:"Form";}
+  #leads tbody td:nth-child(5):before{content:"Source";}
+  #leads tbody td:nth-child(6):before{content:"Campaign";}
+  #leads tbody td:nth-child(7):before{content:"Keyword";}
+  #leads tbody td:nth-child(8):before{content:"Search term";}
+  #leads tbody td:nth-child(9):before{content:"City";}
+  #leads tbody td:nth-child(10):before{content:"Service";}
+  #leads tbody td:nth-child(11):before{content:"Landing page";}
+  #calls tbody td:nth-child(1):before{content:"Lead";}
+  #calls tbody td:nth-child(2):before{content:"Date";}
+  #calls tbody td:nth-child(3):before{content:"Caller";}
+  #calls tbody td:nth-child(4):before{content:"Source";}
+  #calls tbody td:nth-child(5):before{content:"Tracking line";}
+  #calls tbody td:nth-child(6):before{content:"Keyword";}
+  #calls tbody td:nth-child(7):before{content:"Duration";}
+  #calls tbody td:nth-child(8):before{content:"Status";}
+  #calls tbody td:nth-child(9):before{content:"Topic";}
+  #calls tbody td:nth-child(10):before{content:"Notes";}
+  #kwtab thead th,#kwtab tbody td,#kwtab tfoot td,
+  #sttab thead th,#sttab tbody td,#sttab tfoot td{padding-left:9px;padding-right:9px;font-size:12px;}
+  #kwtab thead th:first-child,#kwtab tbody td:first-child,#kwtab tfoot td:first-child,
+  #sttab thead th:first-child,#sttab tbody td:first-child,#sttab tfoot td:first-child{width:34px;}
+  #kwtab td,#kwtab th{white-space:normal;}
+  .sec-title{flex-wrap:wrap;}
+}
+</style>
+<!-- ===== END READABLE TABLES + MOBILE LAYOUT ===== -->
 
 
 
