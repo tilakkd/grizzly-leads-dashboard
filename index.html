@@ -371,20 +371,20 @@ Keywords that brought leads <span class="cnt" id="kw-cnt">3 keywords &middot; 3 
 <div class="tablewrap">
 <table id="kwtab">
 <thead>
-<tr><th>#</th><th>Keyword</th><th>Match type</th><th>Leads</th><th>Clicks</th></tr>
+<tr><th>#</th><th>Keyword</th><th>Match type</th><th>Where it sits</th><th>Leads</th><th>Clicks</th></tr>
 </thead>
 <tbody>
-<tr><td>1</td><td><span class="kw">insulation services</span></td><td><span class="mt mt-p">Phrase</span></td><td><b>1</b></td><td>14</td></tr>
-<tr><td>2</td><td><span class="kw">rat proof insulation</span></td><td><span class="mt mt-p">Phrase</span></td><td><b>1</b></td><td>1</td></tr>
-<tr><td>3</td><td><span class="kw">rodent deterrent insulation</span></td><td><span class="mt mt-p">Phrase</span></td><td><b>1</b></td><td>1</td></tr>
+<tr><td>1</td><td><span class="kw">insulation services</span></td><td><span class="mt mt-p">Phrase</span></td><td>Search - Grizzly - Insulation (General)<span class="agrp">Insulation Company (General)</span></td><td><b>1</b></td><td>15</td></tr>
+<tr><td>2</td><td><span class="kw">rat proof insulation</span></td><td><span class="mt mt-p">Phrase</span></td><td>Search - Grizzly - Insulation (General)<span class="agrp">Pest &amp; Rodent</span></td><td><b>1</b></td><td>1</td></tr>
+<tr><td>3</td><td><span class="kw">rodent deterrent insulation</span></td><td><span class="mt mt-p">Phrase</span></td><td>Search - Grizzly - Insulation (General)<span class="agrp">Pest &amp; Rodent</span></td><td><b>1</b></td><td>1</td></tr>
 </tbody>
 <tfoot>
-<tr class="kw-tot"><td></td><td><b>Total</b></td><td></td><td><b>3</b></td><td><b>16</b></td></tr>
+<tr class="kw-tot"><td></td><td><b>Total</b></td><td></td><td></td><td><b>3</b></td><td><b>17</b></td></tr>
 </tfoot>
 </table>
 </div>
 </div>
-<div class="ads-note kw-note">Keyword is what we bid on. <b>Match type</b> is how loosely Google may match it &mdash; exact fires only on that phrase, phrase allows wording around it. This account currently runs no broad-match keywords. Refreshed weekly.</div>
+<div class="ads-note kw-note">Keyword is what we bid on. <b>Match type</b> is how loosely Google may match it &mdash; exact fires only on that phrase, phrase allows wording around it. This account currently runs no broad-match keywords. <b>Where it sits</b> is the campaign the keyword is paid for from, with its ad group underneath &mdash; the smaller group of related keywords that share the same ads. Refreshed weekly.</div>
 
 <div class="sec-title">
 <span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg></span>
@@ -1662,6 +1662,35 @@ updateKPIs();
 })();
 </script>
 <!-- ===== END TOPIC SHOW MORE ===== -->
+
+<!-- ===== KEYWORD TABLE CAMPAIGN + AD GROUP (column 4) - added 2026-09-04 - KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
+<style>
+/* Column 4 of #kwtab is now "Where it sits": campaign on the first line, ad group
+   under it. Three things in the original CSS assumed a 5-column table and have to
+   be re-pointed, which is why this block exists rather than an edit up in the head:
+     - #kwtab td/th were pinned to height:38px with no vertical padding, so a
+       two-line cell would have been clipped;
+     - the right-align rule targeted columns 4 and 5, which are now the new text
+       column and Leads;
+     - column 4 needs to wrap, like the Keyword column already does. */
+#kwtab td,#kwtab th{height:auto;padding-top:9px;padding-bottom:9px;vertical-align:top;}
+#kwtab td:nth-child(4),#kwtab th:nth-child(4){white-space:normal;text-align:left;overflow-wrap:anywhere;}
+#kwtab td:nth-child(5),#kwtab td:nth-child(6),
+#kwtab th:nth-child(5),#kwtab th:nth-child(6),
+#kwtab tfoot td:nth-child(5),#kwtab tfoot td:nth-child(6){text-align:right;font-variant-numeric:tabular-nums;}
+#kwtab .agrp{display:block;font-size:10.5px;color:var(--mut2);margin-top:3px;line-height:1.4;}
+#kwtab th:nth-child(2){width:26%;}
+#kwtab th:nth-child(3){width:12%;}
+#kwtab th:nth-child(4){width:34%;}
+#kwtab th:nth-child(5){width:10%;}
+#kwtab th:nth-child(6){width:11%;}
+@media(max-width:1080px){
+  #kwtab th:nth-child(2),#kwtab th:nth-child(3),#kwtab th:nth-child(4),
+  #kwtab th:nth-child(5),#kwtab th:nth-child(6){width:auto;}
+  #kwtab .agrp{font-size:11px;}
+}
+</style>
+<!-- ===== END KEYWORD TABLE CAMPAIGN + AD GROUP ===== -->
 
 </body>
 </html>
