@@ -1566,5 +1566,102 @@ updateKPIs();
 
 
 
+<!-- ===== TOPIC SHOW MORE (long call topics collapsed to 4 lines) - added 2026-09-04 - KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
+<style>
+/* The Topic column carries the whole call summary. Left in full it made a single
+   row 200px+ tall and stretched the page. The text stays in the DOM in full (so
+   search, sorting and the Excel export are unchanged) and is only visually
+   clipped to 4 lines, with a toggle. The toggle's label comes from CSS content,
+   so it never leaks into textContent / innerText and cannot pollute an export. */
+#calls tbody td .tp{position:relative;}
+#calls tbody td .tp-txt{overflow:hidden;}
+#calls tbody td .tp.tp-clip .tp-txt{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;}
+#calls tbody td .tp.tp-clip.tp-open .tp-txt{display:block;-webkit-line-clamp:none;overflow:visible;}
+#calls tbody td .tp-btn{display:none;margin-top:5px;padding:0;border:0;background:none;font:inherit;
+  font-size:11px;font-weight:800;letter-spacing:.3px;color:var(--acc);cursor:pointer;line-height:1.4;}
+#calls tbody td .tp.tp-clip .tp-btn{display:inline-block;}
+#calls tbody td .tp-btn::after{content:"Show more";}
+#calls tbody td .tp.tp-open .tp-btn::after{content:"Show less";}
+#calls tbody td .tp-btn:hover::after,#calls tbody td .tp-btn:focus-visible::after{text-decoration:underline;}
+</style>
+<script>
+(function(){
+  var LINES = 4, TOPIC_COL = 9;
+
+  function topicCells(){
+    return document.querySelectorAll('#calls tbody td:nth-child(' + TOPIC_COL + ')');
+  }
+
+  /* Wrap each topic cell once: <td><div class=tp><div class=tp-txt>…</div><button></div></td> */
+  function build(){
+    Array.prototype.forEach.call(topicCells(), function(td){
+      if(td.querySelector('.tp')) return;
+      var raw = (td.textContent || '').replace(/\s+/g,' ').trim();
+      if(!raw || raw === '—' || raw === '-') return;
+
+      var box = document.createElement('div'); box.className = 'tp';
+      var txt = document.createElement('div'); txt.className = 'tp-txt';
+      while(td.firstChild) txt.appendChild(td.firstChild);
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'tp-btn';
+      btn.setAttribute('aria-expanded','false');
+      btn.setAttribute('aria-label','Show the full call topic');
+      btn.addEventListener('click', function(){
+        var open = box.classList.toggle('tp-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Show less of the call topic' : 'Show the full call topic');
+      });
+
+      box.appendChild(txt); box.appendChild(btn); td.appendChild(box);
+    });
+  }
+
+  /* Decide per cell whether it actually overflows 4 lines at the current width.
+     Short topics never get a button. Rows hidden by the search box are skipped
+     and keep whatever state they already had. */
+  function measure(){
+    Array.prototype.forEach.call(document.querySelectorAll('#calls tbody .tp'), function(box){
+      var td = box.parentNode;
+      if(!td || td.offsetParent === null) return;
+      var txt = box.querySelector('.tp-txt');
+      if(!txt) return;
+
+      var wasOpen = box.classList.contains('tp-open');
+      box.classList.remove('tp-open');
+      box.classList.remove('tp-clip');
+
+      var cs = window.getComputedStyle(txt);
+      var lh = parseFloat(cs.lineHeight);
+      if(!lh || isNaN(lh)) lh = parseFloat(cs.fontSize) * 1.45;
+      var full = txt.scrollHeight;
+
+      if(full > (lh * LINES) + 2) box.classList.add('tp-clip');
+      if(wasOpen && box.classList.contains('tp-clip')) box.classList.add('tp-open');
+    });
+  }
+
+  function run(){ build(); measure(); }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+  window.addEventListener('load', measure);
+  if(document.fonts && document.fonts.ready && document.fonts.ready.then){
+    document.fonts.ready.then(measure);
+  }
+
+  var t = null;
+  window.addEventListener('resize', function(){
+    if(t) clearTimeout(t);
+    t = setTimeout(measure, 150);
+  });
+})();
+</script>
+<!-- ===== END TOPIC SHOW MORE ===== -->
+
 </body>
 </html>
