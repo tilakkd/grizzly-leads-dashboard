@@ -1684,10 +1684,49 @@ updateKPIs();
 #kwtab th:nth-child(4){width:34%;}
 #kwtab th:nth-child(5){width:10%;}
 #kwtab th:nth-child(6){width:11%;}
+/* Phones. The sixth column pushed this table 70px wider than its card, so below
+   1080px it becomes one labelled card per keyword, exactly like the two lead
+   tables already do, and the headings become tappable "Sort by" chips so sorting
+   still works. The rank number is dropped on a phone: the cards are already in
+   order and "Rank 1" is noise. Pure CSS, no markup change. */
 @media(max-width:1080px){
   #kwtab th:nth-child(2),#kwtab th:nth-child(3),#kwtab th:nth-child(4),
   #kwtab th:nth-child(5),#kwtab th:nth-child(6){width:auto;}
   #kwtab .agrp{font-size:11px;}
+  .tablewrap:has(#kwtab){overflow-x:visible;}
+  #kwtab{display:block;width:100%;table-layout:auto;}
+  #kwtab thead{display:block;border-bottom:1px solid var(--line);background:#f7f9fc;}
+  #kwtab thead tr{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;align-items:center;}
+  #kwtab thead tr:before{content:"Sort by";font-size:9px;font-weight:800;letter-spacing:.7px;
+    text-transform:uppercase;color:var(--mut2);}
+  #kwtab thead th{display:inline-block;width:auto!important;height:auto;padding:5px 10px;
+    border:1px solid var(--line);border-radius:999px;background:#fff;font-size:9px;
+    letter-spacing:.5px;white-space:nowrap;}
+  #kwtab thead th:first-child{display:none;}
+  #kwtab tbody{display:block;}
+  #kwtab tbody tr{display:block;padding:11px 14px 13px;border-bottom:1px solid var(--line);}
+  #kwtab tbody tr:last-child{border-bottom:0;}
+  #kwtab tbody tr:hover td{background:transparent;}
+  #kwtab tbody td{display:block;position:relative;padding:5px 0 5px 88px!important;border:0;
+    height:auto;text-align:left!important;white-space:normal;font-size:12.5px;}
+  #kwtab tbody td:before{position:absolute;left:0;top:6px;width:82px;color:var(--mut2);
+    font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;line-height:1.5;}
+  #kwtab tbody td:nth-child(1){display:none;}
+  #kwtab tbody td:nth-child(2):before{content:"Keyword";}
+  #kwtab tbody td:nth-child(3):before{content:"Match type";}
+  #kwtab tbody td:nth-child(4):before{content:"Where it sits";}
+  #kwtab tbody td:nth-child(5):before{content:"Leads";}
+  #kwtab tbody td:nth-child(6):before{content:"Clicks";}
+  #kwtab tfoot{display:block;}
+  #kwtab tfoot tr{display:flex;flex-wrap:wrap;gap:6px 22px;padding:11px 14px;
+    background:#f7f9fc;border-top:2px solid var(--line);}
+  #kwtab tfoot td{display:inline-block;height:auto;padding:0!important;border:0;
+    background:transparent;text-align:left!important;}
+  #kwtab tfoot td:empty{display:none;}
+  #kwtab tfoot td:nth-child(5):before{content:"Leads ";}
+  #kwtab tfoot td:nth-child(6):before{content:"Clicks ";}
+  #kwtab tfoot td:nth-child(5):before,#kwtab tfoot td:nth-child(6):before{color:var(--mut2);
+    font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;}
 }
 </style>
 <!-- ===== END KEYWORD TABLE CAMPAIGN + AD GROUP ===== -->
