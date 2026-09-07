@@ -194,6 +194,10 @@ tbody tr:hover td{background:#f9fbff;}
 .mt-b{background:#e7eefb;color:#2f6fd0;}
 #sttab td,#sttab th,#kwtab td,#kwtab th{height:38px;padding-top:0;padding-bottom:0;}
 #sttab tfoot .kw-hid td{color:var(--mut2);font-style:italic;background:#fbfcfe;}
+/* Total row for #sttab. Without it the "kept private" count sits alone under a column of 1s
+   and reads as their total - which is exactly how it was misread on 2026-09-07. The "+" on the
+   private count and this Total row together make the arithmetic visible: 1+1+1 +3 = 6. */
+#sttab tfoot .st-tot td{background:#f7f9fc;border-top:2px solid var(--line);}
 /* "What people actually typed" when Google released nothing: a plain sentence, not an empty table */
 .st-none{display:flex;gap:15px;padding:20px 22px;align-items:flex-start;}
 .st-none-ic{width:34px;height:34px;border-radius:9px;background:#eef1f6;color:#6b7c93;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -459,12 +463,13 @@ What people actually typed <span class="cnt" id="st-cnt">3 released by Google</s
 <tr><td>3</td><td><span class="stq">cost of blown in attic insulation</span></td><td><b>1</b></td></tr>
 </tbody>
 <tfoot>
-<tr class="kw-hid"><td></td><td>Wording kept private by Google</td><td><b>3</b></td></tr>
+<tr class="kw-hid"><td></td><td>Wording kept private by Google</td><td><b>+3</b></td></tr>
+<tr class="st-tot"><td></td><td><b>Total</b></td><td><b>6</b></td></tr>
 </tfoot>
 </table>
 </div>
 </div>
-<div class="ads-note kw-note">These are the words people actually typed into Google before they became a lead, as opposed to the keywords we bid on in the table above. Google only reveals the wording on some clicks and keeps the rest private, so the last row counts the leads whose wording it has withheld. Read it against the six keyword-matched leads above.</div>
+<div class="ads-note kw-note">These are the words people actually typed into Google before they became a lead, as opposed to the keywords we bid on in the table above. Google only shows us the wording on some of those clicks and keeps the rest private, so the <b>+3</b> row is three further leads whose wording it has not given us. Listed and private together come to the same six leads as the keyword table above.</div>
 <!-- Panel to restore IF a future month has no released term for any lead, replacing the .tablewrap above
      (and set the #st-cnt pill back to "Not released for any lead"):
 <div class="st-none">
