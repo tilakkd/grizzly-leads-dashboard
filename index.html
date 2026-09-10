@@ -172,6 +172,8 @@ tbody tr:hover td{background:#f9fbff;}
 #leads thead th,#calls thead th,#kwtab thead th,#sttab thead th{border-bottom:1px solid var(--ink);font-size:9px;letter-spacing:.7px;padding:9px 10px;}
 #leads tbody tr:hover td,#calls tbody tr:hover td,#kwtab tbody tr:hover td,#sttab tbody tr:hover td{background:#fbfcfe;}
 #leads .tiny,#calls .tiny{display:none;}
+/* caller phone number stays visible on desktop (Kunal, 2026-09-10) - the rest of the .tiny second lines stay hidden */
+#calls tbody td:nth-child(3) .tiny{display:block;}
 #leads .avatar,#calls .avatar{display:none;}
 #leads .name,#calls .name{font-weight:700;}
 #leads tbody tr td:first-child,#calls tbody tr td:first-child{color:var(--mut2);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;}
