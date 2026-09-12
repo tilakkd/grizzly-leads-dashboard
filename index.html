@@ -509,15 +509,18 @@ Keywords that brought leads <span class="cnt" id="kw-cnt">10 keywords &middot; 1
 <tr><td>7</td><td><span class="kw">attic insulation denver</span></td><td><span class="mt mt-e">Exact</span></td><td>Grizzly | Search | Attic | Denver<span class="agrp">Attic | Denver</span></td><td><b>1</b></td><td>2</td></tr>
 <tr><td>8</td><td><span class="kw">mouse proof insulation</span></td><td><span class="mt mt-p">Phrase</span></td><td>Search - Grizzly - Insulation (General)<span class="agrp">Pest &amp; Rodent</span></td><td><b>1</b></td><td>2</td></tr>
 <tr><td>9</td><td><span class="kw">rodent deterrent insulation</span></td><td><span class="mt mt-p">Phrase</span></td><td>Search - Grizzly - Insulation (General)<span class="agrp">Pest &amp; Rodent</span></td><td><b>1</b></td><td>2</td></tr>
-<tr><td>10</td><td><span class="kw">insulation company near me</span></td><td><span class="mt mt-e">Exact</span></td><td>Search - Grizzly - Insulation (General)<span class="agrp">Insulation Company (General)</span></td><td><b>1</b></td><td>0</td></tr>
+<tr><td>10</td><td><span class="kw">insulation company near me</span></td><td><span class="mt mt-e">Exact</span></td><td>Search - Grizzly - Insulation (General)<span class="agrp">Insulation Company (General)</span></td><td><b>1</b></td><td><span class="kwz-num">0</span><span class="kwz">*</span></td></tr>
 </tbody>
 <tfoot>
 <tr class="kw-tot"><td></td><td><b>Total</b></td><td></td><td></td><td><b>11</b></td><td><b>141</b></td></tr>
 </tfoot>
 </table>
 </div>
+<!-- ===== ZERO-CLICK CALLOUT ===== -->
+<div class="kw-zero"><span class="kwz-star">*</span><span><b>Why &ldquo;insulation company near me&rdquo; shows 0 clicks.</b> That keyword was changed from phrase match to exact match after its lead came in. Google Ads treats a changed keyword as a brand new one, so the click that actually brought the lead stayed with the old version and is not counted in this column. The lead itself is real.</span></div>
+<!-- ===== END ZERO-CLICK CALLOUT ===== -->
 </div>
-<div class="ads-note kw-note">Keyword is what we bid on. <b>Match type</b> is how loosely Google may match it &mdash; exact fires only on that phrase, phrase allows wording around it. This account currently runs no broad-match keywords. <b>Where it sits</b> is the campaign the keyword is paid for from, with its ad group underneath &mdash; the smaller group of related keywords that share the same ads. Refreshed weekly. One row shows 1 lead but 0 clicks: that keyword was changed from phrase to exact match after the lead came in, and Google Ads counts a changed keyword as a new one, so the click that brought the lead now sits with the old keyword and no longer shows here.</div>
+<div class="ads-note kw-note">Keyword is what we bid on. <b>Match type</b> is how loosely Google may match it &mdash; exact fires only on that phrase, phrase allows wording around it. This account currently runs no broad-match keywords. <b>Where it sits</b> is the campaign the keyword is paid for from, with its ad group underneath &mdash; the smaller group of related keywords that share the same ads. Refreshed weekly.</div>
 
 <div class="sec-title">
 <span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg></span>
@@ -1820,6 +1823,16 @@ updateKPIs();
 #kwtab th:nth-child(5),#kwtab th:nth-child(6),
 #kwtab tfoot td:nth-child(5),#kwtab tfoot td:nth-child(6){text-align:right;font-variant-numeric:tabular-nums;}
 #kwtab .agrp{display:block;font-size:10.5px;color:var(--mut2);margin-top:3px;line-height:1.4;}
+/* ZERO-CLICK CALLOUT — keep with the 0-click row in #kwtab. A note in the grey paragraph
+   under the table is NOT an explanation (Kunal, 2026-09-03 and again 2026-09-12): if a number
+   can be misread at a glance, the explanation has to sit where the eye lands. Remove this
+   block and the .kwz markup together, when no row shows leads against 0 clicks. */
+#kwtab .kwz-num{color:#c0700f;font-weight:800;}
+#kwtab .kwz{color:#c0700f;font-weight:800;margin-left:3px;}
+.kw-zero{display:flex;gap:10px;align-items:flex-start;padding:11px 15px;background:#fff7ea;
+  border-top:1px solid #f0dcbd;font-size:11.5px;line-height:1.6;color:#6b5230;}
+.kw-zero .kwz-star{color:#c0700f;font-weight:800;font-size:15px;line-height:1.15;flex:none;}
+.kw-zero b{color:#8a5512;}
 #kwtab th:nth-child(2){width:26%;}
 #kwtab th:nth-child(3){width:12%;}
 #kwtab th:nth-child(4){width:34%;}
