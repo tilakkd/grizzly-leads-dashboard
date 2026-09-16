@@ -305,6 +305,27 @@ tbody tr:hover td{background:#f9fbff;}
 .brow.og .sw{background:var(--green);} .brow.na .sw{background:#cbd2dd;}
 .scallout{background:var(--amber-bg);border:1px solid #f0d5a8;border-radius:9px;padding:9px 11px;font-size:11px;line-height:1.5;color:#7c4a09;margin-top:9px;}
 /* ===== END SUMMARY BOX ===== */
+
+/* ===== SEARCH TERMS PER KEYWORD ===== */
+.stx{display:block;margin-top:6px;}
+.stx-btn{display:inline-flex;align-items:center;gap:5px;background:#eef2f8;border:1px solid #dde4ee;
+  color:#3f5a7d;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;cursor:pointer;
+  font-family:'Inter',system-ui,Arial,sans-serif;line-height:1.3;}
+.stx-btn:hover{background:#e2e9f4;color:#13314f;}
+.stx-btn .car{font-size:9px;transition:transform .15s;}
+.stx.open .stx-btn .car{transform:rotate(90deg);}
+.stx-none{display:inline-block;margin-top:6px;font-size:10.5px;color:#9aa3b2;font-style:italic;}
+.stx-panel{display:none;margin-top:7px;border:1px solid var(--line);border-radius:9px;background:#fbfcfe;
+  padding:7px 9px;max-width:330px;}
+.stx.open .stx-panel{display:block;}
+.stx-row{display:flex;gap:8px;align-items:baseline;font-size:11px;padding:2px 0;}
+.stx-row .t{flex:1;color:#374151;word-break:break-word;}
+.stx-row .c{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--muted);}
+.stx-priv{display:flex;gap:8px;margin-top:5px;padding-top:5px;border-top:1px dashed #e3e8f0;
+  font-size:11px;color:#7c4a09;}
+.stx-priv .t{flex:1;font-style:italic;}
+.stx-priv .c{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;}
+/* ===== END SEARCH TERMS PER KEYWORD ===== */
 </style>
 </head>
 <body>
@@ -1475,7 +1496,7 @@ updateKPIs();
   function cellText(td){
     if(!td) return "";
     var clone = td.cloneNode(true);
-    var av = clone.querySelectorAll(".avatar");
+    var av = clone.querySelectorAll(".avatar, .stx");
     for(var i=0;i<av.length;i++) av[i].parentNode.removeChild(av[i]);
     return clone.textContent.replace(/\s+/g," ").trim();
   }
@@ -2181,6 +2202,94 @@ updateKPIs();
 })();
 </script>
 <!-- ===== END SUMMARY BOX SCRIPT ===== -->
+
+
+<!-- ===== SEARCH TERMS PER KEYWORD SCRIPT ===== -->
+<script>
+(function(){
+  "use strict";
+  // Wording Google released for each keyword, Sep 1-16 2026. Refreshed by the daily run
+  // from Insights and reports > Search terms with the Keyword column switched on.
+  // Each entry: [search term, clicks]. Anything Google withheld is NOT listed here; the
+  // script works it out as (keyword clicks on the row) minus (clicks listed here).
+  var TERMS = {
+    "insulation services":[["spray foam company",2],["spray foam insulation fort collins",2],["blow in insulation cost",1],["blown insulation near me",1],["colorado insulation",1],["colorado premier insulation",1],["colorado springs insulation companies",1],["cost to insulate crawl space",1],["crawl space insulation and encapsulation",1],["crawl space sealing cost",1],["ibs insulation",1],["insulation companies in colorado springs",1],["insulation contractors",1],["insulation contractors colorado",1],["insulation costs",1],["insulation top up cost",1],["spray foam insulation cost estimator",1]],
+    "home insulation denver":[["ifoam denver",2]],
+    "rat proof insulation":[["will spray foam keep mice out",2],["mouse proof spray foam",1],["mouse spray foam",1]],
+    "spray foam insulation":[["spray foam insulation",9],["spray insulation foam",4],["spray styrofoam",2],["expand foam spray",1],["expanding insulation foam spray",1],["foam spray",1],["foam spray insulation",1],["house spray foam insulation",1],["spray applied foam",1],["spray foam",1],["spray foam insulation for walls",1],["spray in foam insulation",1]],
+    "insulation companies near me":[["insulation companies near me",7]],
+    "insulation denver":[["insulation denver",6],["denver insulation",2]],
+    "insulation contractors near me":[["insulation contractors near me",4]],
+    "attic insulation removal":[["insulation removal",1]],
+    "blown in attic insulation":[["cost of blown in attic insulation",1],["fiberglass blown in insulation",1],["how many bags of blown in insulation do i need",1]],
+    "mouse proof insulation":[],
+    "spray foam insulation denver":[["spray foam insulation denver",4]],
+    "attic insulation denver":[["attic insulation denver",3]],
+    "rodent deterrent insulation":[["crawl space rodent proofing",1]],
+    "insulation company denver":[],
+    "insulation company near me":[["blown in insulation company near me",2],["wall insulation nearby",1]]
+  };
+
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+  function build(){
+    var tbl=document.getElementById("kwtab"); if(!tbl) return;
+    var body=tbl.tBodies[0]; if(!body) return;
+    var rows=body.rows;
+    for(var i=0;i<rows.length;i++){
+      var tr=rows[i];
+      var kwEl=tr.querySelector(".kw"); if(!kwEl) continue;
+      if(tr.querySelector(".stx")) continue;
+      var kw=(kwEl.textContent||"").replace(/\s+/g," ").trim().toLowerCase();
+      var list=TERMS[kw]; if(!list) continue;
+
+      // clicks shown on this row, last cell
+      var clicksCell=tr.cells[tr.cells.length-1];
+      var clicks=parseInt((clicksCell.textContent||"").replace(/[^0-9]/g,""),10);
+      if(!isFinite(clicks)) clicks=0;
+      // a row showing no clicks is explained by the amber callout already; adding a
+      // list of searches with clicks against it would contradict that, so skip it.
+      if(clicks===0) continue;
+
+      var shown=0,k;
+      for(k=0;k<list.length;k++) shown+=list[k][1];
+      var priv=clicks-shown; if(priv<0) priv=0;
+
+      var host=kwEl.parentNode;
+      if(!list.length){
+        var none=document.createElement("span");
+        none.className="stx-none";
+        none.textContent="wording not released by Google";
+        host.appendChild(none);
+        continue;
+      }
+
+      var wrap=document.createElement("span");
+      wrap.className="stx";
+      var html='<button type="button" class="stx-btn"><span class="car">&#9656;</span>'
+        + list.length + (list.length===1?" search":" searches") + '</button>'
+        + '<span class="stx-panel">';
+      for(k=0;k<list.length;k++){
+        html+='<span class="stx-row"><span class="t">'+esc(list[k][0])+'</span><span class="c">'+list[k][1]+'</span></span>';
+      }
+      if(priv>0){
+        html+='<span class="stx-priv"><span class="t">kept private by Google</span><span class="c">'+priv+'</span></span>';
+      }
+      html+='</span>';
+      wrap.innerHTML=html;
+      host.appendChild(wrap);
+      (function(w){
+        w.querySelector(".stx-btn").addEventListener("click",function(e){
+          e.stopPropagation();
+          w.className = (w.className.indexOf("open")>-1) ? "stx" : "stx open";
+        });
+      })(wrap);
+    }
+  }
+  if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",build);}else{build();}
+})();
+</script>
+<!-- ===== END SEARCH TERMS PER KEYWORD SCRIPT ===== -->
 
 </body>
 </html>
