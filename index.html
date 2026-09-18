@@ -2427,6 +2427,7 @@ updateKPIs();
    refresh are laid out automatically. The .rx-on class is added by the script
    below, so if the script never runs the page falls back to the plain table. */
 
+.rx-sortbtn{display:none;}
 /* ---------- detail cells are hidden until the row is open (both layouts) ---------- */
 #leads.rx-on tbody tr:not(.rx-open) td.rx-d,
 #calls.rx-on tbody tr:not(.rx-open) td.rx-d{display:none;}
@@ -2444,6 +2445,21 @@ updateKPIs();
      Housecall Pro sits in column 12 of Form leads and column 10 of Call leads,
      which pushed Notes to 11; these three put the right label on each. ------- */
 @media(max-width:1080px){
+  /* On a phone the header was 12 sort chips stacked five lines deep before the
+     first lead. It now lives behind one Sort button, closed by default, so the
+     list starts at the top of the card. */
+  #leads.rx-on thead,#calls.rx-on thead{display:none;}
+  #leads.rx-on.rx-sorton thead,#calls.rx-on.rx-sorton thead{display:block;}
+  #leads.rx-on thead tr,#calls.rx-on thead tr{gap:5px;padding:9px 12px 11px;}
+  #leads.rx-on thead th,#calls.rx-on thead th{padding:4px 9px;font-size:9px;}
+  .rx-sortbtn{display:flex;align-items:center;gap:8px;width:100%;margin:0;padding:11px 14px;
+    border:0;border-bottom:1px solid var(--line);background:#f7f9fc;font-family:inherit;
+    font-size:10px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:#5b6573;
+    cursor:pointer;text-align:left;}
+  .rx-sortbtn:after{content:"\25BE";margin-left:auto;font-size:11px;color:var(--blue);}
+  .rx-sortbtn.on:after{content:"\25B4";}
+  .rx-sortbtn b{color:var(--blue);font-weight:800;}
+  /* the open / close control reads as a button, not a stray line of text */
   #leads tbody td:nth-child(12):before{content:"HCP status";}
   #calls tbody td:nth-child(10):before{content:"HCP status";}
   #calls tbody td:nth-child(11):before{content:"Notes";}
@@ -2455,8 +2471,9 @@ updateKPIs();
   #calls tbody td:nth-child(11):before{position:static;display:block;width:auto;margin-bottom:3px;}
   /* the open / close line at the foot of every card */
   #leads.rx-on tbody tr,#calls.rx-on tbody tr{position:relative;}
-  #leads.rx-on tbody tr:after,#calls.rx-on tbody tr:after{content:"Show details";display:block;
-    margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);
+  #leads.rx-on tbody tr:after,#calls.rx-on tbody tr:after{content:"Show details";
+    display:inline-block;margin-top:11px;padding:7px 15px;border:1px solid #cfe0fb;
+    border-radius:999px;background:var(--blue-bg);
     font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--blue);}
   #leads.rx-on tbody tr.rx-open:after,#calls.rx-on tbody tr.rx-open:after{content:"Hide details";}
   #leads.rx-on tbody tr.rx-open,#calls.rx-on tbody tr.rx-open{background:#fbfcfe;}
@@ -2571,6 +2588,26 @@ updateKPIs();
     Array.prototype.forEach.call(body.rows, tagRow);
     cols.forEach(function(c){ var th = head.cells[c-1]; if(th) th.classList.add("rx-dh"); });
     t.classList.add("rx-on");
+
+    /* Phone only (the button is display:none above 1080px): one Sort control in
+       front of the table instead of a wall of chips. */
+    var wrap = t.parentNode;
+    var sb = document.createElement("button");
+    sb.type = "button";
+    sb.className = "rx-sortbtn";
+    function label(){
+      var on = head.querySelector("th.sorted");
+      var name = "";
+      if(on){ var c = on.cloneNode(true); var ar = c.querySelector(".sort-ar"); if(ar) ar.remove(); name = c.textContent.trim(); }
+      sb.innerHTML = name ? ('Sorted by <b>' + name + '</b> &mdash; change') : "Sort this table";
+    }
+    label();
+    sb.addEventListener("click", function(){
+      var open = t.classList.toggle("rx-sorton");
+      sb.classList.toggle("on", open);
+    });
+    head.addEventListener("click", function(){ setTimeout(label, 0); });
+    if(wrap) wrap.insertBefore(sb, t);
 
     /* One listener on the tbody, so it survives the sort re-ordering rows. */
     body.addEventListener("click", function(e){
