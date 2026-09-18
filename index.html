@@ -2504,12 +2504,12 @@ updateKPIs();
      line 3 carries the headings of the columns that live inside the row, as chips
      that still sort. Without the wording the two lines read as one broken header. */
   #leads.rx-on thead tr:before,#calls.rx-on thead tr:before{
-    content:"Sort by a column that opens inside the row";
+    content:"Sort by a column inside the row \2014 each chip sits above the field it sorts";
     grid-row:2;grid-column:1/-1;margin:4px 0 7px;padding-top:9px;
     border-top:1px dashed #dfe4ec;font-size:8.5px;font-weight:800;letter-spacing:.8px;
     text-transform:uppercase;color:var(--mut2);}
   #leads.rx-on thead th.rx-dh,#calls.rx-on thead th.rx-dh{
-    justify-self:start;align-self:center;margin:0 0 10px;padding:5px 11px;border:1px solid #dfe4ec;
+    justify-self:start;align-self:center;margin:0 0 7px;padding:5px 12px;border:1px solid #dfe4ec;
     border-radius:999px;background:#fff;font-size:9px;letter-spacing:.5px;white-space:nowrap;
     min-width:0;width:auto!important;color:#6b7c93;}
   #leads.rx-on thead th.rx-dh:hover,#calls.rx-on thead th.rx-dh:hover{background:#eef3fa;color:#13314f;}
@@ -2531,12 +2531,12 @@ updateKPIs();
 #leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(8){grid-row:3;grid-column:1/5;}
 #leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(9){grid-row:3;grid-column:5/9;}
 #leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(11){grid-row:3;grid-column:9/13;}
-#leads.rx-on thead th:nth-child(4){grid-row:3;grid-column:1/3;}
-#leads.rx-on thead th:nth-child(6){grid-row:3;grid-column:3/5;}
-#leads.rx-on thead th:nth-child(7){grid-row:3;grid-column:5/7;}
-#leads.rx-on thead th:nth-child(8){grid-row:3;grid-column:7/9;}
-#leads.rx-on thead th:nth-child(9){grid-row:3;grid-column:9/11;}
-#leads.rx-on thead th:nth-child(11){grid-row:3;grid-column:11/13;}
+#leads.rx-on thead th:nth-child(4){grid-row:3;grid-column:1/5;}
+#leads.rx-on thead th:nth-child(6){grid-row:3;grid-column:5/9;}
+#leads.rx-on thead th:nth-child(7){grid-row:3;grid-column:9/13;}
+#leads.rx-on thead th:nth-child(8){grid-row:4;grid-column:1/5;}
+#leads.rx-on thead th:nth-child(9){grid-row:4;grid-column:5/9;}
+#leads.rx-on thead th:nth-child(11){grid-row:4;grid-column:9/13;}
 #calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(1),#calls.rx-on thead th:nth-child(1){grid-row:1;grid-column:1/2;}
 #calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(2),#calls.rx-on thead th:nth-child(2){grid-row:1;grid-column:2/4;}
 #calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(3),#calls.rx-on thead th:nth-child(3){grid-row:1;grid-column:4/7;}
@@ -2546,13 +2546,13 @@ updateKPIs();
 #calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(5){grid-row:2;grid-column:1/5;}
 #calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(6){grid-row:2;grid-column:5/9;}
 #calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(7){grid-row:2;grid-column:9/13;}
-#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(9){grid-row:3;grid-column:1/13;}
-#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(11){grid-row:4;grid-column:1/13;}
-#calls.rx-on thead th:nth-child(5){grid-row:3;grid-column:1/4;}
-#calls.rx-on thead th:nth-child(6){grid-row:3;grid-column:4/7;}
-#calls.rx-on thead th:nth-child(7){grid-row:3;grid-column:7/9;}
-#calls.rx-on thead th:nth-child(9){grid-row:3;grid-column:9/11;}
-#calls.rx-on thead th:nth-child(11){grid-row:3;grid-column:11/13;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(9){grid-row:3;grid-column:1/9;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(11){grid-row:3;grid-column:9/13;}
+#calls.rx-on thead th:nth-child(5){grid-row:3;grid-column:1/5;}
+#calls.rx-on thead th:nth-child(6){grid-row:3;grid-column:5/9;}
+#calls.rx-on thead th:nth-child(7){grid-row:3;grid-column:9/13;}
+#calls.rx-on thead th:nth-child(9){grid-row:4;grid-column:1/9;}
+#calls.rx-on thead th:nth-child(11){grid-row:4;grid-column:9/13;}
 }
 </style>
 <script>
