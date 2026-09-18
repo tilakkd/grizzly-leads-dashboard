@@ -2283,10 +2283,7 @@ updateKPIs();
           + '</div>'
         + '<div class="blk"><div class="blk-t">Most requested service</div>'
           + svcLine('PAID','p',topOf(tp)) + svcLine('ORG','o',topOf(to))
-          + '<div class="brk"><div class="blk-t" style="margin-bottom:6px;">Full split &mdash; paid</div>'
-          + splitList(tp,'')
-          + (to.length?'<div class="blk-t" style="margin:10px 0 6px;">Full split &mdash; organic</div>'+splitList(to,'og'):'')
-          + '</div></div>'
+          + '</div>'
         + '</div>';
     }
 
@@ -2307,10 +2304,7 @@ updateKPIs();
           + '</div>'
         + '<div class="blk"><div class="blk-t">Most requested service</div>'
           + svcLine('PAID','p',topOf(tp2)) + svcLine('ORG','o',topOf(to2))
-          + '<div class="brk"><div class="blk-t" style="margin-bottom:6px;">Full split &mdash; paid</div>'
-          + splitList(tp2,'', noneP>0?['Nothing said on the call',noneP]:null)
-          + (to2.length?'<div class="blk-t" style="margin:10px 0 6px;">Full split &mdash; organic</div>'+splitList(to2,'og'):'')
-          + '</div></div>'
+          + '</div>'
         + '</div>';
     }
   }
