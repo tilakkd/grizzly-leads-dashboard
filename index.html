@@ -328,25 +328,33 @@ tbody tr:hover td{background:#f9fbff;}
 .stx-priv .c{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;}
 /* ===== END SEARCH TERMS PER KEYWORD ===== */
 
-/* ===== HCP JOB VALUE COLUMN ===== */
+/* ===== HCP STAGE COLUMN ===== */
 #leads td.hcp,#calls td.hcp{background:#f8faff;}
 #leads th.hcp,#calls th.hcp{background:#eef4ff;color:#2f6fd0;}
-.hcp-v{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;font-weight:700;color:var(--green);white-space:nowrap;}
-.hcp-open{font-size:10.5px;font-weight:700;color:var(--amber);white-space:nowrap;}
+td.hcp .hs{display:block;font-size:9px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;line-height:1.3;}
+td.hcp .hv{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;font-weight:700;
+  line-height:1.45;white-space:nowrap;}
+td.hcp .hm{display:block;font-size:9px;color:#9aa3b2;line-height:1.4;white-space:nowrap;}
+td.hcp.h-won .hs,td.hcp.h-won .hv{color:var(--green);}
+td.hcp.h-est .hs,td.hcp.h-est .hv{color:#2563eb;}
+td.hcp.h-visit .hs,td.hcp.h-visit .hv{color:#b45309;}
+td.hcp.h-lost .hs,td.hcp.h-lost .hv{color:#b3261e;}
+td.hcp.h-inhcp .hs{color:#8a93a3;}
 .hcp-no{color:#c3c9d4;}
-.hcp-nph{font-size:10px;color:#9aa3b2;font-style:italic;white-space:nowrap;}
 td.hcp .hcp-more{display:block;margin-top:4px;padding:0;border:0;background:none;font:inherit;
   font-size:9.5px;font-weight:800;letter-spacing:.2px;color:var(--blue);cursor:pointer;line-height:1.3;text-align:left;}
 td.hcp .hcp-more::after{content:"Details";}
 td.hcp.is-open .hcp-more::after{content:"Hide";}
 td.hcp .hcp-more:hover::after,td.hcp .hcp-more:focus-visible::after{text-decoration:underline;}
-td.hcp .hcp-why{display:none;margin-top:4px;font-size:9.5px;line-height:1.5;color:var(--muted);}
+td.hcp .hcp-why{display:none;margin-top:4px;font-size:9.5px;line-height:1.55;color:var(--muted);}
 td.hcp.is-open .hcp-why{display:block;}
-td.hcp.s-money .hcp-why::after{content:"Job finished. This is their lifetime total in Housecall Pro.";}
-td.hcp.s-open .hcp-why::after{content:"Customer record exists in Housecall Pro. No job finished yet.";}
-td.hcp.s-none .hcp-why::after{content:"This phone number is not in Housecall Pro.";}
-td.hcp.s-noph .hcp-why::after{content:"No phone number was captured, so this cannot be checked.";}
-/* ===== END HCP JOB VALUE COLUMN ===== */
+td.hcp.h-won .hcp-why::after{content:"Housecall Pro has this estimate marked Won. Open Estimates, find the estimate number shown above, and the same figure is in its Won column.";}
+td.hcp.h-est .hcp-why::after{content:"The estimate has been sent and is still Open in Housecall Pro, waiting on the customer. The figure is that estimate's Open column.";}
+td.hcp.h-lost .hcp-why::after{content:"Housecall Pro has this estimate marked Lost. The figure is the amount that was quoted, in its Lost column.";}
+td.hcp.h-visit .hcp-why::after{content:"A visit is booked in Housecall Pro for this date. The estimate exists but has no price on it yet, so there is no figure to show.";}
+td.hcp.h-inhcp .hcp-why::after{content:"This person is a customer in Housecall Pro, but no estimate has been raised for them yet.";}
+td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall Pro.";}
+/* ===== END HCP STAGE COLUMN ===== */
 </style>
 </head>
 <body>
@@ -444,7 +452,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr>
 <th>#</th><th>Date &amp; time (MST)</th><th>Lead name</th><th>Form</th><th>Source</th>
 <th>Campaign</th><th>Keyword</th><th>Search term</th><th>City</th><th>Service</th><th>Landing page</th>
-<th class="hcp">Job value (HCP)<span class="sort-ar">&#8597;</span></th>
+<th class="hcp">HCP status<span class="sort-ar">&#8597;</span></th>
 </tr>
 </thead>
 <tbody>
@@ -460,7 +468,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-17">
 <td>2</td>
@@ -474,7 +482,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Parker, CO</td>
 <td>Crawl Space Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/parker-crawl-space-insulation/" target="_blank" rel="noopener">/parker-crawl-space-insulation/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-visit" data-sort="20000022"><span class="hs">Visit booked</span> <span class="hv">Sep 22</span> <span class="hm">Est #240</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-16">
 <td>3</td>
@@ -488,7 +496,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td><span class="stq-empty">—</span></td>
 <td>Spray Foam Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-est" data-sort="40022769.60"><span class="hs">Estimate sent</span> <span class="hv">$22,769.60</span> <span class="hm">Est #239</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-15">
 <td>4</td>
@@ -502,7 +510,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Aurora, CO</td>
 <td>Insulation Removal</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-est" data-sort="40011000"><span class="hs">Estimate sent</span> <span class="hv">$11,000</span> <span class="hm">Est #236</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-15">
 <td>5</td>
@@ -516,7 +524,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Insulation Removal</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-lp/" target="_blank" rel="noopener">/attic-insulation-lp/</a></td>
-<td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-14">
 <td>6</td>
@@ -530,7 +538,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Golden, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-est" data-sort="40003820"><span class="hs">Estimate sent</span> <span class="hv">$3,820</span> <span class="hm">Est #232</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-14">
 <td>7</td>
@@ -544,7 +552,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-won" data-sort="50002500"><span class="hs">Won</span> <span class="hv">$2,500</span> <span class="hm">Est #231</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-12">
 <td>8</td>
@@ -558,7 +566,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-12">
 <td>9</td>
@@ -572,7 +580,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Crawl Space Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-11">
 <td>10</td>
@@ -586,7 +594,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Spray Foam Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/spray-foam-insulation-lp/" target="_blank" rel="noopener">/spray-foam-insulation-lp/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-inhcp" data-sort="10000000"><span class="hs">In HCP</span> <span class="hm">No estimate yet</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-10">
 <td>11</td>
@@ -600,7 +608,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Golden, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://grizzlyinsulationco.com/golden-batt-insulation/" target="_blank" rel="noopener">/golden-batt-insulation/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-est" data-sort="40004080"><span class="hs">Estimate sent</span> <span class="hv">$4,080</span> <span class="hm">Est #227</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-09">
 <td>12</td>
@@ -614,7 +622,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Blown-In Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-visit" data-sort="20000018"><span class="hs">Visit booked</span> <span class="hv">Sep 18</span> <span class="hm">Est #228</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-08">
 <td>13</td>
@@ -628,7 +636,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Crawl Space Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-06">
 <td>14</td>
@@ -642,7 +650,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Blown-In Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-lost" data-sort="30002050"><span class="hs">Lost</span> <span class="hv">$2,050</span> <span class="hm">Est #223</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-05">
 <td>15</td>
@@ -656,7 +664,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Centennial, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-denver-lp/" target="_blank" rel="noopener">/attic-insulation-denver-lp/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-est" data-sort="40008750"><span class="hs">Estimate sent</span> <span class="hv">$8,750</span> <span class="hm">Est #226</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-04">
 <td>16</td>
@@ -670,7 +678,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Spray Foam Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/attic-insulation-lp/" target="_blank" rel="noopener">/attic-insulation-lp/</a></td>
-<td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-visit" data-sort="20000024"><span class="hs">Visit booked</span> <span class="hv">Sep 24</span> <span class="hm">Est #220</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-02">
 <td>17</td>
@@ -684,7 +692,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td><span class="stq-empty">—</span></td>
 <td>Insulation Removal</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp s-money" data-sort="1500"><span class="hcp-v">$1,500</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-won" data-sort="50001500"><span class="hs">Won</span> <span class="hv">$1,500</span> <span class="hm">Est #217</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 </tbody>
 </table>
@@ -708,64 +716,64 @@ Call Leads <span class="cnt">manually logged from CTM</span>
 <thead>
 <tr>
 <th>#</th><th>Date &amp; time (MST)</th><th>Caller</th><th>Source</th>
-<th>Tracking line (CTM)</th><th>Keyword</th><th>Duration</th><th>Status</th><th>Topic</th><th class="hcp">Job value (HCP)<span class="sort-ar">&#8597;</span></th>
+<th>Tracking line (CTM)</th><th>Keyword</th><th>Duration</th><th>Status</th><th>Topic</th><th class="hcp">HCP status<span class="sort-ar">&#8597;</span></th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
-<tr data-source="organic" data-date="2026-09-17" data-service="Commercial job"><td>1</td><td>Sep 17, 2026<div class="tiny">3:28 PM MST (Sep 18, 3:58 AM IST)</div></td><td><span class="name"><span class="avatar c">CC</span>Critter Control</span><div class="tiny">Colorado Springs, CO &middot; (719) 246-3649</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>9:19</td><td><span class="st-ans">Answered</span><div class="tiny">Referral partnership discussed, not a booked job yet</div></td><td class="muted">Eric from Critter Control, a pest-control firm, rang to ask whether Grizzly would take on attic insulation, remediation and crawl-space work referred from their branches between Pueblo and Longmont, including Colorado Springs. He put the likely volume at a minimum of two attic jobs a month and said Critter Control pays on net-30 terms. Mercede set out what Grizzly covers &mdash; attic cleanouts, air sealing, sanitisation, blown-in insulation, vapour barriers, wall and floor-joist insulation &mdash; and is sending pricing and work photos. This is a referral channel being set up, not a single job booked.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-17" data-service="Commercial job"><td>1</td><td>Sep 17, 2026<div class="tiny">3:28 PM MST (Sep 18, 3:58 AM IST)</div></td><td><span class="name"><span class="avatar c">CC</span>Critter Control</span><div class="tiny">Colorado Springs, CO &middot; (719) 246-3649</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>9:19</td><td><span class="st-ans">Answered</span><div class="tiny">Referral partnership discussed, not a booked job yet</div></td><td class="muted">Eric from Critter Control, a pest-control firm, rang to ask whether Grizzly would take on attic insulation, remediation and crawl-space work referred from their branches between Pueblo and Longmont, including Colorado Springs. He put the likely volume at a minimum of two attic jobs a month and said Critter Control pays on net-30 terms. Mercede set out what Grizzly covers &mdash; attic cleanouts, air sealing, sanitisation, blown-in insulation, vapour barriers, wall and floor-joist insulation &mdash; and is sending pricing and work photos. This is a referral channel being set up, not a single job booked.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="organic" data-date="2026-09-17" data-service="Attic Insulation"><td>2</td><td>Sep 17, 2026<div class="tiny">2:43 PM MST (Sep 18, 3:13 AM IST)</div></td><td><span class="name"><span class="avatar c">CP</span>Charlotte Pearce</span><div class="tiny">Denver, CO &middot; (720) 503-9664</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>10:57</td><td><span class="st-ans">Answered</span><div class="tiny">Free inspection booked Monday, 11 AM to 1 PM</div></td><td class="muted">Called about a mouse infestation and insulation put in by another company in one attic, which she wants inspected because she is unhappy with the exclusion work, plus a quote to insulate the second attic. Crawl-space and gopher concerns came up as well. Mercede booked a free inspection for Monday between 11 AM and 1 PM, to be carried out by the owner, who will give an honest assessment and may comment on the earlier work in the estimate.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-17" data-service="Attic Insulation"><td>2</td><td>Sep 17, 2026<div class="tiny">2:43 PM MST (Sep 18, 3:13 AM IST)</div></td><td><span class="name"><span class="avatar c">CP</span>Charlotte Pearce</span><div class="tiny">Denver, CO &middot; (720) 503-9664</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>10:57</td><td><span class="st-ans">Answered</span><div class="tiny">Free inspection booked Monday, 11 AM to 1 PM</div></td><td class="muted">Called about a mouse infestation and insulation put in by another company in one attic, which she wants inspected because she is unhappy with the exclusion work, plus a quote to insulate the second attic. Crawl-space and gopher concerns came up as well. Mercede booked a free inspection for Monday between 11 AM and 1 PM, to be carried out by the owner, who will give an honest assessment and may comment on the earlier work in the estimate.</td><td class="hcp h-visit" data-sort="20000021"><span class="hs">Visit booked</span> <span class="hv">Sep 21</span> <span class="hm">Est #242</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="paid" data-date="2026-09-17" data-service="Commercial job"><td>3</td><td>Sep 17, 2026<div class="tiny">8:17 AM MST (Sep 17, 8:47 PM IST)</div></td><td><span class="name"><span class="avatar c">PC</span>Philip Citerone</span><div class="tiny">Boulder, CO &middot; (443) 220-1709</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">insulation services</span></td><td>8:56</td><td><span class="st-ans">Answered</span><div class="tiny">Rough pricing and an estimate to be sent</div></td><td class="muted">An HOA board member who came through the insulation company landing page and rang the number on it. He is planning roof and insulation replacement on two eight-unit buildings from 1968, with the first tentatively set for spring 2027. The attic spaces are low-clearance and hard to reach, so the insulation has to be replaced while the roof is off, and HVAC repairs may need coordinating with the roofer. Mercede is researching the properties, putting together rough pricing and coordinating with Bear Brothers Roofing if needed. Landing page /insulation-company-lp/.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-17" data-service="Commercial job"><td>3</td><td>Sep 17, 2026<div class="tiny">8:17 AM MST (Sep 17, 8:47 PM IST)</div></td><td><span class="name"><span class="avatar c">PC</span>Philip Citerone</span><div class="tiny">Boulder, CO &middot; (443) 220-1709</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">insulation services</span></td><td>8:56</td><td><span class="st-ans">Answered</span><div class="tiny">Rough pricing and an estimate to be sent</div></td><td class="muted">An HOA board member who came through the insulation company landing page and rang the number on it. He is planning roof and insulation replacement on two eight-unit buildings from 1968, with the first tentatively set for spring 2027. The attic spaces are low-clearance and hard to reach, so the insulation has to be replaced while the roof is off, and HVAC repairs may need coordinating with the roofer. Mercede is researching the properties, putting together rough pricing and coordinating with Bear Brothers Roofing if needed. Landing page /insulation-company-lp/.</td><td class="hcp h-inhcp" data-sort="10000000"><span class="hs">In HCP</span> <span class="hm">No estimate yet</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="organic" data-date="2026-09-16" data-service="Commercial job"><td>4</td><td>Sep 16, 2026<div class="tiny">8:54 AM MST (Sep 16, 9:24 PM IST)</div></td><td><span class="name"><span class="avatar c">CC</span>Chris Crotzer</span><div class="tiny">Denver, CO · (303) 638-1709</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>5:59</td><td><span class="st-ans">Answered</span><div class="tiny">On-site estimate booked Monday, 9 AM</div></td><td class="muted">Chris Crotzer, an electrical contractor, rang to ask whether Grizzly could take on a commercial fire-stopping penetration correction at the Glasshouse property in Denver. Mercede confirmed Grizzly can do that work and booked an on-site estimate for Monday at 9 AM, noting the estimator would call ahead if anything needed moving. He left 303-638-1709 and an email address as his contact.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-16" data-service="Commercial job"><td>4</td><td>Sep 16, 2026<div class="tiny">8:54 AM MST (Sep 16, 9:24 PM IST)</div></td><td><span class="name"><span class="avatar c">CC</span>Chris Crotzer</span><div class="tiny">Denver, CO · (303) 638-1709</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>5:59</td><td><span class="st-ans">Answered</span><div class="tiny">On-site estimate booked Monday, 9 AM</div></td><td class="muted">Chris Crotzer, an electrical contractor, rang to ask whether Grizzly could take on a commercial fire-stopping penetration correction at the Glasshouse property in Denver. Mercede confirmed Grizzly can do that work and booked an on-site estimate for Monday at 9 AM, noting the estimator would call ahead if anything needed moving. He left 303-638-1709 and an email address as his contact.</td><td class="hcp h-visit" data-sort="20000021"><span class="hs">Visit booked</span> <span class="hv">Sep 21</span> <span class="hm">Est #237</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="organic" data-date="2026-09-16" data-service="Commercial job"><td>5</td><td>Sep 16, 2026<div class="tiny">8:27 AM MST (Sep 16, 8:57 PM IST)</div></td><td><span class="name"><span class="avatar c">SH</span>Sandy Hollander</span><div class="tiny">Loveland, OH · (786) 390-9927</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>4:29</td><td><span class="st-ans">Answered</span><div class="tiny">Wants to speak to an estimator before booking an inspection</div></td><td class="muted">Sandy Hollander, a project manager at a Boulder doctor’s office, called about commercial insulation for the open HVAC plenum above the drop ceilings, to bring the noise down. She needs products that meet fire and safety codes for plenum spaces and asked to speak to a knowledgeable estimator before an inspection is booked. Mercede took her callback number and will pass the details to the estimator; Sandy asked to be called back the same day. An unanswered 23-second call from the same number at 7:59 AM is her first attempt, not a separate lead. Caller ID places her in Ohio, so the job site is Boulder rather than her own location.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-16" data-service="Commercial job"><td>5</td><td>Sep 16, 2026<div class="tiny">8:27 AM MST (Sep 16, 8:57 PM IST)</div></td><td><span class="name"><span class="avatar c">SH</span>Sandy Hollander</span><div class="tiny">Loveland, OH · (786) 390-9927</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>4:29</td><td><span class="st-ans">Answered</span><div class="tiny">Wants to speak to an estimator before booking an inspection</div></td><td class="muted">Sandy Hollander, a project manager at a Boulder doctor’s office, called about commercial insulation for the open HVAC plenum above the drop ceilings, to bring the noise down. She needs products that meet fire and safety codes for plenum spaces and asked to speak to a knowledgeable estimator before an inspection is booked. Mercede took her callback number and will pass the details to the estimator; Sandy asked to be called back the same day. An unanswered 23-second call from the same number at 7:59 AM is her first attempt, not a separate lead. Caller ID places her in Ohio, so the job site is Boulder rather than her own location.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-15" data-service=""><td>6</td><td>Sep 15, 2026<div class="tiny">2:49 PM MST (Sep 16, 3:19 AM IST)</div></td><td><span class="name"><span class="avatar c">AM</span>Anna Marzolino</span><div class="tiny">Anaheim, CA · (714) 470-6604</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">insulation denver</span></td><td>0:31</td><td><span class="st-vm">Voicemail</span><div class="tiny">Reached voicemail, no message recorded</div></td><td class="muted">Clicked a Google ad on the search term insulation denver, read the insulation company landing page and rang the number on it. The call connected to Mercede’s voicemail and ran 31 seconds, but nothing was recorded, so there is no message to return — the caller ID is the only way back. Landing page /insulation-company-lp/.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-15" data-service=""><td>6</td><td>Sep 15, 2026<div class="tiny">2:49 PM MST (Sep 16, 3:19 AM IST)</div></td><td><span class="name"><span class="avatar c">AM</span>Anna Marzolino</span><div class="tiny">Anaheim, CA · (714) 470-6604</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">insulation denver</span></td><td>0:31</td><td><span class="st-vm">Voicemail</span><div class="tiny">Reached voicemail, no message recorded</div></td><td class="muted">Clicked a Google ad on the search term insulation denver, read the insulation company landing page and rang the number on it. The call connected to Mercede’s voicemail and ran 31 seconds, but nothing was recorded, so there is no message to return — the caller ID is the only way back. Landing page /insulation-company-lp/.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-15" data-service="Spray Foam Insulation"><td>7</td><td>Sep 15, 2026<div class="tiny">11:30 AM MST (Sep 16, 12:00 AM IST)</div></td><td><span class="name"><span class="avatar c">LE</span>Lenny (Erie)</span><div class="tiny">Denver, CO · (720) 469-9794</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">spray foam insulation denver</span></td><td>0:58</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, wants spray foam for a new shed</div></td><td class="muted">Lenny, who is in Erie, came through the spray foam landing page and rang the number on it. He reached Mercede’s voicemail and left a message asking to talk about spray insulation for a newly built shed, leaving 720-469-9794 as his callback number. Landing page /spray-foam-insulation-lp/.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-15" data-service="Spray Foam Insulation"><td>7</td><td>Sep 15, 2026<div class="tiny">11:30 AM MST (Sep 16, 12:00 AM IST)</div></td><td><span class="name"><span class="avatar c">LE</span>Lenny (Erie)</span><div class="tiny">Denver, CO · (720) 469-9794</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">spray foam insulation denver</span></td><td>0:58</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, wants spray foam for a new shed</div></td><td class="muted">Lenny, who is in Erie, came through the spray foam landing page and rang the number on it. He reached Mercede’s voicemail and left a message asking to talk about spray insulation for a newly built shed, leaving 720-469-9794 as his callback number. Landing page /spray-foam-insulation-lp/.</td><td class="hcp h-est" data-sort="40004768"><span class="hs">Estimate sent</span> <span class="hv">$4,768</span> <span class="hm">Est #233</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-15" data-service=""><td>8</td><td>Sep 15, 2026<div class="tiny">11:02 AM MST (Sep 15, 11:32 PM IST)</div></td><td><span class="name"><span class="avatar c">BV</span>Buena Vista Caller</span><div class="tiny">Buena Vista, CO · (719) 435-1270</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads — SERP call ad<div class="tiny"><span class="kw">(303) 217-5970</span></div></td><td class="muted">—</td><td>1:16</td><td><span class="st-vm">Voicemail</span><div class="tiny">Reached voicemail, no message recorded</div></td><td class="muted">Tapped the call button on a Google search ad instead of visiting the site, so no landing page or keyword was captured for this one. The call connected to Mercede’s voicemail for 1 minute 16 seconds with silence on the line and no message was recorded.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-15" data-service=""><td>8</td><td>Sep 15, 2026<div class="tiny">11:02 AM MST (Sep 15, 11:32 PM IST)</div></td><td><span class="name"><span class="avatar c">BV</span>Buena Vista Caller</span><div class="tiny">Buena Vista, CO · (719) 435-1270</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads — SERP call ad<div class="tiny"><span class="kw">(303) 217-5970</span></div></td><td class="muted">—</td><td>1:16</td><td><span class="st-vm">Voicemail</span><div class="tiny">Reached voicemail, no message recorded</div></td><td class="muted">Tapped the call button on a Google search ad instead of visiting the site, so no landing page or keyword was captured for this one. The call connected to Mercede’s voicemail for 1 minute 16 seconds with silence on the line and no message was recorded.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-10" data-service=""><td>9</td><td>Sep 10, 2026<div class="tiny">2:27 PM MST (Sep 11, 2:57 AM IST)</div></td><td><span class="name"><span class="avatar c">GL</span>Gregory Lane</span><div class="tiny">Sedalia, CO &middot; (303) 901-3837</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>1:15</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, contractor wants a callback</div></td><td class="muted">Greg with DB Designs, a contractor, rang the number on a Google ad because he is looking for an insulation company to work on a project that starts in the next month or so. He has questions and asked for a callback on 303-901-3837. The call went to Mercede&rsquo;s voicemail and he left the message there.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-10" data-service=""><td>9</td><td>Sep 10, 2026<div class="tiny">2:27 PM MST (Sep 11, 2:57 AM IST)</div></td><td><span class="name"><span class="avatar c">GL</span>Gregory Lane</span><div class="tiny">Sedalia, CO &middot; (303) 901-3837</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>1:15</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, contractor wants a callback</div></td><td class="muted">Greg with DB Designs, a contractor, rang the number on a Google ad because he is looking for an insulation company to work on a project that starts in the next month or so. He has questions and asked for a callback on 303-901-3837. The call went to Mercede&rsquo;s voicemail and he left the message there.</td><td class="hcp h-inhcp" data-sort="10000000"><span class="hs">In HCP</span> <span class="hm">No estimate yet</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="organic" data-date="2026-09-10" data-service="Commercial job"><td>10</td><td>Sep 10, 2026<div class="tiny">1:56 PM MST (Sep 11, 2:26 AM IST)</div></td><td><span class="name"><span class="avatar c">PC</span>Parkway Construction</span><div class="tiny">Allen, TX &middot; (214) 972-7902</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>0:57</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, commercial fireproofing job in Cherry Creek</div></td><td class="muted">Mike from Parkway Construction left a voicemail asking whether Grizzly can do spray-applied fireproofing on a commercial project in Cherry Creek, Denver, and asked for a callback. Caller ID places the business in Texas, so the job site is Denver rather than his own location.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-10" data-service="Commercial job"><td>10</td><td>Sep 10, 2026<div class="tiny">1:56 PM MST (Sep 11, 2:26 AM IST)</div></td><td><span class="name"><span class="avatar c">PC</span>Parkway Construction</span><div class="tiny">Allen, TX &middot; (214) 972-7902</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>0:57</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, commercial fireproofing job in Cherry Creek</div></td><td class="muted">Mike from Parkway Construction left a voicemail asking whether Grizzly can do spray-applied fireproofing on a commercial project in Cherry Creek, Denver, and asked for a callback. Caller ID places the business in Texas, so the job site is Denver rather than his own location.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="paid" data-date="2026-09-10" data-service="Spray Foam Insulation"><td>11</td><td>Sep 10, 2026<div class="tiny">12:16 PM MST (Sep 11, 12:46 AM IST)</div></td><td><span class="name"><span class="avatar c">MS</span>Mike (Southside)</span><div class="tiny">San Diego, CA &middot; (303) 506-3635</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>1:09</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, asking about slab lifting with spray foam</div></td><td class="muted">Found Grizzly through a Google search and rang the number on the ad. He asked whether Grizzly does slab re-levelling or slab lifting using spray foam, and left 303-506-3635 twice as the callback number. The call reached Mercede&rsquo;s voicemail. Caller ID reads Southside and places the line in California, but the callback number is a Colorado 303 number.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-10" data-service="Spray Foam Insulation"><td>11</td><td>Sep 10, 2026<div class="tiny">12:16 PM MST (Sep 11, 12:46 AM IST)</div></td><td><span class="name"><span class="avatar c">MS</span>Mike (Southside)</span><div class="tiny">San Diego, CA &middot; (303) 506-3635</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>1:09</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, asking about slab lifting with spray foam</div></td><td class="muted">Found Grizzly through a Google search and rang the number on the ad. He asked whether Grizzly does slab re-levelling or slab lifting using spray foam, and left 303-506-3635 twice as the callback number. The call reached Mercede&rsquo;s voicemail. Caller ID reads Southside and places the line in California, but the callback number is a Colorado 303 number.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="paid" data-date="2026-09-09" data-service=""><td>12</td><td>Sep 9, 2026<div class="tiny">4:58 PM MST (Sep 10, 5:28 AM IST)</div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Wetumpka, AL &middot; (720) 360-5446</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>0:34</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left</div></td><td class="muted">Clicked a Google ad and rang the number on the landing page late in the afternoon. The call reached Mercede&rsquo;s voicemail and the caller left a message, but CTM holds no transcript, so the job details are not on record yet. Worth a callback first thing. CTM recorded the click as paid Google traffic but released no campaign, ad group or keyword for it.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-09" data-service=""><td>12</td><td>Sep 9, 2026<div class="tiny">4:58 PM MST (Sep 10, 5:28 AM IST)</div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Wetumpka, AL &middot; (720) 360-5446</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>0:34</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left</div></td><td class="muted">Clicked a Google ad and rang the number on the landing page late in the afternoon. The call reached Mercede&rsquo;s voicemail and the caller left a message, but CTM holds no transcript, so the job details are not on record yet. Worth a callback first thing. CTM recorded the click as paid Google traffic but released no campaign, ad group or keyword for it.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="paid" data-date="2026-09-09" data-service="Spray Foam Insulation"><td>13</td><td>Sep 9, 2026<div class="tiny">10:19 AM MST (Sep 9, 10:49 PM IST)</div></td><td><span class="name"><span class="avatar c">GT</span>Greengate Turf</span><div class="tiny">Magnolia, TX &middot; (281) 831-5028</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>1:03</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, wants a barndominium quote</div></td><td class="muted">Reached Mercede&rsquo;s voicemail and left a message. Keith Cannon is building a barndominium in Loveland, Colorado and asked for a quote on closed-cell foam and net-and-blow insulation. He left 281-831-5028 as the callback number. Caller ID places the business in Texas, so the job site is Colorado rather than his own location.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-09" data-service="Spray Foam Insulation"><td>13</td><td>Sep 9, 2026<div class="tiny">10:19 AM MST (Sep 9, 10:49 PM IST)</div></td><td><span class="name"><span class="avatar c">GT</span>Greengate Turf</span><div class="tiny">Magnolia, TX &middot; (281) 831-5028</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>1:03</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left, wants a barndominium quote</div></td><td class="muted">Reached Mercede&rsquo;s voicemail and left a message. Keith Cannon is building a barndominium in Loveland, Colorado and asked for a quote on closed-cell foam and net-and-blow insulation. He left 281-831-5028 as the callback number. Caller ID places the business in Texas, so the job site is Colorado rather than his own location.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="organic" data-date="2026-09-09" data-service="Blown-In Insulation"><td>14</td><td>Sep 9, 2026<div class="tiny">10:11 AM MST (Sep 9, 10:41 PM IST)</div></td><td><span class="name"><span class="avatar c">TD</span>Tom Devine</span><div class="tiny">Denver, CO &middot; (720) 520-2126</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>4:22</td><td><span class="st-ans">Answered</span><div class="tiny">Free estimate booked Tue Sep 15, 11 AM to 1 PM</div></td><td class="muted">Wants an estimate to replace or add blown-in insulation in the attic of his late-1970s home in Arvada. Mercede booked a free estimate for Tuesday Sep 15 between 11 AM and 1 PM at his Coors Drive address in Arvada. His phone number and email were taken, and he asked not to be added to any mailing list.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-09" data-service="Blown-In Insulation"><td>14</td><td>Sep 9, 2026<div class="tiny">10:11 AM MST (Sep 9, 10:41 PM IST)</div></td><td><span class="name"><span class="avatar c">TD</span>Tom Devine</span><div class="tiny">Denver, CO &middot; (720) 520-2126</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>4:22</td><td><span class="st-ans">Answered</span><div class="tiny">Free estimate booked Tue Sep 15, 11 AM to 1 PM</div></td><td class="muted">Wants an estimate to replace or add blown-in insulation in the attic of his late-1970s home in Arvada. Mercede booked a free estimate for Tuesday Sep 15 between 11 AM and 1 PM at his Coors Drive address in Arvada. His phone number and email were taken, and he asked not to be added to any mailing list.</td><td class="hcp h-lost" data-sort="30005056.25"><span class="hs">Lost</span> <span class="hv">$5,056.25</span> <span class="hm">Est #225</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="organic" data-date="2026-09-09" data-service="Attic Insulation"><td>15</td><td>Sep 9, 2026<div class="tiny">9:51 AM MST (Sep 9, 10:21 PM IST)</div></td><td><span class="name"><span class="avatar c">CP</span>Chad Powell</span><div class="tiny">Denver, CO &middot; (720) 891-5877</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>3:53</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Wed Sep 16, 10 AM to noon</div></td><td class="muted">Asked for a free inspection and estimate. The attic insulation at his Denver row home is not enough and the soffit vents are missing or blocked, and he needs to know what his HOA will approve. Mercede booked the appointment for Wednesday Sep 16 between 10 AM and noon.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-09" data-service="Attic Insulation"><td>15</td><td>Sep 9, 2026<div class="tiny">9:51 AM MST (Sep 9, 10:21 PM IST)</div></td><td><span class="name"><span class="avatar c">CP</span>Chad Powell</span><div class="tiny">Denver, CO &middot; (720) 891-5877</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>3:53</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Wed Sep 16, 10 AM to noon</div></td><td class="muted">Asked for a free inspection and estimate. The attic insulation at his Denver row home is not enough and the soffit vents are missing or blocked, and he needs to know what his HOA will approve. Mercede booked the appointment for Wednesday Sep 16 between 10 AM and noon.</td><td class="hcp h-est" data-sort="40005254"><span class="hs">Estimate sent</span> <span class="hv">$5,254</span> <span class="hm">Est #224</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="paid" data-date="2026-09-08" data-service=""><td>16</td><td>Sep 8, 2026<div class="tiny">11:02 AM MST (Sep 8, 11:32 PM IST)</div></td><td><span class="name"><span class="avatar c">DA</span>Dana</span><div class="tiny">Santa Rosa, CA · (415) 341-5280</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rat proof insulation</span></td><td>1:56</td><td><span class="st-ans">Answered</span><div class="tiny">Asked about mold testing, sent to a specialist</div></td><td class="muted">Came through the insulation company landing page and rang the number on it. She asked whether Grizzly does surface testing of spray foam insulation for mold, which home buyers had requested. Mercede explained that insulation companies do not usually do mold testing and suggested a mold specialist. Dana said she may use a mold test kit instead. Landing page /insulation-company-lp/.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-08" data-service=""><td>16</td><td>Sep 8, 2026<div class="tiny">11:02 AM MST (Sep 8, 11:32 PM IST)</div></td><td><span class="name"><span class="avatar c">DA</span>Dana</span><div class="tiny">Santa Rosa, CA · (415) 341-5280</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rat proof insulation</span></td><td>1:56</td><td><span class="st-ans">Answered</span><div class="tiny">Asked about mold testing, sent to a specialist</div></td><td class="muted">Came through the insulation company landing page and rang the number on it. She asked whether Grizzly does surface testing of spray foam insulation for mold, which home buyers had requested. Mercede explained that insulation companies do not usually do mold testing and suggested a mold specialist. Dana said she may use a mold test kit instead. Landing page /insulation-company-lp/.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-08" data-service="Spray Foam Insulation"><td>17</td><td>Sep 8, 2026<div class="tiny">10:46 AM MST (Sep 8, 11:16 PM IST)</div></td><td><span class="name"><span class="avatar c">DR</span>Derrick Riley</span><div class="tiny">Aurora, CO · (303) 946-8187</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">mouse proof insulation</span></td><td>2:48</td><td><span class="st-ans">Answered</span><div class="tiny">Wants a spray foam estimate, plans coming by email</div></td><td class="muted">Came through the insulation company landing page and rang the number on it to ask for a spray foam estimate for the roof and walls of a garage and ADU he is building. The job is still a few months out because of permit delays. He will email the plans, roofing details, project address, name and phone number to info@grizzlyinsulationco.com. Landing page /insulation-company-lp/.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-08" data-service="Spray Foam Insulation"><td>17</td><td>Sep 8, 2026<div class="tiny">10:46 AM MST (Sep 8, 11:16 PM IST)</div></td><td><span class="name"><span class="avatar c">DR</span>Derrick Riley</span><div class="tiny">Aurora, CO · (303) 946-8187</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">mouse proof insulation</span></td><td>2:48</td><td><span class="st-ans">Answered</span><div class="tiny">Wants a spray foam estimate, plans coming by email</div></td><td class="muted">Came through the insulation company landing page and rang the number on it to ask for a spray foam estimate for the roof and walls of a garage and ADU he is building. The job is still a few months out because of permit delays. He will email the plans, roofing details, project address, name and phone number to info@grizzlyinsulationco.com. Landing page /insulation-company-lp/.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-08" data-service="Insulation Removal"><td>18</td><td>Sep 8, 2026<div class="tiny">8:57 AM MST (Sep 8, 9:27 PM IST)</div></td><td><span class="name"><span class="avatar c">JG</span>James Galione</span><div class="tiny">Port Richey, FL · (727) 247-9707</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">—</td><td>4:12</td><td><span class="st-ans">Answered</span><div class="tiny">Free estimate booked Fri 12 to 2 PM</div></td><td class="muted">Came through the crawl space encapsulation landing page and rang the number on it. He asked for a quote to remove the insulation in his Lakewood, Colorado attic and possibly re-insulate it. Mercede booked a free estimate for Friday between 12 and 2 PM at 85 Garland Street. His wife Davey is the main contact. Landing page /crawl-space-encapsulation-lp/.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-08" data-service="Insulation Removal"><td>18</td><td>Sep 8, 2026<div class="tiny">8:57 AM MST (Sep 8, 9:27 PM IST)</div></td><td><span class="name"><span class="avatar c">JG</span>James Galione</span><div class="tiny">Port Richey, FL · (727) 247-9707</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">—</td><td>4:12</td><td><span class="st-ans">Answered</span><div class="tiny">Free estimate booked Fri 12 to 2 PM</div></td><td class="muted">Came through the crawl space encapsulation landing page and rang the number on it. He asked for a quote to remove the insulation in his Lakewood, Colorado attic and possibly re-insulate it. Mercede booked a free estimate for Friday between 12 and 2 PM at 85 Garland Street. His wife Davey is the main contact. Landing page /crawl-space-encapsulation-lp/.</td><td class="hcp h-inhcp" data-sort="10000000"><span class="hs">In HCP</span> <span class="hm">No estimate yet</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-04" data-service=""><td>19</td><td>Sep 4, 2026<div class="tiny">12:54 PM MST (Sep 5, 1:24 AM IST)</div></td><td><span class="name"><span class="avatar c">PA</span>Patel</span><div class="tiny">Denver, CO &middot; (224) 392-5078</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>3:15</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Fri Sep 11, 11 AM to 1 PM</div></td><td class="muted">Came through the attic insulation landing page and rang the number on it to ask for an estimate. The mini-splits at his Denver home run very often and he thinks the walls may need more insulation, even though the attic itself is already well insulated. Mercede booked a free inspection for Friday Sep 11 between 11 AM and 1 PM at his Denver 80222 address. Landing page /attic-insulation-lp/.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-04" data-service=""><td>19</td><td>Sep 4, 2026<div class="tiny">12:54 PM MST (Sep 5, 1:24 AM IST)</div></td><td><span class="name"><span class="avatar c">PA</span>Patel</span><div class="tiny">Denver, CO &middot; (224) 392-5078</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>3:15</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Fri Sep 11, 11 AM to 1 PM</div></td><td class="muted">Came through the attic insulation landing page and rang the number on it to ask for an estimate. The mini-splits at his Denver home run very often and he thinks the walls may need more insulation, even though the attic itself is already well insulated. Mercede booked a free inspection for Friday Sep 11 between 11 AM and 1 PM at his Denver 80222 address. Landing page /attic-insulation-lp/.</td><td class="hcp h-est" data-sort="40003900"><span class="hs">Estimate sent</span> <span class="hv">$3,900</span> <span class="hm">Est #221</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="organic" data-date="2026-09-04" data-service="Commercial job"><td>20</td><td>Sep 4, 2026<div class="tiny">11:16 AM MST (Sep 4, 11:46 PM IST)</div></td><td><span class="name"><span class="avatar c">MI</span>Mike</span><div class="tiny">West Palm Beach, FL &middot; (561) 275-5988</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>4:41</td><td><span class="st-ans">Answered</span><div class="tiny">Sending photos and details for a quote</div></td><td class="muted">Calling from a maintenance and construction firm about a commercial job in Cheyenne, Wyoming: roughly 2,500 square feet of white vinyl insulation to be replaced in a steel building. He will email photos, the address and the project details so Grizzly can price it. Timing is flexible because XPO Logistics has to approve the work, and the budget sits near the $10,000 approval mark. Mercede said she will review it and come back with competitive pricing. Caller ID places him in Florida, so the job site is Wyoming rather than his own location.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-04" data-service="Commercial job"><td>20</td><td>Sep 4, 2026<div class="tiny">11:16 AM MST (Sep 4, 11:46 PM IST)</div></td><td><span class="name"><span class="avatar c">MI</span>Mike</span><div class="tiny">West Palm Beach, FL &middot; (561) 275-5988</div></td><td><span class="pill organic">Organic &middot; GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">&mdash;</td><td>4:41</td><td><span class="st-ans">Answered</span><div class="tiny">Sending photos and details for a quote</div></td><td class="muted">Calling from a maintenance and construction firm about a commercial job in Cheyenne, Wyoming: roughly 2,500 square feet of white vinyl insulation to be replaced in a steel building. He will email photos, the address and the project details so Grizzly can price it. Timing is flexible because XPO Logistics has to approve the work, and the budget sits near the $10,000 approval mark. Mercede said she will review it and come back with competitive pricing. Caller ID places him in Florida, so the job site is Wyoming rather than his own location.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="paid" data-date="2026-09-04" data-service="Spray Foam Insulation"><td>21</td><td>Sep 4, 2026<div class="tiny">8:56 AM MST (Sep 4, 9:26 PM IST)</div></td><td><span class="name"><span class="avatar c">DC</span>DE Crowder</span><div class="tiny">Littleton, CO &middot; (303) 587-2572</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>3:18</td><td><span class="st-ans">Answered</span><div class="tiny">Estimate booked Wed Sep 9, 9 to 11 AM</div></td><td class="muted">Came through the spray foam landing page and called to ask about spray-foaming a couple of walls in a storage pole barn in Commerce City. Mercede booked an on-site estimate for Wednesday Sep 9 between 9 and 11 AM. Landing page /spray-foam-insulation-lp/.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-04" data-service="Spray Foam Insulation"><td>21</td><td>Sep 4, 2026<div class="tiny">8:56 AM MST (Sep 4, 9:26 PM IST)</div></td><td><span class="name"><span class="avatar c">DC</span>DE Crowder</span><div class="tiny">Littleton, CO &middot; (303) 587-2572</div></td><td><span class="pill paid">Paid &middot; Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td class="muted">&mdash;</td><td>3:18</td><td><span class="st-ans">Answered</span><div class="tiny">Estimate booked Wed Sep 9, 9 to 11 AM</div></td><td class="muted">Came through the spray foam landing page and called to ask about spray-foaming a couple of walls in a storage pole barn in Commerce City. Mercede booked an on-site estimate for Wednesday Sep 9 between 9 and 11 AM. Landing page /spray-foam-insulation-lp/.</td><td class="hcp h-est" data-sort="40003000"><span class="hs">Estimate sent</span> <span class="hv">$3,000</span> <span class="hm">Est #219</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">&mdash;</span></td></tr>
-<tr data-source="organic" data-date="2026-09-03" data-service="Attic Insulation"><td>22</td><td>Sep 3, 2026<div class="tiny">8:43 AM MST (Sep 3, 9:13 PM IST)</div></td><td><span class="name"><span class="avatar c">SM</span>Stephen Meister</span><div class="tiny">Herndon, VA · (571) 246-7656</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>5:27</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Tue Sep 8, 3 to 5 PM</div></td><td class="muted">Wants a quote to replace the attic insulation at his Littleton home, and asked whether the small storage landing by the pull-down stairs can be made bigger at the same time. Mercede confirmed that can be included. An inspection was booked for Tuesday Sep 8 between 3 and 5 PM at his West Ontario Drive address, with Emil due to arrive. He did not want to give an email address, so he will get a text reminder.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-03" data-service="Attic Insulation"><td>22</td><td>Sep 3, 2026<div class="tiny">8:43 AM MST (Sep 3, 9:13 PM IST)</div></td><td><span class="name"><span class="avatar c">SM</span>Stephen Meister</span><div class="tiny">Herndon, VA · (571) 246-7656</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>5:27</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Tue Sep 8, 3 to 5 PM</div></td><td class="muted">Wants a quote to replace the attic insulation at his Littleton home, and asked whether the small storage landing by the pull-down stairs can be made bigger at the same time. Mercede confirmed that can be included. An inspection was booked for Tuesday Sep 8 between 3 and 5 PM at his West Ontario Drive address, with Emil due to arrive. He did not want to give an email address, so he will get a text reminder.</td><td class="hcp h-inhcp" data-sort="10000000"><span class="hs">In HCP</span> <span class="hm">No estimate yet</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="organic" data-date="2026-09-02" data-service="Attic Insulation"><td>23</td><td>Sep 2, 2026<div class="tiny">7:56 AM MST (Sep 2, 8:26 PM IST)</div></td><td><span class="name"><span class="avatar c">SM</span>Steven Montoya</span><div class="tiny">Denver, CO · (720) 207-1524</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>6:23</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Friday, 12 to 2 PM</div></td><td class="muted">Wants an estimate to upgrade the attic insulation in his 1959 Denver home, and is considering adding insulation to the exterior walls as well, for energy efficiency and sound. Mercede explained that an inspector may drill a small hole to check whether the walls already hold insulation, and booked an inspection for Friday with a 12 to 2 PM arrival window at his Denver / Adams County address. He confirmed the appointment and said he is collecting several estimates.</td><td class="hcp s-open" data-sort="0.5"><span class="hcp-open">In HCP</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-02" data-service="Attic Insulation"><td>23</td><td>Sep 2, 2026<div class="tiny">7:56 AM MST (Sep 2, 8:26 PM IST)</div></td><td><span class="name"><span class="avatar c">SM</span>Steven Montoya</span><div class="tiny">Denver, CO · (720) 207-1524</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>6:23</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked Friday, 12 to 2 PM</div></td><td class="muted">Wants an estimate to upgrade the attic insulation in his 1959 Denver home, and is considering adding insulation to the exterior walls as well, for energy efficiency and sound. Mercede explained that an inspector may drill a small hole to check whether the walls already hold insulation, and booked an inspection for Friday with a 12 to 2 PM arrival window at his Denver / Adams County address. He confirmed the appointment and said he is collecting several estimates.</td><td class="hcp h-est" data-sort="40004240"><span class="hs">Estimate sent</span> <span class="hv">$4,240</span> <span class="hm">Est #216</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="organic" data-date="2026-09-02" data-service="Air sealing"><td>24</td><td>Sep 2, 2026<div class="tiny">7:41 AM MST (Sep 2, 8:11 PM IST)</div></td><td><span class="name"><span class="avatar c">JC</span>Jeanne Cahill</span><div class="tiny">Quincy, MA · (617) 688-6943</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>1:09</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left</div></td><td class="muted">Reached Mercede’s voicemail and left a message asking whether Grizzly does air-sealing work. She said she is not looking for a quote yet and asked for a callback on 617-688-6943. Caller ID places her in Quincy, MA, so the property location is not confirmed.</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-02" data-service="Air sealing"><td>24</td><td>Sep 2, 2026<div class="tiny">7:41 AM MST (Sep 2, 8:11 PM IST)</div></td><td><span class="name"><span class="avatar c">JC</span>Jeanne Cahill</span><div class="tiny">Quincy, MA · (617) 688-6943</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>1:09</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left</div></td><td class="muted">Reached Mercede’s voicemail and left a message asking whether Grizzly does air-sealing work. She said she is not looking for a quote yet and asked for a callback on 617-688-6943. Caller ID places her in Quincy, MA, so the property location is not confirmed.</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-01" data-service=""><td>25</td><td>Sep 1, 2026<div class="tiny">11:00 PM MST (Sep 2, 11:30 AM IST)</div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Denver, CO · (720) 957-6277</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rat proof insulation</span></td><td>0:42</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left</div></td><td class="muted">Searched for rodent-proof insulation, clicked the ad and called the number on the landing page late in the evening. The call reached Mercede’s voicemail and the caller left a message, but CTM holds no transcript, so the job details are not on record yet. Worth a callback first thing. Landing page /insulation-company-lp/, campaign Search – Grizzly – Insulation (General).</td><td class="hcp s-none" data-sort="0.1"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-01" data-service=""><td>25</td><td>Sep 1, 2026<div class="tiny">11:00 PM MST (Sep 2, 11:30 AM IST)</div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Denver, CO · (720) 957-6277</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rat proof insulation</span></td><td>0:42</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left</div></td><td class="muted">Searched for rodent-proof insulation, clicked the ad and called the number on the landing page late in the evening. The call reached Mercede’s voicemail and the caller left a message, but CTM holds no transcript, so the job details are not on record yet. Worth a callback first thing. Landing page /insulation-company-lp/, campaign Search – Grizzly – Insulation (General).</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-01" data-service="Insulation Removal"><td>26</td><td>Sep 1, 2026<div class="tiny">11:01 AM MST (Sep 1, 11:31 PM IST)</div></td><td><span class="name"><span class="avatar c">RL</span>Robert Lindow</span><div class="tiny">Erie, CO · (303) 570-1029</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rodent deterrent insulation</span></td><td>7:32</td><td><span class="st-ans">Answered</span><div class="tiny">Removal estimate to be sent</div></td><td class="muted">Wants blown-in attic insulation removed from about 1,400 to 1,500 sq ft of his Erie home; his own contractor will install the new insulation. He expects the permit in one to two weeks and wants the removal done as soon as possible. Easy attic access and roughly six inches of existing insulation. Mercede took his contact and property details and will send a formal removal estimate. Landing page /insulation-company-lp/, campaign Search – Grizzly – Insulation (General).</td><td class="hcp s-money" data-sort="2250"><span class="hcp-v">$2,250</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-01" data-service="Insulation Removal"><td>26</td><td>Sep 1, 2026<div class="tiny">11:01 AM MST (Sep 1, 11:31 PM IST)</div></td><td><span class="name"><span class="avatar c">RL</span>Robert Lindow</span><div class="tiny">Erie, CO · (303) 570-1029</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rodent deterrent insulation</span></td><td>7:32</td><td><span class="st-ans">Answered</span><div class="tiny">Removal estimate to be sent</div></td><td class="muted">Wants blown-in attic insulation removed from about 1,400 to 1,500 sq ft of his Erie home; his own contractor will install the new insulation. He expects the permit in one to two weeks and wants the removal done as soon as possible. Easy attic access and roughly six inches of existing insulation. Mercede took his contact and property details and will send a formal removal estimate. Landing page /insulation-company-lp/, campaign Search – Grizzly – Insulation (General).</td><td class="hcp h-won" data-sort="50002250.75"><span class="hs">Won</span> <span class="hv">$2,250.75</span> <span class="hm">Est #214</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="organic" data-date="2026-09-01" data-service="Insulation Removal"><td>27</td><td>Sep 1, 2026<div class="tiny">9:28 AM MST (Sep 1, 9:58 PM IST)</div></td><td><span class="name"><span class="avatar c">KB</span>Kathryn Boyd</span><div class="tiny">Boulder, CO · (734) 546-2387</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>6:49</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked same day, 2 to 4 PM</div></td><td class="muted">Wants rat-contaminated attic insulation removed from two attic spaces at her South Boulder home after another company repeatedly canceled. Mercede explained that Grizzly specializes in rodent-related insulation removal and can offer fiberglass, cellulose or TAP cellulose with a built-in rodent deterrent, and booked an inspection for that same afternoon. She found Grizzly through Google. Caller ID shows Ann Arbor, MI. A second call at 9:35 AM confirming the Boulder service address is the same lead, not a new one.</td><td class="hcp s-money" data-sort="9750"><span class="hcp-v">$9,750</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-01" data-service="Insulation Removal"><td>27</td><td>Sep 1, 2026<div class="tiny">9:28 AM MST (Sep 1, 9:58 PM IST)</div></td><td><span class="name"><span class="avatar c">KB</span>Kathryn Boyd</span><div class="tiny">Boulder, CO · (734) 546-2387</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>6:49</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked same day, 2 to 4 PM</div></td><td class="muted">Wants rat-contaminated attic insulation removed from two attic spaces at her South Boulder home after another company repeatedly canceled. Mercede explained that Grizzly specializes in rodent-related insulation removal and can offer fiberglass, cellulose or TAP cellulose with a built-in rodent deterrent, and booked an inspection for that same afternoon. She found Grizzly through Google. Caller ID shows Ann Arbor, MI. A second call at 9:35 AM confirming the Boulder service address is the same lead, not a new one.</td><td class="hcp h-won" data-sort="50009350"><span class="hs">Won</span> <span class="hv">$9,350</span> <span class="hm">Est #212</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
 </tbody>
 </table>
@@ -898,7 +906,7 @@ var fc=document.getElementById('form-cnt'); if(fc) fc.textContent = forms + (for
 function apply(){
 var t = (q.value||'').toLowerCase();
 rows.forEach(function(r){
-var matchText = r.innerText.toLowerCase().indexOf(t) > -1;
+var matchText = r.textContent.toLowerCase().indexOf(t) > -1;
 var matchSrc = activeFilter === 'all' || r.getAttribute('data-source') === activeFilter;
 r.style.display = (matchText && matchSrc) ? '' : 'none';
 });
@@ -939,7 +947,7 @@ updateKPIs();
 
   var COLS = ["Lead type","#","Date","Date (ISO)","Time (MST)","Time (IST)","Name","Phone","City",
               "Source","Form","Campaign","Keyword / Topic","Search term","Service","Landing page",
-              "Tracking line (CTM)","Duration","Status","Topic","Notes","Job value (HCP)"];
+              "Tracking line (CTM)","Duration","Status","Topic","Notes","HCP status"];
   var WIDTHS = [10,5,15,12,12,20,24,16,20,20,20,36,30,28,22,46,30,10,13,46,46,16];
 
   /* header label -> canonical field. Covers every variant used across June/July/August. */
@@ -959,7 +967,7 @@ updateKPIs();
     "duration":"duration",
     "status":"status",
     "notes":"notes",
-    "job value (hcp)":"hcpvalue"
+    "job value (hcp)":"hcpvalue", "hcp status":"hcpvalue"
   };
 
   var MON = {january:"01",february:"02",march:"03",april:"04",may:"05",june:"06",july:"07",
@@ -2413,6 +2421,176 @@ updateKPIs();
 })();
 </script>
 <!-- ===== END HCP DETAILS TOGGLE ===== -->
+
+
+<!-- ===== ROW EXPAND (tap a row to open its details) - added 2026-09-18 - KEEP THIS BLOCK ON EVERY REPUBLISH ===== -->
+<style>
+/* The two lead tables carried 12 and 11 columns. Everything a client scans for
+   stays on the row; the rest moves into a panel that opens when the row is
+   tapped. No markup is moved and no cell is removed, so the sorting, client
+   notes, Excel export, search, show-more and topic-clip scripts all keep
+   working on the same cells they always did, and rows added by the daily
+   refresh are laid out automatically. The .rx-on class is added by the script
+   below, so if the script never runs the page falls back to the plain table. */
+
+/* ---------- detail cells are hidden until the row is open (both layouts) ---------- */
+#leads.rx-on tbody tr:not(.rx-open) td.rx-d,
+#calls.rx-on tbody tr:not(.rx-open) td.rx-d{display:none;}
+#leads.rx-on tbody tr,#calls.rx-on tbody tr{cursor:pointer;}
+#leads.rx-on tbody tr.rx-open td.rx-d,#calls.rx-on tbody tr.rx-open td.rx-d{background:#fbfcfe;}
+#calls.rx-on tbody tr.rx-open td.ntcell{max-width:none;}
+
+/* ---------- the labels the mobile card layout prints in front of each value.
+     Housecall Pro sits in column 12 of Form leads and column 10 of Call leads,
+     which pushed Notes to 11; these three put the right label on each. ------- */
+@media(max-width:1080px){
+  #leads tbody td:nth-child(12):before{content:"HCP status";}
+  #calls tbody td:nth-child(10):before{content:"HCP status";}
+  #calls tbody td:nth-child(11):before{content:"Notes";}
+  /* Housecall Pro reads as a normal labelled line, label on the left */
+  #leads tbody td:nth-child(12),#calls tbody td:nth-child(10){padding-left:90px;padding-top:6px;}
+  #leads tbody td:nth-child(12):before,#calls tbody td:nth-child(10):before{position:absolute;left:0;top:7px;width:82px;display:block;margin-bottom:0;}
+  /* Notes keeps the full-width heading the long Topic column uses */
+  #calls tbody td:nth-child(11){padding-left:0;padding-top:9px;}
+  #calls tbody td:nth-child(11):before{position:static;display:block;width:auto;margin-bottom:3px;}
+  /* the open / close line at the foot of every card */
+  #leads.rx-on tbody tr,#calls.rx-on tbody tr{position:relative;}
+  #leads.rx-on tbody tr:after,#calls.rx-on tbody tr:after{content:"Show details";display:block;
+    margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);
+    font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--blue);}
+  #leads.rx-on tbody tr.rx-open:after,#calls.rx-on tbody tr.rx-open:after{content:"Hide details";}
+  #leads.rx-on tbody tr.rx-open,#calls.rx-on tbody tr.rx-open{background:#fbfcfe;}
+}
+
+/* ---------- desktop: the row becomes a grid, the panel sits underneath ---------- */
+@media(min-width:1081px){
+  #leads.rx-on,#calls.rx-on{display:block;width:100%;}
+  #leads.rx-on thead,#calls.rx-on thead{display:block;position:sticky;top:0;z-index:4;background:#f7f9fc;border-bottom:1px solid var(--line);}
+  #leads.rx-on tbody,#calls.rx-on tbody{display:block;}
+  #leads.rx-on thead tr,#calls.rx-on thead tr,
+  #leads.rx-on tbody tr:not(.row-collapsed),#calls.rx-on tbody tr:not(.row-collapsed){
+    display:grid;grid-template-columns:repeat(12,minmax(0,1fr)) 26px;align-items:start;}
+  #leads.rx-on thead th,#calls.rx-on thead th{width:auto!important;position:static;border-bottom:0;}
+  #leads.rx-on tbody tr,#calls.rx-on tbody tr{border-bottom:1px solid #f0f2f6;position:relative;}
+  #leads.rx-on tbody tr:last-child,#calls.rx-on tbody tr:last-child{border-bottom:0;}
+  #leads.rx-on tbody td,#calls.rx-on tbody td{border-bottom:0;}
+  #leads.rx-on tbody tr:hover,#calls.rx-on tbody tr:hover{background:#f9fbff;}
+  #leads.rx-on tbody tr.rx-open,#calls.rx-on tbody tr.rx-open{background:#fbfcfe;}
+  /* the chevron, drawn by CSS so nothing lands in the text an export reads */
+  #leads.rx-on tbody tr:after,#calls.rx-on tbody tr:after{content:"\203A";grid-row:1;grid-column:13/14;
+    align-self:center;justify-self:center;width:20px;height:20px;line-height:18px;text-align:center;
+    border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--blue);font-size:13px;
+    transition:transform .15s ease;}
+  #leads.rx-on tbody tr.rx-open:after,#calls.rx-on tbody tr.rx-open:after{transform:rotate(90deg);
+    background:var(--blue-bg);border-color:#cfe0fb;}
+  /* the panel: a labelled field grid under the row */
+  #leads.rx-on tbody tr.rx-open td.rx-d,#calls.rx-on tbody tr.rx-open td.rx-d{
+    padding:9px 12px 11px;border-top:1px solid #eef1f6;}
+  #leads.rx-on tbody tr.rx-open td.rx-d:before,#calls.rx-on tbody tr.rx-open td.rx-d:before{
+    display:block;margin-bottom:3px;font-size:9px;font-weight:800;letter-spacing:.6px;
+    text-transform:uppercase;color:var(--mut2);}
+#leads.rx-on tbody tr.rx-open td:nth-child(4):before{content:"Form";}
+#leads.rx-on tbody tr.rx-open td:nth-child(6):before{content:"Campaign";}
+#leads.rx-on tbody tr.rx-open td:nth-child(7):before{content:"Keyword";}
+#leads.rx-on tbody tr.rx-open td:nth-child(8):before{content:"Search term";}
+#leads.rx-on tbody tr.rx-open td:nth-child(9):before{content:"City";}
+#leads.rx-on tbody tr.rx-open td:nth-child(11):before{content:"Landing page";}
+#calls.rx-on tbody tr.rx-open td:nth-child(5):before{content:"Tracking line";}
+#calls.rx-on tbody tr.rx-open td:nth-child(6):before{content:"Keyword";}
+#calls.rx-on tbody tr.rx-open td:nth-child(7):before{content:"Duration";}
+#calls.rx-on tbody tr.rx-open td:nth-child(9):before{content:"Topic";}
+#calls.rx-on tbody tr.rx-open td:nth-child(11):before{content:"Notes";}
+  /* the headings of the hidden columns stay clickable, as sort chips on a second line */
+  #leads.rx-on thead th.rx-dh,#calls.rx-on thead th.rx-dh{
+    justify-self:start;align-self:center;margin:0 0 8px;padding:4px 9px;border:1px solid var(--line);
+    border-radius:999px;background:#fff;font-size:9px;letter-spacing:.5px;white-space:nowrap;
+    min-width:0;width:auto!important;}
+  #leads.rx-on thead th.rx-dh:hover,#calls.rx-on thead th.rx-dh:hover{background:#eef3fa;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(1),#leads.rx-on thead th:nth-child(1){grid-row:1;grid-column:1/2;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(2),#leads.rx-on thead th:nth-child(2){grid-row:1;grid-column:2/4;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(3),#leads.rx-on thead th:nth-child(3){grid-row:1;grid-column:4/7;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(5),#leads.rx-on thead th:nth-child(5){grid-row:1;grid-column:7/9;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(10),#leads.rx-on thead th:nth-child(10){grid-row:1;grid-column:9/11;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(12),#leads.rx-on thead th:nth-child(12){grid-row:1;grid-column:11/13;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(4){grid-row:2;grid-column:1/5;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(6){grid-row:2;grid-column:5/9;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(7){grid-row:2;grid-column:9/13;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(8){grid-row:3;grid-column:1/5;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(9){grid-row:3;grid-column:5/9;}
+#leads.rx-on tbody tr:not(.row-collapsed) td:nth-child(11){grid-row:3;grid-column:9/13;}
+#leads.rx-on thead th:nth-child(4){grid-row:2;grid-column:1/3;}
+#leads.rx-on thead th:nth-child(6){grid-row:2;grid-column:3/5;}
+#leads.rx-on thead th:nth-child(7){grid-row:2;grid-column:5/7;}
+#leads.rx-on thead th:nth-child(8){grid-row:2;grid-column:7/9;}
+#leads.rx-on thead th:nth-child(9){grid-row:2;grid-column:9/11;}
+#leads.rx-on thead th:nth-child(11){grid-row:2;grid-column:11/13;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(1),#calls.rx-on thead th:nth-child(1){grid-row:1;grid-column:1/2;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(2),#calls.rx-on thead th:nth-child(2){grid-row:1;grid-column:2/4;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(3),#calls.rx-on thead th:nth-child(3){grid-row:1;grid-column:4/7;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(4),#calls.rx-on thead th:nth-child(4){grid-row:1;grid-column:7/9;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(8),#calls.rx-on thead th:nth-child(8){grid-row:1;grid-column:9/11;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(10),#calls.rx-on thead th:nth-child(10){grid-row:1;grid-column:11/13;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(5){grid-row:2;grid-column:1/5;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(6){grid-row:2;grid-column:5/9;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(7){grid-row:2;grid-column:9/13;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(9){grid-row:3;grid-column:1/13;}
+#calls.rx-on tbody tr:not(.row-collapsed) td:nth-child(11){grid-row:4;grid-column:1/13;}
+#calls.rx-on thead th:nth-child(5){grid-row:2;grid-column:1/4;}
+#calls.rx-on thead th:nth-child(6){grid-row:2;grid-column:4/7;}
+#calls.rx-on thead th:nth-child(7){grid-row:2;grid-column:7/9;}
+#calls.rx-on thead th:nth-child(9){grid-row:2;grid-column:9/11;}
+#calls.rx-on thead th:nth-child(11){grid-row:2;grid-column:11/13;}
+}
+</style>
+<script>
+(function(){
+  "use strict";
+  /* Columns that move into the panel, by their 1-based position in the header row. */
+  var DET = { leads:[4,6,7,8,9,11], calls:[5,6,7,9,11] };
+
+  function setup(id){
+    var t = document.getElementById(id); if(!t) return;
+    var body = t.tBodies[0], head = t.tHead && t.tHead.rows[0];
+    if(!body || !head) return;
+    var cols = DET[id];
+
+    function tagRow(tr){ cols.forEach(function(c){ var td = tr.cells[c-1]; if(td) td.classList.add("rx-d"); }); }
+    Array.prototype.forEach.call(body.rows, tagRow);
+    cols.forEach(function(c){ var th = head.cells[c-1]; if(th) th.classList.add("rx-dh"); });
+    t.classList.add("rx-on");
+
+    /* One listener on the tbody, so it survives the sort re-ordering rows. */
+    body.addEventListener("click", function(e){
+      var el = e.target;
+      if(!el || !el.closest) return;
+      /* anything with its own job keeps it: the landing-page link, the notes box,
+         the Details toggle, the topic Show more, the Show all button. */
+      if(el.closest("a,button,input,textarea,select,label,.cnotes")) return;
+      var s = window.getSelection ? String(window.getSelection()) : "";
+      if(s && s.length > 2) return;                 /* the user is selecting text */
+      var tr = el.closest("tr");
+      if(!tr || tr.parentNode !== body) return;
+      var open = tr.classList.toggle("rx-open");
+      /* the topic clip measures itself only on visible cells, so let it re-measure */
+      if(open){ try{ window.dispatchEvent(new Event("resize")); }catch(err){} }
+    });
+
+    /* rows the daily refresh adds later still get tagged */
+    new MutationObserver(function(ms){
+      ms.forEach(function(m){
+        Array.prototype.forEach.call(m.addedNodes, function(n){
+          if(n.nodeType === 1 && n.tagName === "TR" && !n.querySelector(".rx-d")) tagRow(n);
+        });
+      });
+    }).observe(body, {childList:true});
+  }
+
+  function boot(){ setup("leads"); setup("calls"); }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+<!-- ===== END ROW EXPAND ===== -->
 
 </body>
 </html>
