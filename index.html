@@ -838,10 +838,16 @@ Keywords that brought leads <span class="cnt" id="kw-cnt">16 keywords · 21 lead
 
 <div class="sec-title">
 <span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg></span>
-What people actually typed <span class="cnt" id="st-cnt">5 released by Google</span>
+What people actually typed <span class="cnt" id="st-cnt">7 released by Google</span>
 </div>
 <!-- SEARCH TERMS - TWO STATES. Google releases the typed wording on only some clicks.
-     CURRENT STATE (2026-09-18): SOME RELEASED - the #sttab table below is live, pill "5 released by Google".
+     CURRENT STATE (2026-09-19): SOME RELEASED - the #sttab table below is live, and the panel is now
+     SPLIT BY CHANNEL: the #sttab table holds PAID FORM leads only (5 named + 9 private = the 14 paid
+     form rows), and the SEARCH TERMS BY CHANNEL block under it lists the terms Google released for
+     PAID CALLS (2 this month). Pill #st-cnt = the two added together, "7 released by Google".
+     The call block is a LIST OF WORDS WITH NO TOTAL, on purpose: Google counts call conversions its
+     own way and they do not tie one-for-one to the calls logged in CTM, so any fraction there would
+     be a number that matches no table on this page. Refresh BOTH blocks whenever search terms change.
      NONE RELEASED FOR A LEAD: show the .st-none panel kept in the comment at the end of this section,
      pill "Not released for any lead".
      Google does disclose wording for SOME clicks (Sep 1-2: 27 of 59) - the test is whether any
@@ -853,6 +859,8 @@ What people actually typed <span class="cnt" id="st-cnt">5 released by Google</s
      Never show an empty table with only footer rows - a bare "0" beside a "3" reads as a
      contradiction to anyone who does not stop to read a note. -->
 <div class="card">
+<!-- ===== SEARCH TERMS BY CHANNEL ===== -->
+<div class="st-head"><span class="st-tag st-tag-f">Paid website forms</span><span class="st-sub">Google released the wording behind 5 of these 14 leads</span></div>
 <div class="tablewrap">
 <table id="sttab">
 <thead>
@@ -871,8 +879,15 @@ What people actually typed <span class="cnt" id="st-cnt">5 released by Google</s
 </tfoot>
 </table>
 </div>
+<div class="st-head st-head-c"><span class="st-tag st-tag-c">Paid phone calls</span><span class="st-sub">Google released the wording behind 2 calls</span></div>
+<ul class="st-calls" id="stcalls">
+<li><span class="stq">mouse proof spray foam</span></li>
+<li><span class="stq">colorado insulation company</span></li>
+</ul>
+<div class="st-calls-note">Deliberately a list of words and not a count. Google records a call conversion its own way and those do not line up one-for-one with the calls logged in CallTrackingMetrics, so a &ldquo;2 of 15&rdquo; here would be a figure that matches no table on this page. Fifteen paid calls came in this month; the keyword Grizzly bid on is known for seven of them and is shown in the keyword table above.</div>
+<!-- ===== END SEARCH TERMS BY CHANNEL ===== -->
 </div>
-<div class="ads-note kw-note">These are the words people actually typed into Google before they became a lead, as opposed to the keywords we bid on in the table above. Google only shows us the wording on some of those clicks and keeps the rest private, so the <b>+9</b> row is nine further leads whose wording it has not given us. Listed and private together come to the fourteen paid website leads in the form table at the top of this page. The keyword table above counts more because it also covers paid phone calls.</div>
+<div class="ads-note kw-note">These are the words people actually typed into Google before they became a lead, as opposed to the keywords we bid on in the table above. Google only shows us the wording on some of those clicks and keeps the rest private, so the <b>+9</b> row is nine further leads whose wording it has not given us. Listed and private together come to the fourteen paid website leads in the form table at the top of this page. Paid phone calls are kept in their own block above, as a plain list rather than a count, because Google records call conversions its own way and they do not tie one-for-one to the calls logged in CallTrackingMetrics. The keyword table further up counts more than either block because it covers paid forms and paid calls together.</div>
 <!-- Panel to restore IF a future month has no released term for any lead, replacing the .tablewrap above
      (and set the #st-cnt pill back to "Not released for any lead"):
 <div class="st-none">
@@ -2161,6 +2176,17 @@ updateKPIs();
   #kwtab th:nth-child(2),#kwtab th:nth-child(3),#kwtab th:nth-child(4),
   #kwtab th:nth-child(5),#kwtab th:nth-child(6){width:auto;}
   #kwtab .agrp{font-size:11px;}
+/* ===== SEARCH TERMS BY CHANNEL (form block vs call block) ===== */
+.st-head{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:1px 0 10px;}
+.st-head-c{margin-top:17px;padding-top:15px;border-top:1px solid var(--line);}
+.st-tag{font-size:11px;font-weight:800;letter-spacing:.02em;padding:3px 9px;border-radius:999px;}
+.st-tag-f{background:#e8f0fe;color:#2563eb;}
+.st-tag-c{background:#fdf0dd;color:#b45309;}
+.st-sub{font-size:11.5px;color:var(--mut2);font-weight:600;}
+.st-calls{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.st-calls li{background:#fbfcfe;border:1px solid var(--line);border-radius:8px;padding:7px 11px;}
+.st-calls-note{margin-top:10px;font-size:11px;line-height:1.55;color:var(--mut2);}
+/* ===== END SEARCH TERMS BY CHANNEL ===== */
   .tablewrap:has(#kwtab){overflow-x:visible;}
   #kwtab{display:block;width:100%;table-layout:auto;}
   #kwtab thead{display:block;border-bottom:1px solid var(--line);background:#f7f9fc;}
