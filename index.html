@@ -2162,6 +2162,17 @@ updateKPIs();
 #kwtab th:nth-child(5),#kwtab th:nth-child(6),
 #kwtab tfoot td:nth-child(5),#kwtab tfoot td:nth-child(6){text-align:right;font-variant-numeric:tabular-nums;}
 #kwtab .agrp{display:block;font-size:10.5px;color:var(--mut2);margin-top:3px;line-height:1.4;}
+/* ===== SEARCH TERMS BY CHANNEL (form block vs call block) ===== */
+.st-head{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:1px 0 10px;}
+.st-head-c{margin-top:17px;padding-top:15px;border-top:1px solid var(--line);}
+.st-tag{font-size:11px;font-weight:800;letter-spacing:.02em;padding:3px 9px;border-radius:999px;}
+.st-tag-f{background:#e8f0fe;color:#2563eb;}
+.st-tag-c{background:#fdf0dd;color:#b45309;}
+.st-sub{font-size:11.5px;color:var(--mut2);font-weight:600;}
+.st-calls{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.st-calls li{background:#fbfcfe;border:1px solid var(--line);border-radius:8px;padding:7px 11px;}
+.st-calls-note{margin-top:10px;font-size:11px;line-height:1.55;color:var(--mut2);}
+/* ===== END SEARCH TERMS BY CHANNEL ===== */
 #kwtab th:nth-child(2){width:26%;}
 #kwtab th:nth-child(3){width:12%;}
 #kwtab th:nth-child(4){width:34%;}
@@ -2176,17 +2187,6 @@ updateKPIs();
   #kwtab th:nth-child(2),#kwtab th:nth-child(3),#kwtab th:nth-child(4),
   #kwtab th:nth-child(5),#kwtab th:nth-child(6){width:auto;}
   #kwtab .agrp{font-size:11px;}
-/* ===== SEARCH TERMS BY CHANNEL (form block vs call block) ===== */
-.st-head{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:1px 0 10px;}
-.st-head-c{margin-top:17px;padding-top:15px;border-top:1px solid var(--line);}
-.st-tag{font-size:11px;font-weight:800;letter-spacing:.02em;padding:3px 9px;border-radius:999px;}
-.st-tag-f{background:#e8f0fe;color:#2563eb;}
-.st-tag-c{background:#fdf0dd;color:#b45309;}
-.st-sub{font-size:11.5px;color:var(--mut2);font-weight:600;}
-.st-calls{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
-.st-calls li{background:#fbfcfe;border:1px solid var(--line);border-radius:8px;padding:7px 11px;}
-.st-calls-note{margin-top:10px;font-size:11px;line-height:1.55;color:var(--mut2);}
-/* ===== END SEARCH TERMS BY CHANNEL ===== */
   .tablewrap:has(#kwtab){overflow-x:visible;}
   #kwtab{display:block;width:100%;table-layout:auto;}
   #kwtab thead{display:block;border-bottom:1px solid var(--line);background:#f7f9fc;}
