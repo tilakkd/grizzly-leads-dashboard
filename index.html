@@ -343,6 +343,18 @@ td.hcp.h-visit .hs,td.hcp.h-visit .hv{color:#b45309;}
 td.hcp.h-lost .hs,td.hcp.h-lost .hv{color:#b3261e;}
 td.hcp.h-inhcp .hs{color:#8a93a3;}
 .hcp-no{color:#c3c9d4;}
+/* ===== HCP PIPELINE KPI CSS ===== */
+.hstrip{grid-template-columns:repeat(3,1fr);border-top:2px solid #2563eb;}
+.hstrip .krule.hk-won{background:var(--green);}
+.hstrip .krule.hk-est{background:#2563eb;}
+.hstrip .krule.hk-lost{background:#b3261e;}
+.hstrip .hkv-won{color:var(--green);}
+.hstrip .hkv-est{color:#2563eb;}
+.hstrip .hkv-lost{color:#b3261e;}
+.hstrip .kval{font-size:25px;letter-spacing:-1px;}
+.hstrip .kmeta{color:var(--mut2);}
+@media(max-width:700px){.hstrip{grid-template-columns:1fr;}.hstrip .kcell{border-right:0;border-bottom:1px solid var(--hair);}.hstrip .kcell:last-child{border-bottom:0;}}
+/* ===== END HCP PIPELINE KPI CSS ===== */
 td.hcp .hcp-more{display:block;margin-top:4px;padding:0;border:0;background:none;font:inherit;
   font-size:9.5px;font-weight:800;letter-spacing:.2px;color:var(--blue);cursor:pointer;line-height:1.3;text-align:left;}
 td.hcp .hcp-more::after{content:"Details";}
@@ -424,6 +436,33 @@ td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall
 </div>
 <div class="ads-note kw-note">Lead counts are computed from the tables below. Ads spend is the whole Google Ads account, Mountain Time, read from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so today&rsquo;s figure can still move.</div>
 <!-- ===== END KPI STRIP ===== -->
+<!-- ===== HCP PIPELINE KPIS ===== -->
+<div class="sec-title">
+<span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+Job pipeline in Housecall Pro <span class="cnt" id="hcp-cnt">0 of 0 leads have a price</span>
+</div>
+<div class="kstrip hstrip">
+<div class="kcell">
+<div class="krule hk-won"></div>
+<div class="klbl">Won</div>
+<div class="kval hkv-won" id="hcp-won-amt">$0</div>
+<div class="kmeta"><span id="hcp-won-n">0</span> leads</div>
+</div>
+<div class="kcell">
+<div class="krule hk-est"></div>
+<div class="klbl">Estimate sent &middot; awaiting customer</div>
+<div class="kval hkv-est" id="hcp-est-amt">$0</div>
+<div class="kmeta"><span id="hcp-est-n">0</span> leads</div>
+</div>
+<div class="kcell">
+<div class="krule hk-lost"></div>
+<div class="klbl">Lost</div>
+<div class="kval hkv-lost" id="hcp-lost-amt">$0</div>
+<div class="kmeta"><span id="hcp-lost-n">0</span> leads</div>
+</div>
+</div>
+<div class="ads-note kw-note">These three boxes only cover the <b><span id="hcp-priced">0</span></b> leads that have reached a price in Housecall Pro. The other <b><span id="hcp-unpriced">0</span></b> are not there yet: <b><span id="hcp-visit-n">0</span></b> have a visit booked but no price on the estimate, <b><span id="hcp-inhcp-n">0</span></b> are customers in Housecall Pro with no estimate raised, and <b><span id="hcp-none-n">0</span></b> have not been added to Housecall Pro at all. Figures come straight from the Housecall Pro column in the tables below and follow the search and Paid/Organic filters, so they always agree with the rows on screen.</div>
+<!-- ===== END HCP PIPELINE KPIS ===== -->
 <div class="totline" style="margin-top:2px;">⏱ All times in <b>Arizona time (MST, GMT−7)</b> — <b>India time (IST)</b> shown in brackets.</div>
 <!-- Controls -->
 <div class="controls">
@@ -1071,7 +1110,42 @@ setVal('paid-form',pf); setVal('paid-call',pc); setVal('paid-total',pf+pc);
 setVal('org-form',of); setVal('org-call',oc); setVal('org-total',of+oc);
 setVal('total-leads',pf+pc+of+oc);
 var fc=document.getElementById('form-cnt'); if(fc) fc.textContent = forms + (forms===1?' lead':' leads');
+updateHCP();
 }
+
+/* ===== HCP PIPELINE KPIS - computed from the HCP column, never hand-written ===== */
+function money(n){
+return '$' + n.toLocaleString('en-US',{minimumFractionDigits:(n%1?2:0),maximumFractionDigits:2});
+}
+function updateHCP(){
+var agg={won:{n:0,v:0},est:{n:0,v:0},lost:{n:0,v:0}}, visit=0, inhcp=0, none=0, total=0;
+rows.forEach(function(r){
+if(!vis(r)) return;
+total++;
+var c=r.querySelector('td.hcp'); if(!c) return;
+var key=null;
+if(c.classList.contains('h-won')) key='won';
+else if(c.classList.contains('h-est')) key='est';
+else if(c.classList.contains('h-lost')) key='lost';
+else if(c.classList.contains('h-visit')){ visit++; return; }
+else if(c.classList.contains('h-inhcp')){ inhcp++; return; }
+else { none++; return; }
+var hv=c.querySelector('.hv');
+var v=hv ? parseFloat(hv.textContent.replace(/[^0-9.]/g,'')) : 0;
+if(isNaN(v)) v=0;
+agg[key].n++; agg[key].v+=v;
+});
+setVal('hcp-won-amt',money(agg.won.v));   setVal('hcp-won-n',agg.won.n);
+setVal('hcp-est-amt',money(agg.est.v));   setVal('hcp-est-n',agg.est.n);
+setVal('hcp-lost-amt',money(agg.lost.v)); setVal('hcp-lost-n',agg.lost.n);
+var priced=agg.won.n+agg.est.n+agg.lost.n;
+setVal('hcp-priced',priced);
+setVal('hcp-unpriced',total-priced);
+setVal('hcp-visit-n',visit); setVal('hcp-inhcp-n',inhcp); setVal('hcp-none-n',none);
+var pill=document.getElementById('hcp-cnt');
+if(pill) pill.textContent = priced + ' of ' + total + (total===1?' lead':' leads') + ' have a price';
+}
+/* ===== END HCP PIPELINE KPIS ===== */
 
 function apply(){
 var t = (q.value||'').toLowerCase();
