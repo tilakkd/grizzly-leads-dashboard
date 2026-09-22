@@ -175,6 +175,8 @@ tbody tr:hover td{background:#f9fbff;}
 #leads .tiny,#calls .tiny{display:none;}
 /* caller phone number stays visible on desktop (Kunal, 2026-09-10) - the rest of the .tiny second lines stay hidden */
 #calls tbody td:nth-child(3) .tiny{display:block;white-space:nowrap;}
+/* date column keeps its time line visible on desktop - the heading says "Date & time (MST)" (Kunal, 2026-09-22) */
+#leads tbody td:nth-child(2) .tiny,#calls tbody td:nth-child(2) .tiny{display:block;white-space:nowrap;}
 /* Call table column widths so the caller number sits inside its own column instead of running under Source (Kunal, 2026-09-10). Desktop only - below 1081px the READABLE TABLES block stacks the rows and these do not apply. Total still adds up to the same table width, so no horizontal scrollbar. */
 @media(min-width:1081px){
 #calls thead th:nth-child(1){width:32px;}
