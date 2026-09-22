@@ -344,6 +344,7 @@ td.hcp.h-lost .hs,td.hcp.h-lost .hv{color:#b3261e;}
 td.hcp.h-inhcp .hs{color:#8a93a3;}
 .hcp-no{color:#c3c9d4;}
 /* ===== HCP PIPELINE KPI CSS ===== */
+#hcp-kpis{display:none;}  /* HIDE SWITCH - delete this one line to show the Job-pipeline strip again (hidden 2026-09-22 per Kunal) */
 .hstrip{grid-template-columns:repeat(3,1fr);border-top:2px solid #2563eb;}
 .hstrip .krule.hk-won{background:var(--green);}
 .hstrip .krule.hk-est{background:#2563eb;}
@@ -437,6 +438,8 @@ td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall
 <div class="ads-note kw-note">Lead counts are computed from the tables below. Ads spend is the whole Google Ads account, Mountain Time, read from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so today&rsquo;s figure can still move.</div>
 <!-- ===== END KPI STRIP ===== -->
 <!-- ===== HCP PIPELINE KPIS ===== -->
+<!-- HIDDEN 2026-09-22 at Kunal's request ("abhi ke liye ye KPIs hide kar do", HCP only). Nothing removed: the markup, the CSS and updateHCP() are all intact and still computing, so the strip is hidden, not broken. TO BRING IT BACK: delete the single #hcp-kpis{display:none} line in the HCP PIPELINE KPI CSS block. -->
+<div id="hcp-kpis">
 <div class="sec-title">
 <span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
 Job pipeline in Housecall Pro <span class="cnt" id="hcp-cnt">0 of 0 leads have a price</span>
@@ -462,6 +465,7 @@ Job pipeline in Housecall Pro <span class="cnt" id="hcp-cnt">0 of 0 leads have a
 </div>
 </div>
 <div class="ads-note kw-note">These three boxes only cover the <b><span id="hcp-priced">0</span></b> leads that have reached a price in Housecall Pro. The other <b><span id="hcp-unpriced">0</span></b> are not there yet: <b><span id="hcp-visit-n">0</span></b> have a visit booked but no price on the estimate, <b><span id="hcp-inhcp-n">0</span></b> are customers in Housecall Pro with no estimate raised, and <b><span id="hcp-none-n">0</span></b> have not been added to Housecall Pro at all. Figures come straight from the Housecall Pro column in the tables below and follow the search and Paid/Organic filters, so they always agree with the rows on screen.</div>
+</div>
 <!-- ===== END HCP PIPELINE KPIS ===== -->
 <div class="totline" style="margin-top:2px;">⏱ All times in <b>Arizona time (MST, GMT−7)</b> — <b>India time (IST)</b> shown in brackets.</div>
 <!-- Controls -->
