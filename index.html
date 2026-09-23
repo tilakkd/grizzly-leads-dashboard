@@ -443,34 +443,24 @@ td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall
 </div>
 <!-- ===== END GOOGLE ADS MTD ===== -->
 <!-- ===== TOTAL WON KPI ===== -->
-<!-- HAND-WRITTEN, REFRESH EVERY RUN. This is the SECOND hand-maintained figure on the page after the Ads
-     MTD block; everything else is computed.
-     SOURCE, CORRECTED BY ERIK LEFKO 2026-09-23: revenue comes from the Housecall Pro **JOBS** tab, NOT the
-     Estimates tab. Erik: "the estimates tab isn't always 100% accurate". Definition he gave: total revenue
-     from jobs that had a JOB START in the current month, with CONTRACTOR jobs removed - work that comes from
-     the owner's trade relationships (Terminix, First General Services and the like) rather than from our
-     marketing.
-     HOW TO READ IT (method confirmed with Kunal 2026-09-23): HCP > Customers > Jobs, filter "Scheduled between"
-     the 1st and last day of the month. URL: /app/customers/jobs?page_size=25&page=1
-       &filters[0][property]=scheduled_start_at&filters[0][operator]=lte&filters[0][values][0]=<YYYY-MM-last>T23:59:59
-       &filters[1][property]=scheduled_start_at&filters[1][operator]=gte&filters[1][values][0]=<YYYY-MM-01>T00:00:00&user_filters=1
-     Then: (1) drop CANCELED jobs (Sep: #76 Juan Gomez $10,500); (2) drop PARTNER-COMPANY jobs - decided ONLY by the
-     customer profile in HCP: Profile > Contact info "Company" and "This customer bills to ...". Billed to EnviroPest
-     or Terminix/Rentokil = partner job. NO name-based guessing (Kunal 2026-09-23). Open EVERY customer profile.
-     Sep 2026: 23 records - 1 canceled = 22 jobs $69,008.50; partner jobs 10 = $25,746.00 (EnviroPest: #92 American Homes
-     $1,760, #66 Snug Harbor $1,000, #93 Tim Rehnstrom $1,420, #72+#96 Eric Arscott $7,230, #68+#89 Elton Woodrom $8,170,
-     #83 Kelly Belknap $1,000; Terminix: #79+#84 Nicholas Mansfield $5,166) => $43,262.50 over 12 jobs.
-     #87 First General Services $6,742.50 is KEPT (self-billed; first called our Denver GMB number 2026-07-13 per CTM;
-     Kunal's decision). -->
+<!-- HAND-WRITTEN, REFRESH EVERY RUN. WHAT IT COUNTS (Kunal 2026-09-23, from Erik Lefko's request "aggregate all total won,
+     add to top of dashboard like ad spend" + his correction "use the Housecall Pro JOBS tab, jobs with a job START in the month"):
+     ONLY the leads on THIS page (form + call tables). For each lead matched to an HCP customer ON PHONE, take its JOB(S) from
+     HCP > Customers > Jobs whose scheduled start is in the current month (filter property scheduled_start_at), skip Canceled jobs,
+     and add the job amount. NOT the whole company's revenue - partner/contractor jobs and customers not on this page never count.
+     The four h-won row cells carry the SAME job amounts and "Job #" refs, so the card = sum of the Won cells in the tables.
+     Paid/organic split comes straight from each row's data-source.
+     Sep 2026: Kathryn Boyd #78 $9,750 (organic, completed) + Robert Lindow #80 $2,250 (paid, completed) + David Copeland #77
+     $1,500 (paid, completed) + Andrea Gerard #95 $2,500 (paid, scheduled Sep 29) = $16,000 over 4 jobs = $6,250 paid / $9,750 organic. -->
 <div class="kcell">
 <div class="krule hk-won"></div>
-<div class="klbl">Revenue &middot; jobs started in Sep</div>
-<div class="kval" id="kwon-amt">$43,262.50</div>
-<div class="kmeta"><span id="kwon-n">12</span> jobs &middot; partner-company jobs excluded</div>
+<div class="klbl">Won &middot; this month&rsquo;s leads</div>
+<div class="kval" id="kwon-amt">$16,000.00</div>
+<div class="kmeta"><span id="kwon-n">4</span> jobs &middot; $6,250 paid &middot; $9,750 organic</div>
 </div>
 <!-- ===== END TOTAL WON KPI ===== -->
 </div>
-<div class="ads-note kw-note"><b>Ads spend:</b> the whole Google Ads account, updated daily &mdash; today&rsquo;s figure can still move. <b>Revenue:</b> Housecall Pro jobs starting this month, not counting cancelled jobs or jobs billed to partner companies (EnviroPest, Terminix). It covers all of Grizzly&rsquo;s work, not just the leads below, so it is not a return on the ad spend.</div>
+<div class="ads-note kw-note"><b>Ads spend:</b> the whole Google Ads account, updated daily &mdash; today&rsquo;s figure can still move. <b>Won:</b> Housecall Pro job value for the leads on this page whose job starts this month.</div>
 <!-- ===== END KPI STRIP ===== -->
 <!-- ===== HCP PIPELINE KPIS ===== -->
 <!-- HIDDEN 2026-09-22 at Kunal's request ("abhi ke liye ye KPIs hide kar do", HCP only). Nothing removed: the markup, the CSS and updateHCP() are all intact and still computing, so the strip is hidden, not broken. TO BRING IT BACK: delete the single #hcp-kpis{display:none} line in the HCP PIPELINE KPI CSS block. -->
@@ -828,7 +818,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td>Denver, CO</td>
 <td>Attic Insulation</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp h-won" data-sort="50002500"><span class="hs">Won</span> <span class="hv">$2,500</span> <span class="hm">Est #231</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-won" data-sort="50002500"><span class="hs">Won</span> <span class="hv">$2,500</span> <span class="hm">Job #95</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-12">
 <td>22</td>
@@ -968,7 +958,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td><span class="stq-empty">—</span></td>
 <td>Insulation Removal</td>
 <td><a class="lp" href="https://estimate.grizzlyinsulationco.com/insulation-company-lp/" target="_blank" rel="noopener">/insulation-company-lp/</a></td>
-<td class="hcp h-won" data-sort="50001500"><span class="hs">Won</span> <span class="hv">$1,500</span> <span class="hm">Est #217</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<td class="hcp h-won" data-sort="50001500"><span class="hs">Won</span> <span class="hv">$1,500</span> <span class="hm">Job #77</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 </tbody>
 </table>
@@ -1059,9 +1049,9 @@ Call Leads <span class="cnt">manually logged from CTM</span>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
 <tr data-source="paid" data-date="2026-09-01" data-service=""><td>31</td><td>Sep 1, 2026<div class="tiny">11:00 PM MST <span class="ist">(Sep 2, 11:30 AM IST)</span></div></td><td><span class="name"><span class="avatar c">WC</span>Wireless Caller</span><div class="tiny">Denver, CO · (720) 957-6277</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rat proof insulation</span></td><td>0:42</td><td><span class="st-vm">Voicemail</span><div class="tiny">Message left</div><div class="nosend">Not sent to Google Ads (call under 60s)</div></td><td class="muted">Searched for rodent-proof insulation, clicked the ad and called the number on the landing page late in the evening. The call reached Mercede’s voicemail and the caller left a message, but CTM holds no transcript, so the job details are not on record yet. Worth a callback first thing. Landing page /insulation-company-lp/, campaign Search – Grizzly – Insulation (General).</td><td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="paid" data-date="2026-09-01" data-service="Insulation Removal"><td>32</td><td>Sep 1, 2026<div class="tiny">11:01 AM MST <span class="ist">(Sep 1, 11:31 PM IST)</span></div></td><td><span class="name"><span class="avatar c">RL</span>Robert Lindow</span><div class="tiny">Erie, CO · (303) 570-1029</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rodent deterrent insulation</span></td><td>7:32</td><td><span class="st-ans">Answered</span><div class="tiny">Removal estimate to be sent</div></td><td class="muted">Wants blown-in attic insulation removed from about 1,400 to 1,500 sq ft of his Erie home; his own contractor will install the new insulation. He expects the permit in one to two weeks and wants the removal done as soon as possible. Easy attic access and roughly six inches of existing insulation. Mercede took his contact and property details and will send a formal removal estimate. Landing page /insulation-company-lp/, campaign Search – Grizzly – Insulation (General).</td><td class="hcp h-won" data-sort="50002250.75"><span class="hs">Won</span> <span class="hv">$2,250.75</span> <span class="hm">Est #214</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="paid" data-date="2026-09-01" data-service="Insulation Removal"><td>32</td><td>Sep 1, 2026<div class="tiny">11:01 AM MST <span class="ist">(Sep 1, 11:31 PM IST)</span></div></td><td><span class="name"><span class="avatar c">RL</span>Robert Lindow</span><div class="tiny">Erie, CO · (303) 570-1029</div></td><td><span class="pill paid">Paid · Google Ads</span></td><td>Google Ads DNI<div class="tiny"><span class="kw">(303) 219-3594</span></div></td><td><span class="kw">rodent deterrent insulation</span></td><td>7:32</td><td><span class="st-ans">Answered</span><div class="tiny">Removal estimate to be sent</div></td><td class="muted">Wants blown-in attic insulation removed from about 1,400 to 1,500 sq ft of his Erie home; his own contractor will install the new insulation. He expects the permit in one to two weeks and wants the removal done as soon as possible. Easy attic access and roughly six inches of existing insulation. Mercede took his contact and property details and will send a formal removal estimate. Landing page /insulation-company-lp/, campaign Search – Grizzly – Insulation (General).</td><td class="hcp h-won" data-sort="50002250"><span class="hs">Won</span> <span class="hv">$2,250</span> <span class="hm">Job #80</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
-<tr data-source="organic" data-date="2026-09-01" data-service="Insulation Removal"><td>33</td><td>Sep 1, 2026<div class="tiny">9:28 AM MST <span class="ist">(Sep 1, 9:58 PM IST)</span></div></td><td><span class="name"><span class="avatar c">KB</span>Kathryn Boyd</span><div class="tiny">Boulder, CO · (734) 546-2387</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>6:49</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked same day, 2 to 4 PM</div></td><td class="muted">Wants rat-contaminated attic insulation removed from two attic spaces at her South Boulder home after another company repeatedly canceled. Mercede explained that Grizzly specializes in rodent-related insulation removal and can offer fiberglass, cellulose or TAP cellulose with a built-in rodent deterrent, and booked an inspection for that same afternoon. She found Grizzly through Google. Caller ID shows Ann Arbor, MI. A second call at 9:35 AM confirming the Boulder service address is the same lead, not a new one.</td><td class="hcp h-won" data-sort="50009350"><span class="hs">Won</span> <span class="hv">$9,350</span> <span class="hm">Est #212</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+<tr data-source="organic" data-date="2026-09-01" data-service="Insulation Removal"><td>33</td><td>Sep 1, 2026<div class="tiny">9:28 AM MST <span class="ist">(Sep 1, 9:58 PM IST)</span></div></td><td><span class="name"><span class="avatar c">KB</span>Kathryn Boyd</span><div class="tiny">Boulder, CO · (734) 546-2387</div></td><td><span class="pill organic">Organic · GMB</span></td><td>Denver GMB<div class="tiny"><span class="kw">(303) 854-6221</span></div></td><td class="muted">—</td><td>6:49</td><td><span class="st-ans">Answered</span><div class="tiny">Inspection booked same day, 2 to 4 PM</div></td><td class="muted">Wants rat-contaminated attic insulation removed from two attic spaces at her South Boulder home after another company repeatedly canceled. Mercede explained that Grizzly specializes in rodent-related insulation removal and can offer fiberglass, cellulose or TAP cellulose with a built-in rodent deterrent, and booked an inspection for that same afternoon. She found Grizzly through Google. Caller ID shows Ann Arbor, MI. A second call at 9:35 AM confirming the Boulder service address is the same lead, not a new one.</td><td class="hcp h-won" data-sort="50009750"><span class="hs">Won</span> <span class="hv">$9,750</span> <span class="hm">Job #78</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 <td class="ntcell"><span class="nt-empty">—</span></td></tr>
 </tbody>
 </table>
