@@ -183,6 +183,8 @@ tbody tr:hover td{background:#f9fbff;}
 #calls tbody td:nth-child(3) .tiny{white-space:normal!important;}
 #leads tbody td:nth-child(2),#calls tbody td:nth-child(2),#calls tbody td:nth-child(3){overflow:hidden;}
 /* ===== END NO-OVERLAP ===== */
+/* form-lead phone under the name, so HCP can be searched straight from the dashboard (Kunal 2026-09-23). Phone only, never email. */
+#leads tbody td:nth-child(3) .tiny{display:block;white-space:normal;}
 /* Call table column widths so the caller number sits inside its own column instead of running under Source (Kunal, 2026-09-10). Desktop only - below 1081px the READABLE TABLES block stacks the rows and these do not apply. Total still adds up to the same table width, so no horizontal scrollbar. */
 @media(min-width:1081px){
 #calls thead th:nth-child(1){width:32px;}
@@ -537,7 +539,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-23">
 <td>1</td>
 <td>Sep 23, 2026<div class="tiny">2:37 AM MST <span class="ist">(Sep 23, 3:07 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">RR</span>Ryan Rose</span></td>
+<td><span class="name"><span class="avatar">RR</span>Ryan Rose</span><div class="tiny">(508) 287-9174</div></td>
 <td><span class="pill form">Popup Estimate</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -551,7 +553,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-22">
 <td>2</td>
 <td>Sep 22, 2026<div class="tiny">8:23 PM MST <span class="ist">(Sep 23, 8:53 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">CP</span>Cole Peters</span></td>
+<td><span class="name"><span class="avatar">CP</span>Cole Peters</span><div class="tiny">(970) 420-3663</div></td>
 <td><span class="pill form">Popup Estimate</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -565,7 +567,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-22">
 <td>3</td>
 <td>Sep 22, 2026<div class="tiny">5:15 PM MST <span class="ist">(Sep 23, 5:45 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">KS</span>Kathy Speed</span></td>
+<td><span class="name"><span class="avatar">KS</span>Kathy Speed</span><div class="tiny">(720) 377-7800</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -579,7 +581,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-22">
 <td>4</td>
 <td>Sep 22, 2026<div class="tiny">11:10 AM MST <span class="ist">(Sep 22, 11:40 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">BF</span>Baylor Fordham</span></td>
+<td><span class="name"><span class="avatar">BF</span>Baylor Fordham</span><div class="tiny">(303) 956-1030</div></td>
 <td><span class="pill form">City Popup</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -593,7 +595,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-21">
 <td>5</td>
 <td>Sep 21, 2026<div class="tiny">12:38 PM MST <span class="ist">(Sep 22, 1:08 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">TP</span>Tamara Powell</span></td>
+<td><span class="name"><span class="avatar">TP</span>Tamara Powell</span><div class="tiny">(858) 361-6633</div></td>
 <td><span class="pill form">City Popup</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -607,7 +609,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-21">
 <td>6</td>
 <td>Sep 21, 2026<div class="tiny">10:51 AM MST <span class="ist">(Sep 21, 11:21 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">MS</span>Mary Seawell</span></td>
+<td><span class="name"><span class="avatar">MS</span>Mary Seawell</span><div class="tiny">(720) 840-7658</div></td>
 <td><span class="pill form">Contact Us</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -621,7 +623,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-21">
 <td>7</td>
 <td>Sep 21, 2026<div class="tiny">10:30 AM MST <span class="ist">(Sep 21, 11:00 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">LD</span>Larry Dew</span></td>
+<td><span class="name"><span class="avatar">LD</span>Larry Dew</span><div class="tiny">(719) 352-8468</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -635,7 +637,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-21">
 <td>8</td>
 <td>Sep 21, 2026<div class="tiny">10:29 AM MST <span class="ist">(Sep 21, 10:59 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">JT</span>John Thaden</span></td>
+<td><span class="name"><span class="avatar">JT</span>John Thaden</span><div class="tiny">(720) 538-2675</div></td>
 <td><span class="pill form">Contact Us</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -649,7 +651,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-21">
 <td>9</td>
 <td>Sep 21, 2026<div class="tiny">9:17 AM MST <span class="ist">(Sep 21, 9:47 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">SH</span>Saul Hernandez</span></td>
+<td><span class="name"><span class="avatar">SH</span>Saul Hernandez</span><div class="tiny">(720) 371-1482</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Grizzly | Search | Spray Foam Insulation</td>
@@ -663,7 +665,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-20">
 <td>10</td>
 <td>Sep 20, 2026<div class="tiny">10:42 PM MST <span class="ist">(Sep 21, 11:12 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">AW</span>Alex Wamain</span></td>
+<td><span class="name"><span class="avatar">AW</span>Alex Wamain</span><div class="tiny">(505) 321-5149</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -677,7 +679,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-19">
 <td>11</td>
 <td>Sep 19, 2026<div class="tiny">9:17 PM MST <span class="ist">(Sep 20, 9:47 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">JS</span>John Skocilich</span></td>
+<td><span class="name"><span class="avatar">JS</span>John Skocilich</span><div class="tiny">(206) 920-1999</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Grizzly | Search | Spray Foam Insulation</td>
@@ -691,7 +693,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-19">
 <td>12</td>
 <td>Sep 19, 2026<div class="tiny">2:24 PM MST <span class="ist">(Sep 20, 2:54 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">RW</span>Robert Williams</span></td>
+<td><span class="name"><span class="avatar">RW</span>Robert Williams</span><div class="tiny">(720) 786-0193</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -705,7 +707,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-19">
 <td>13</td>
 <td>Sep 19, 2026<div class="tiny">10:03 AM MST <span class="ist">(Sep 19, 10:33 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">SB</span>Sev Boyd</span></td>
+<td><span class="name"><span class="avatar">SB</span>Sev Boyd</span><div class="tiny">(970) 581-3800</div></td>
 <td><span class="pill form">Contact Us</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -719,7 +721,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-18">
 <td>14</td>
 <td>Sep 18, 2026<div class="tiny">8:06 AM MST <span class="ist">(Sep 18, 8:36 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">JP</span>Jeff Pitus</span></td>
+<td><span class="name"><span class="avatar">JP</span>Jeff Pitus</span><div class="tiny">(719) 632-6511</div></td>
 <td><span class="pill form">Contact Us</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -733,7 +735,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-17">
 <td>15</td>
 <td>Sep 17, 2026<div class="tiny">11:32 AM MST <span class="ist">(Sep 18, 12:02 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">IP</span>Ian Phillips</span></td>
+<td><span class="name"><span class="avatar">IP</span>Ian Phillips</span><div class="tiny">(321) 295-9279</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -747,7 +749,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-17">
 <td>16</td>
 <td>Sep 17, 2026<div class="tiny">8:23 AM MST <span class="ist">(Sep 17, 8:53 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">VW</span>Veronica Weigel</span></td>
+<td><span class="name"><span class="avatar">VW</span>Veronica Weigel</span><div class="tiny">(303) 596-9144</div></td>
 <td><span class="pill form">Contact Us</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -761,7 +763,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-16">
 <td>17</td>
 <td>Sep 16, 2026<div class="tiny">1:05 PM MST <span class="ist">(Sep 17, 1:35 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">DK</span>Drew Kelley</span></td>
+<td><span class="name"><span class="avatar">DK</span>Drew Kelley</span><div class="tiny">(970) 702-4921</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Grizzly | Search | Spray Foam Insulation</td>
@@ -775,7 +777,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-15">
 <td>18</td>
 <td>Sep 15, 2026<div class="tiny">5:02 PM MST <span class="ist">(Sep 16, 5:32 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">KF</span>Kathy Freeman</span></td>
+<td><span class="name"><span class="avatar">KF</span>Kathy Freeman</span><div class="tiny">(818) 426-4225</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -789,7 +791,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-15">
 <td>19</td>
 <td>Sep 15, 2026<div class="tiny">3:53 PM MST <span class="ist">(Sep 16, 4:23 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">RJ</span>Ron Jensen</span></td>
+<td><span class="name"><span class="avatar">RJ</span>Ron Jensen</span><div class="tiny">(303) 204-8646</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Grizzly | Search | Attic Insulation</td>
@@ -803,7 +805,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-14">
 <td>20</td>
 <td>Sep 14, 2026<div class="tiny">11:34 AM MST <span class="ist">(Sep 15, 12:04 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">JM</span>Jen Mccallum</span></td>
+<td><span class="name"><span class="avatar">JM</span>Jen Mccallum</span><div class="tiny">(970) 988-9139</div></td>
 <td><span class="pill form">Contact Us</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -817,7 +819,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-14">
 <td>21</td>
 <td>Sep 14, 2026<div class="tiny">7:57 AM MST <span class="ist">(Sep 14, 8:27 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">AG</span>Andrea Gerard</span></td>
+<td><span class="name"><span class="avatar">AG</span>Andrea Gerard</span><div class="tiny">(786) 382-1258</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -831,7 +833,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-12">
 <td>22</td>
 <td>Sep 12, 2026<div class="tiny">11:46 AM MST <span class="ist">(Sep 13, 12:16 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">WW</span>Will Watters</span></td>
+<td><span class="name"><span class="avatar">WW</span>Will Watters</span><div class="tiny">(720) 971-0553</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -845,7 +847,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-12">
 <td>23</td>
 <td>Sep 12, 2026<div class="tiny">3:02 AM MST <span class="ist">(Sep 12, 3:32 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">MA</span>Melissa Anderson</span></td>
+<td><span class="name"><span class="avatar">MA</span>Melissa Anderson</span><div class="tiny">(720) 665-6551</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -859,7 +861,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-11">
 <td>24</td>
 <td>Sep 11, 2026<div class="tiny">12:00 PM MST <span class="ist">(Sep 12, 12:30 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">JA</span>Jamie Akens</span></td>
+<td><span class="name"><span class="avatar">JA</span>Jamie Akens</span><div class="tiny">(720) 938-1441</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Grizzly | Search | Spray Foam Insulation</td>
@@ -873,7 +875,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="organic" data-date="2026-09-10">
 <td>25</td>
 <td>Sep 10, 2026<div class="tiny">7:23 AM MST <span class="ist">(Sep 10, 7:53 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">WH</span>William Hoer</span></td>
+<td><span class="name"><span class="avatar">WH</span>William Hoer</span><div class="tiny">(973) 534-9923</div></td>
 <td><span class="pill form">Contact Us</span></td>
 <td><span class="pill organic">Organic</span></td>
 <td><span class="stq-empty">&mdash;</span></td>
@@ -887,7 +889,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-09">
 <td>26</td>
 <td>Sep 9, 2026<div class="tiny">1:47 PM MST <span class="ist">(Sep 10, 2:17 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">MF</span>Margo Francis</span></td>
+<td><span class="name"><span class="avatar">MF</span>Margo Francis</span><div class="tiny">(720) 323-9550</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -901,7 +903,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-08">
 <td>27</td>
 <td>Sep 8, 2026<div class="tiny">7:48 PM MST <span class="ist">(Sep 9, 8:18 AM IST)</span></div></td>
-<td><span class="name"><span class="avatar">SW</span>Scott Welsh</span></td>
+<td><span class="name"><span class="avatar">SW</span>Scott Welsh</span><div class="tiny">(303) 264-7215</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -915,7 +917,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-06">
 <td>28</td>
 <td>Sep 6, 2026<div class="tiny">8:16 AM MST <span class="ist">(Sep 6, 8:46 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">TD</span>Tom Daugherty</span></td>
+<td><span class="name"><span class="avatar">TD</span>Tom Daugherty</span><div class="tiny">(719) 510-3134</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
@@ -929,7 +931,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-05">
 <td>29</td>
 <td>Sep 5, 2026<div class="tiny">10:10 AM MST <span class="ist">(Sep 5, 10:40 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">CH</span>Cori Hamilton</span></td>
+<td><span class="name"><span class="avatar">CH</span>Cori Hamilton</span><div class="tiny">(720) 427-4343</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Grizzly | Search | Attic | Denver</td>
@@ -943,7 +945,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-04">
 <td>30</td>
 <td>Sep 4, 2026<div class="tiny">11:25 AM MST <span class="ist">(Sep 4, 11:55 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">DL</span>David Larson</span></td>
+<td><span class="name"><span class="avatar">DL</span>David Larson</span><div class="tiny">(540) 207-7848</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid &middot; Google Ads</span></td>
 <td>Grizzly | Search | Attic Insulation</td>
@@ -957,7 +959,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <tr data-source="paid" data-date="2026-09-02">
 <td>31</td>
 <td>Sep 2, 2026<div class="tiny">11:04 AM MST <span class="ist">(Sep 2, 11:34 PM IST)</span></div></td>
-<td><span class="name"><span class="avatar">DC</span>David Copeland</span></td>
+<td><span class="name"><span class="avatar">DC</span>David Copeland</span><div class="tiny">(650) 643-9625</div></td>
 <td><span class="pill form">Subdomain Page</span></td>
 <td><span class="pill paid">Paid · Google Ads</span></td>
 <td>Search - Grizzly - Insulation (General)</td>
