@@ -448,28 +448,27 @@ td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall
      from jobs that had a JOB START in the current month, with CONTRACTOR jobs removed - work that comes from
      the owner's trade relationships (Terminix, First General Services and the like) rather than from our
      marketing.
-     HOW TO READ IT: HCP > Jobs. The grid is a Kendo grid inside a same-origin iframe and is SERVER-PAGED and
-     virtualised, so scraping the DOM silently misses rows. Read the data model instead:
-       var g = jQuery(iframeDoc.querySelector('.k-grid')).data('kendoGrid');
-       g.dataSource.pageSize(300);
-       g.dataSource.filter({logic:'and',filters:[
-         {field:'start',operator:'eq',value:'<YYYY-MM-01>T00:00:00Z'},
-         {field:'start',operator:'eq',value:'<YYYY-MM-last>T23:59:59Z'}]});
-       g.dataSource.data()  // fields: when, amount, paid_amount, customer, display_name, presentable_job_status
-     *** TRAP THAT ALREADY BIT ONCE: the grid's DEFAULT filter is a rolling 12 months ending TODAY, so jobs
-     dated later this month are missing from it. Reading it without setting the filter gave 17 jobs /
-     $56,586 when the real September figure is 22 jobs / $69,008.50. ALWAYS set the month filter explicitly. ***
-     Sep 2026 working: 22 jobs $69,008.50 gross, minus 4 contractor/company jobs ($14,668.50) = $54,340.00
-     over 18 jobs. Exclusions listed in _session_handoff.md - re-check them against Erik's document. -->
+     HOW TO READ IT (method confirmed with Kunal 2026-09-23): HCP > Customers > Jobs, filter "Scheduled between"
+     the 1st and last day of the month. URL: /app/customers/jobs?page_size=25&page=1
+       &filters[0][property]=scheduled_start_at&filters[0][operator]=lte&filters[0][values][0]=<YYYY-MM-last>T23:59:59
+       &filters[1][property]=scheduled_start_at&filters[1][operator]=gte&filters[1][values][0]=<YYYY-MM-01>T00:00:00&user_filters=1
+     Then: (1) drop CANCELED jobs (Sep: #76 Juan Gomez $10,500); (2) drop PARTNER-COMPANY jobs - decided ONLY by the
+     customer profile in HCP: Profile > Contact info "Company" and "This customer bills to ...". Billed to EnviroPest
+     or Terminix/Rentokil = partner job. NO name-based guessing (Kunal 2026-09-23). Open EVERY customer profile.
+     Sep 2026: 23 records - 1 canceled = 22 jobs $69,008.50; partner jobs 10 = $25,746.00 (EnviroPest: #92 American Homes
+     $1,760, #66 Snug Harbor $1,000, #93 Tim Rehnstrom $1,420, #72+#96 Eric Arscott $7,230, #68+#89 Elton Woodrom $8,170,
+     #83 Kelly Belknap $1,000; Terminix: #79+#84 Nicholas Mansfield $5,166) => $43,262.50 over 12 jobs.
+     #87 First General Services $6,742.50 is KEPT (self-billed; first called our Denver GMB number 2026-07-13 per CTM;
+     Kunal's decision). -->
 <div class="kcell">
 <div class="krule hk-won"></div>
 <div class="klbl">Revenue &middot; jobs started in Sep</div>
-<div class="kval" id="kwon-amt">$54,340.00</div>
-<div class="kmeta"><span id="kwon-n">18</span> jobs &middot; contractor work excluded</div>
+<div class="kval" id="kwon-amt">$43,262.50</div>
+<div class="kmeta"><span id="kwon-n">12</span> jobs &middot; partner-company jobs excluded</div>
 </div>
 <!-- ===== END TOTAL WON KPI ===== -->
 </div>
-<div class="ads-note kw-note">Lead counts are computed from the tables below. Ads spend is the whole Google Ads account, Mountain Time, read from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so today&rsquo;s figure can still move. <b>Revenue</b> is the value of Housecall Pro jobs with a job start date in this month, with contractor work excluded &mdash; jobs that come through the owner&rsquo;s trade relationships rather than through marketing. It covers all of Grizzly&rsquo;s September work, so it is not a total of the leads listed below and should not be read as the return on the ads spend beside it.</div>
+<div class="ads-note kw-note">Lead counts are computed from the tables below. Ads spend is the whole Google Ads account, Mountain Time, read from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so today&rsquo;s figure can still move. <b>Revenue</b> is the value of Housecall Pro jobs with a job start date in this month, with cancelled jobs and partner-company jobs excluded &mdash; jobs that Housecall Pro bills to a partner company (EnviroPest, Terminix) rather than to the homeowner, because those come through the partner, not through marketing. It covers all of Grizzly&rsquo;s September work, so it is not a total of the leads listed below and should not be read as the return on the ads spend beside it.</div>
 <!-- ===== END KPI STRIP ===== -->
 <!-- ===== HCP PIPELINE KPIS ===== -->
 <!-- HIDDEN 2026-09-22 at Kunal's request ("abhi ke liye ye KPIs hide kar do", HCP only). Nothing removed: the markup, the CSS and updateHCP() are all intact and still computing, so the strip is hidden, not broken. TO BRING IT BACK: delete the single #hcp-kpis{display:none} line in the HCP PIPELINE KPI CSS block. -->
@@ -535,8 +534,22 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 </tr>
 </thead>
 <tbody>
-<tr data-source="organic" data-date="2026-09-22">
+<tr data-source="organic" data-date="2026-09-23">
 <td>1</td>
+<td>Sep 23, 2026<div class="tiny">2:37 AM MST <span class="ist">(Sep 23, 3:07 PM IST)</span></div></td>
+<td><span class="name"><span class="avatar">RR</span>Ryan Rose</span></td>
+<td><span class="pill form">Popup Estimate</span></td>
+<td><span class="pill organic">Organic</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td><span class="stq-empty">&mdash;</span></td>
+<td>Denver, CO</td>
+<td>Attic Insulation</td>
+<td><a class="lp" href="https://grizzlyinsulationco.com/" target="_blank" rel="noopener">/</a></td>
+<td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
+</tr>
+<tr data-source="organic" data-date="2026-09-22">
+<td>2</td>
 <td>Sep 22, 2026<div class="tiny">8:23 PM MST <span class="ist">(Sep 23, 8:53 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">CP</span>Cole Peters</span></td>
 <td><span class="pill form">Popup Estimate</span></td>
@@ -550,7 +563,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-22">
-<td>2</td>
+<td>3</td>
 <td>Sep 22, 2026<div class="tiny">5:15 PM MST <span class="ist">(Sep 23, 5:45 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">KS</span>Kathy Speed</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -564,7 +577,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-22">
-<td>3</td>
+<td>4</td>
 <td>Sep 22, 2026<div class="tiny">11:10 AM MST <span class="ist">(Sep 22, 11:40 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">BF</span>Baylor Fordham</span></td>
 <td><span class="pill form">City Popup</span></td>
@@ -578,7 +591,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000023"><span class="hs">Visit booked</span> <span class="hv">Sep 23</span> <span class="hm">Est #255</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-21">
-<td>4</td>
+<td>5</td>
 <td>Sep 21, 2026<div class="tiny">12:38 PM MST <span class="ist">(Sep 22, 1:08 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">TP</span>Tamara Powell</span></td>
 <td><span class="pill form">City Popup</span></td>
@@ -592,7 +605,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-21">
-<td>5</td>
+<td>6</td>
 <td>Sep 21, 2026<div class="tiny">10:51 AM MST <span class="ist">(Sep 21, 11:21 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">MS</span>Mary Seawell</span></td>
 <td><span class="pill form">Contact Us</span></td>
@@ -606,7 +619,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-21">
-<td>6</td>
+<td>7</td>
 <td>Sep 21, 2026<div class="tiny">10:30 AM MST <span class="ist">(Sep 21, 11:00 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">LD</span>Larry Dew</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -620,7 +633,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000024"><span class="hs">Visit booked</span> <span class="hv">Sep 24</span> <span class="hm">Est #252</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-21">
-<td>7</td>
+<td>8</td>
 <td>Sep 21, 2026<div class="tiny">10:29 AM MST <span class="ist">(Sep 21, 10:59 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">JT</span>John Thaden</span></td>
 <td><span class="pill form">Contact Us</span></td>
@@ -634,7 +647,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000028"><span class="hs">Visit booked</span> <span class="hv">Sep 28</span> <span class="hm">Est #254</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-21">
-<td>8</td>
+<td>9</td>
 <td>Sep 21, 2026<div class="tiny">9:17 AM MST <span class="ist">(Sep 21, 9:47 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">SH</span>Saul Hernandez</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -648,7 +661,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000025"><span class="hs">Visit booked</span> <span class="hv">Sep 25</span> <span class="hm">Est #249</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-20">
-<td>9</td>
+<td>10</td>
 <td>Sep 20, 2026<div class="tiny">10:42 PM MST <span class="ist">(Sep 21, 11:12 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">AW</span>Alex Wamain</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -662,7 +675,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000023"><span class="hs">Visit booked</span> <span class="hv">Sep 23</span> <span class="hm">Est #248</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-19">
-<td>10</td>
+<td>11</td>
 <td>Sep 19, 2026<div class="tiny">9:17 PM MST <span class="ist">(Sep 20, 9:47 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">JS</span>John Skocilich</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -676,7 +689,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-19">
-<td>11</td>
+<td>12</td>
 <td>Sep 19, 2026<div class="tiny">2:24 PM MST <span class="ist">(Sep 20, 2:54 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">RW</span>Robert Williams</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -690,7 +703,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000025"><span class="hs">Visit booked</span> <span class="hv">Sep 25</span> <span class="hm">Est #247</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-19">
-<td>12</td>
+<td>13</td>
 <td>Sep 19, 2026<div class="tiny">10:03 AM MST <span class="ist">(Sep 19, 10:33 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">SB</span>Sev Boyd</span></td>
 <td><span class="pill form">Contact Us</span></td>
@@ -704,7 +717,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000028"><span class="hs">Visit booked</span> <span class="hv">Sep 28</span> <span class="hm">Est #246</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-18">
-<td>13</td>
+<td>14</td>
 <td>Sep 18, 2026<div class="tiny">8:06 AM MST <span class="ist">(Sep 18, 8:36 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">JP</span>Jeff Pitus</span></td>
 <td><span class="pill form">Contact Us</span></td>
@@ -718,7 +731,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-17">
-<td>14</td>
+<td>15</td>
 <td>Sep 17, 2026<div class="tiny">11:32 AM MST <span class="ist">(Sep 18, 12:02 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">IP</span>Ian Phillips</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -732,7 +745,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-17">
-<td>15</td>
+<td>16</td>
 <td>Sep 17, 2026<div class="tiny">8:23 AM MST <span class="ist">(Sep 17, 8:53 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">VW</span>Veronica Weigel</span></td>
 <td><span class="pill form">Contact Us</span></td>
@@ -746,7 +759,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000022"><span class="hs">Visit booked</span> <span class="hv">Sep 22</span> <span class="hm">Est #240</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-16">
-<td>16</td>
+<td>17</td>
 <td>Sep 16, 2026<div class="tiny">1:05 PM MST <span class="ist">(Sep 17, 1:35 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">DK</span>Drew Kelley</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -760,7 +773,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-est" data-sort="40022769.60"><span class="hs">Estimate sent</span> <span class="hv">$22,769.60</span> <span class="hm">Est #239</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-15">
-<td>17</td>
+<td>18</td>
 <td>Sep 15, 2026<div class="tiny">5:02 PM MST <span class="ist">(Sep 16, 5:32 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">KF</span>Kathy Freeman</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -774,7 +787,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-lost" data-sort="30011000"><span class="hs">Lost</span> <span class="hv">$11,000</span> <span class="hm">Est #236</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-15">
-<td>18</td>
+<td>19</td>
 <td>Sep 15, 2026<div class="tiny">3:53 PM MST <span class="ist">(Sep 16, 4:23 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">RJ</span>Ron Jensen</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -788,7 +801,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-14">
-<td>19</td>
+<td>20</td>
 <td>Sep 14, 2026<div class="tiny">11:34 AM MST <span class="ist">(Sep 15, 12:04 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">JM</span>Jen Mccallum</span></td>
 <td><span class="pill form">Contact Us</span></td>
@@ -802,7 +815,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-est" data-sort="40003820"><span class="hs">Estimate sent</span> <span class="hv">$3,820</span> <span class="hm">Est #232</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-14">
-<td>20</td>
+<td>21</td>
 <td>Sep 14, 2026<div class="tiny">7:57 AM MST <span class="ist">(Sep 14, 8:27 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">AG</span>Andrea Gerard</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -816,7 +829,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-won" data-sort="50002500"><span class="hs">Won</span> <span class="hv">$2,500</span> <span class="hm">Est #231</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-12">
-<td>21</td>
+<td>22</td>
 <td>Sep 12, 2026<div class="tiny">11:46 AM MST <span class="ist">(Sep 13, 12:16 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">WW</span>Will Watters</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -830,7 +843,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-12">
-<td>22</td>
+<td>23</td>
 <td>Sep 12, 2026<div class="tiny">3:02 AM MST <span class="ist">(Sep 12, 3:32 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">MA</span>Melissa Anderson</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -844,7 +857,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-11">
-<td>23</td>
+<td>24</td>
 <td>Sep 11, 2026<div class="tiny">12:00 PM MST <span class="ist">(Sep 12, 12:30 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">JA</span>Jamie Akens</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -858,7 +871,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-est" data-sort="40007680.00"><span class="hs">Estimate sent</span> <span class="hv">$7,680.00</span> <span class="hm">Est #230</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="organic" data-date="2026-09-10">
-<td>24</td>
+<td>25</td>
 <td>Sep 10, 2026<div class="tiny">7:23 AM MST <span class="ist">(Sep 10, 7:53 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">WH</span>William Hoer</span></td>
 <td><span class="pill form">Contact Us</span></td>
@@ -872,7 +885,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-est" data-sort="40004080"><span class="hs">Estimate sent</span> <span class="hv">$4,080</span> <span class="hm">Est #227</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-09">
-<td>25</td>
+<td>26</td>
 <td>Sep 9, 2026<div class="tiny">1:47 PM MST <span class="ist">(Sep 10, 2:17 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">MF</span>Margo Francis</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -886,7 +899,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-est" data-sort="40007928.00"><span class="hs">Estimate sent</span> <span class="hv">$7,928.00</span> <span class="hm">Est #228</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-08">
-<td>26</td>
+<td>27</td>
 <td>Sep 8, 2026<div class="tiny">7:48 PM MST <span class="ist">(Sep 9, 8:18 AM IST)</span></div></td>
 <td><span class="name"><span class="avatar">SW</span>Scott Welsh</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -900,7 +913,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-none"><span class="hcp-no">&mdash;</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-06">
-<td>27</td>
+<td>28</td>
 <td>Sep 6, 2026<div class="tiny">8:16 AM MST <span class="ist">(Sep 6, 8:46 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">TD</span>Tom Daugherty</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -914,7 +927,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-lost" data-sort="30002050"><span class="hs">Lost</span> <span class="hv">$2,050</span> <span class="hm">Est #223</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-05">
-<td>28</td>
+<td>29</td>
 <td>Sep 5, 2026<div class="tiny">10:10 AM MST <span class="ist">(Sep 5, 10:40 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">CH</span>Cori Hamilton</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -928,7 +941,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-est" data-sort="40008750"><span class="hs">Estimate sent</span> <span class="hv">$8,750</span> <span class="hm">Est #226</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-04">
-<td>29</td>
+<td>30</td>
 <td>Sep 4, 2026<div class="tiny">11:25 AM MST <span class="ist">(Sep 4, 11:55 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">DL</span>David Larson</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
@@ -942,7 +955,7 @@ Form Leads <span class="cnt" id="form-cnt">0 leads</span>
 <td class="hcp h-visit" data-sort="20000024"><span class="hs">Visit booked</span> <span class="hv">Sep 24</span> <span class="hm">Est #220</span><button class="hcp-more" type="button" aria-label="Show what this means"></button><span class="hcp-why"></span></td>
 </tr>
 <tr data-source="paid" data-date="2026-09-02">
-<td>30</td>
+<td>31</td>
 <td>Sep 2, 2026<div class="tiny">11:04 AM MST <span class="ist">(Sep 2, 11:34 PM IST)</span></div></td>
 <td><span class="name"><span class="avatar">DC</span>David Copeland</span></td>
 <td><span class="pill form">Subdomain Page</span></td>
