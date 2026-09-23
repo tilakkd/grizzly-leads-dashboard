@@ -2942,6 +2942,17 @@ updateKPIs();
 #calls.rx-on thead th:nth-child(9){grid-row:4;grid-column:1/9;}
 #calls.rx-on thead th:nth-child(11){grid-row:4;grid-column:9/13;}
 }
+/* ===== WON ROW HIGHLIGHT (Kunal 2026-09-23, option 3 of Grizzly-WON-Row-Highlight-Mockup.html) =====
+   Every lead whose Housecall Pro cell is h-won gets a soft green row tint plus a solid green WON badge.
+   The badge is what separates "won" from "organic" (green already means organic on this page).
+   Driven purely by the h-won class, so a row lights up/clears by itself when step 5e changes its HCP cell.
+   Keep this block on every republish. */
+#leads tbody tr:has(td.h-won),#calls tbody tr:has(td.h-won){background:#f2fbf5;}
+#leads tbody tr:has(td.h-won) td,#calls tbody tr:has(td.h-won) td{background:#f2fbf5;}
+#leads tbody tr:has(td.h-won):hover,#calls tbody tr:has(td.h-won):hover,
+#leads tbody tr:has(td.h-won):hover td,#calls tbody tr:has(td.h-won):hover td{background:#e8f6ed;}
+#leads td.hcp.h-won .hs,#calls td.hcp.h-won .hs{display:inline-block;background:var(--green);color:#fff;padding:2px 6px;border-radius:4px;letter-spacing:.5px;margin-bottom:2px;}
+/* ===== END WON ROW HIGHLIGHT ===== */
 </style>
 <script>
 (function(){
