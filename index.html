@@ -156,7 +156,7 @@ tbody tr:hover td{background:#f9fbff;}
 .topbar{border-radius:12px 12px 0 0;}
 .wrap .topbar + .kstrip{border-top:0;}
 /* KPI strip: one panel divided by hairlines, not floating cards */
-.kstrip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--line);border-top:2px solid var(--ink);border-radius:0 0 12px 12px;margin:0 0 8px;overflow:hidden;}
+.kstrip{display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border:1px solid var(--line);border-top:2px solid var(--ink);border-radius:0 0 12px 12px;margin:0 0 8px;overflow:hidden;}
 .kcell{padding:15px 17px;border-right:1px solid var(--hair);display:flex;flex-direction:column;}
 .kcell:last-child{border-right:0;}
 .krule{height:3px;width:26px;background:var(--ink);margin-bottom:10px;}
@@ -434,8 +434,22 @@ td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall
 <div class="kmeta"><span id="ads-clicks">615</span> clicks &middot; <span id="ads-cpc">$18.39</span> cpc</div>
 </div>
 <!-- ===== END GOOGLE ADS MTD ===== -->
+<!-- ===== TOTAL WON KPI ===== -->
+<!-- COMPUTED, NEVER HAND-EDITED. updateHCP() fills #kwon-amt, #kwon-paid and #kwon-org by reading the
+     h-won cells out of the two lead tables and splitting them on each row's data-source. It follows the
+     search box and the Paid/Organic chips exactly like the other cards. Added 2026-09-23 at Erik Lefko's
+     request ("aggregate all total won and add to top of dashboard like we have adspend"). The paid/organic
+     SPLIT IS NOT DECORATION: without it, this figure sits beside Ads spend and reads as if the ads paid for
+     themselves, when most of the won value so far is organic. Do not remove the sub-line. -->
+<div class="kcell">
+<div class="krule hk-won"></div>
+<div class="klbl">Total won &middot; Housecall Pro</div>
+<div class="kval" id="kwon-amt">$0.00</div>
+<div class="kmeta"><span id="kwon-paid">$0.00</span> Google Ads &middot; <span id="kwon-org">$0.00</span> organic</div>
 </div>
-<div class="ads-note kw-note">Lead counts are computed from the tables below. Ads spend is the whole Google Ads account, Mountain Time, read from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so today&rsquo;s figure can still move.</div>
+<!-- ===== END TOTAL WON KPI ===== -->
+</div>
+<div class="ads-note kw-note">Lead counts are computed from the tables below. Ads spend is the whole Google Ads account, Mountain Time, read from Google Ads on each daily refresh &mdash; Google&rsquo;s reporting is not real-time, so today&rsquo;s figure can still move. <b>Total won</b> is the value of jobs Grizzly has already won from this month&rsquo;s leads, read from Housecall Pro. It counts only the leads that have reached a price there, so treat it as a floor that rises as more estimates are settled. The line underneath splits it by where the lead came from &mdash; that split is the part Housecall Pro cannot report on its own, and it is the only honest way to read this figure next to the ads spend beside it.</div>
 <!-- ===== END KPI STRIP ===== -->
 <!-- ===== HCP PIPELINE KPIS ===== -->
 <!-- HIDDEN 2026-09-22 at Kunal's request ("abhi ke liye ye KPIs hide kar do", HCP only). Nothing removed: the markup, the CSS and updateHCP() are all intact and still computing, so the strip is hidden, not broken. TO BRING IT BACK: delete the single #hcp-kpis{display:none} line in the HCP PIPELINE KPI CSS block. -->
@@ -1169,7 +1183,7 @@ function money(n){
 return '$' + n.toLocaleString('en-US',{minimumFractionDigits:(n%1?2:0),maximumFractionDigits:2});
 }
 function updateHCP(){
-var agg={won:{n:0,v:0},est:{n:0,v:0},lost:{n:0,v:0}}, visit=0, inhcp=0, none=0, total=0;
+var agg={won:{n:0,v:0},est:{n:0,v:0},lost:{n:0,v:0}}, visit=0, inhcp=0, none=0, total=0, wonPaid=0, wonOrg=0;
 rows.forEach(function(r){
 if(!vis(r)) return;
 total++;
@@ -1185,8 +1199,10 @@ var hv=c.querySelector('.hv');
 var v=hv ? parseFloat(hv.textContent.replace(/[^0-9.]/g,'')) : 0;
 if(isNaN(v)) v=0;
 agg[key].n++; agg[key].v+=v;
+if(key==='won'){ if(r.getAttribute('data-source')==='paid') wonPaid+=v; else wonOrg+=v; }
 });
 setVal('hcp-won-amt',money(agg.won.v));   setVal('hcp-won-n',agg.won.n);
+setVal('kwon-amt',money(agg.won.v)); setVal('kwon-paid',money(wonPaid)); setVal('kwon-org',money(wonOrg));
 setVal('hcp-est-amt',money(agg.est.v));   setVal('hcp-est-n',agg.est.n);
 setVal('hcp-lost-amt',money(agg.lost.v)); setVal('hcp-lost-n',agg.lost.n);
 var priced=agg.won.n+agg.est.n+agg.lost.n;
