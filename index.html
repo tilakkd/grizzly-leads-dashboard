@@ -414,7 +414,7 @@ td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall
 </div>
 
 <!-- ===== KPI STRIP ===== -->
-<div class="kstrip">
+<div class="kstrip k6">
 <div class="kcell">
 <div class="krule acc"></div>
 <div class="klbl">Total leads</div>
@@ -454,13 +454,32 @@ td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall
      $1,500 (paid, completed) + Andrea Gerard #95 $2,500 (paid, scheduled Sep 29) = $16,000 over 4 jobs = $6,250 paid / $9,750 organic. -->
 <div class="kcell">
 <div class="krule hk-won"></div>
-<div class="klbl">Won &middot; this month&rsquo;s leads</div>
+<div class="klbl">Jobs from September leads</div>
 <div class="kval" id="kwon-amt">$16,000.00</div>
 <div class="kmeta"><span id="kwon-n">4</span> jobs &middot; $6,250 paid &middot; $9,750 organic</div>
 </div>
 <!-- ===== END TOTAL WON KPI ===== -->
+<!-- ===== ALL JOBS KPI ===== -->
+<!-- COMPUTED - never type these figures. Filled by the JOBS THIS MONTH FROM OUR LEADS script from the #jobtab rows (Kunal 2026-09-24). -->
+<div class="kcell">
+<div class="krule hk-alljobs"></div>
+<div class="klbl">All September jobs from our leads</div>
+<div class="kval" id="kjob-all-amt">$32,765.00</div>
+<div class="kmeta" id="kjob-all-meta">8 jobs &middot; 4 from earlier months&rsquo; leads</div>
 </div>
-<div class="ads-note kw-note"><b>Ads spend:</b> the whole Google Ads account, updated daily &mdash; today&rsquo;s figure can still move. <b>Won:</b> Housecall Pro job value for the leads on this page whose job starts this month.</div>
+<!-- ===== END ALL JOBS KPI ===== -->
+</div>
+<div class="ads-note kw-note"><b>Ads spend:</b> the whole Google Ads account, updated daily &mdash; today&rsquo;s figure can still move. <b>Jobs cards:</b> Housecall Pro job value (completed + scheduled) for jobs scheduled to start this month. The first counts only this month&rsquo;s leads; the second also counts leads from earlier months. Contractor jobs never count.</div>
+<style>
+/* ===== SIX-CARD KPI STRIP (2026-09-24, second revenue card) - KEEP ===== */
+.kstrip.k6{grid-template-columns:repeat(6,minmax(0,1fr));}
+.kstrip.k6 .kval{font-size:clamp(19px,1.75vw,29px);}
+.kstrip.k6 .krule.hk-alljobs{background:#2563eb;}
+.kstrip.k6 .krule.hk-won{background:#15803d;}
+@media(max-width:760px){.kstrip.k6{grid-template-columns:repeat(2,minmax(0,1fr));}.kstrip.k6 .kcell:nth-child(5){grid-column:auto;border-right:1px solid var(--hair);}.kstrip.k6 .kcell:nth-child(6){border-right:0;}.kstrip.k6 .kval{font-size:24px;}}
+/* ===== END SIX-CARD KPI STRIP ===== */
+</style>
+
 <!-- ===== END KPI STRIP ===== -->
 <!-- ===== HCP PIPELINE KPIS ===== -->
 <!-- HIDDEN 2026-09-22 at Kunal's request ("abhi ke liye ye KPIs hide kar do", HCP only). Nothing removed: the markup, the CSS and updateHCP() are all intact and still computing, so the strip is hidden, not broken. TO BRING IT BACK: delete the single #hcp-kpis{display:none} line in the HCP PIPELINE KPI CSS block. -->
@@ -1040,6 +1059,102 @@ Call Leads <span class="cnt">manually logged from CTM</span>
 <div class="card sumcard" id="sum-call"></div>
 </div>
 <!-- ===== END SUMMARY BOX: CALL ===== -->
+
+<!-- ===== JOBS THIS MONTH FROM OUR LEADS ===== -->
+<!-- Added 2026-09-24 at Kunal's request (mockup Grizzly-Revenue-Cards-Mockup-v2.html approved). KEEP THIS BLOCK ON EVERY REPUBLISH.
+     HAND-WRITTEN ROWS, REFRESH EVERY RUN from HCP > Customers > Jobs (list view; its dates are IST, MT = IST - 12h30):
+     every non-cancelled job whose SCHEDULED START (MT) is in the current month and whose customer is a lead on this page OR on any
+     archived month (match on PHONE). Contractor / partner-billed jobs (EnviroPest, Terminix/Rentokil) never count.
+     data-sep="1" = lead came in this month (these rows must equal the "Jobs from ... leads" card, #kwon-amt); data-sep="0" = earlier-month lead.
+     data-st = done | sch | prog (HCP job status). data-amt = HCP job amount in whole dollars.
+     The heading pill, the two total lines and card #kjob-all-amt / #kjob-all-meta are COMPUTED by the script below - never type them.
+     Sep 2026 (read from HCP 2026-09-24): 8 jobs $32,765 = 4 from Sep leads $16,000 + Castro(Aug) $6,000 + Fiore(Jul) $7,965 + $0 + Letzelter(Jun) $2,800. -->
+<style>
+#jobsec .jt-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#445;padding:12px 14px 0;}
+#jobsec .jt-q{font-size:12.5px;color:#556;margin:0;padding:12px 14px 0;line-height:1.5;}
+#jobsec .jt-filter{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:10px 14px 10px;}
+#jobsec .jt-flbl{font-size:12px;color:#556;margin-right:2px;}
+#jobsec .jt-f{font:inherit;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;border:1px solid #d5dbe5;background:#fff;color:#334;cursor:pointer;}
+#jobsec .jt-f:hover{border-color:#9aa6b6;}
+#jobsec .jt-f.on{background:#13314f;border-color:#13314f;color:#fff;}
+#jobtab .jt-m{font-size:10.5px;padding:2px 8px;border-radius:999px;background:#e7f6ec;color:#15803d;font-weight:600;white-space:nowrap;}
+#jobtab .jt-m.e{background:#e8f0fe;color:#2563eb;}
+#jobsec .jt-legend .jt-m{font-size:10.5px;padding:2px 8px;border-radius:999px;background:#e7f6ec;color:#15803d;font-weight:600;}
+#jobsec .jt-legend .jt-m.e{background:#e8f0fe;color:#2563eb;}
+#jobtab .jt-st{font-size:10.5px;padding:2px 8px;border-radius:999px;font-weight:600;white-space:nowrap;}
+#jobtab .jt-st.done{background:#e7f6ec;color:#15803d;}
+#jobtab .jt-st.sch{background:#fdf0dd;color:#b45309;}
+#jobtab .jt-st.prog{background:#e8f0fe;color:#2563eb;}
+#jobtab .jt-r{text-align:right;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:nowrap;}
+#jobtab tbody tr.jt-earlier td{background:#f5f8ff;}
+#jobtab tfoot td{padding:10px 9px;font-weight:700;border-top:2px solid var(--line);background:#f2fbf5;}
+#jobtab tfoot tr.jt-all td{background:#eef4ff;border-top:0;}
+#jobsec .jt-note{font-size:12px;color:#7a5a00;margin:0;padding:10px 14px 12px;}
+</style>
+<div class="sec-title" id="jobsec-title">
+<span class="ic f"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+Jobs this month from our leads (completed + scheduled) <span class="cnt" id="jt-cnt">8 jobs &middot; $32,765</span>
+</div>
+<div class="card" id="jobsec">
+<p class="jt-q">Every Housecall Pro job scheduled to start this month whose customer came in through a form or call on this dashboard (this month or an earlier month). Contractor jobs are not included.</p>
+<div class="jt-legend"><span><span class="jt-m">Sep</span> lead came in this month &rarr; counts in both cards</span><span><span class="jt-m e">Aug / Jul / Jun</span> lead came in an earlier month &rarr; counts only in the second card</span></div>
+<div class="jt-filter" role="group" aria-label="Filter by job status"><span class="jt-flbl">Show:</span><button type="button" class="jt-f on" data-f="all">All</button><button type="button" class="jt-f" data-f="done">Completed</button><button type="button" class="jt-f" data-f="sch">Scheduled</button><button type="button" class="jt-f" data-f="prog">In progress</button></div>
+<div class="tablewrap">
+<table id="jobtab">
+<thead><tr><th>Customer</th><th>Lead came in</th><th>Job scheduled start (MT)</th><th>Job status</th><th class="jt-r">Amount</th></tr></thead>
+<tbody>
+<tr data-job="77" data-st="done" data-amt="1500" data-sep="1"><td>David Copeland</td><td><span class="jt-m">Sep</span></td><td>Sep 3</td><td><span class="jt-st done">Completed</span></td><td class="jt-r">$1,500</td></tr>
+<tr data-job="78" data-st="done" data-amt="9750" data-sep="1"><td>Kathryn Boyd</td><td><span class="jt-m">Sep</span></td><td>Sep 4</td><td><span class="jt-st done">Completed</span></td><td class="jt-r">$9,750</td></tr>
+<tr data-job="80" data-st="done" data-amt="2250" data-sep="1"><td>Robert Lindow</td><td><span class="jt-m">Sep</span></td><td>Sep 7</td><td><span class="jt-st done">Completed</span></td><td class="jt-r">$2,250</td></tr>
+<tr data-job="95" data-st="sch" data-amt="2500" data-sep="1"><td>Andrea Gerard</td><td><span class="jt-m">Sep</span></td><td>Sep 29</td><td><span class="jt-st sch">Scheduled</span></td><td class="jt-r">$2,500</td></tr>
+<tr data-job="73" data-st="done" data-amt="6000" data-sep="0" class="jt-earlier"><td>Regina Castro</td><td><span class="jt-m e">Aug</span></td><td>Sep 9</td><td><span class="jt-st done">Completed</span></td><td class="jt-r">$6,000</td></tr>
+<tr data-job="85" data-st="prog" data-amt="7965" data-sep="0" class="jt-earlier"><td>Danielle Fiore</td><td><span class="jt-m e">Jul</span></td><td>Sep 12</td><td><span class="jt-st prog">In progress</span></td><td class="jt-r">$7,965</td></tr>
+<tr data-job="86" data-st="sch" data-amt="2800" data-sep="0" class="jt-earlier"><td>John Letzelter</td><td><span class="jt-m e">Jun</span></td><td>Sep 19</td><td><span class="jt-st sch">Scheduled</span></td><td class="jt-r">$2,800</td></tr>
+<tr data-job="94" data-st="done" data-amt="0" data-sep="0" class="jt-earlier"><td>Danielle Fiore</td><td><span class="jt-m e">Jul</span></td><td>Sep 22</td><td><span class="jt-st done">Completed</span></td><td class="jt-r">$0</td></tr>
+</tbody>
+<tfoot>
+<tr class="jt-sep"><td>From this month&rsquo;s leads</td><td></td><td colspan="2" id="jt-sep-n">4 jobs (3 completed, 1 scheduled)</td><td class="jt-r" id="jt-sep-amt">$16,000</td></tr>
+<tr class="jt-all"><td>All jobs this month from our leads</td><td></td><td colspan="2" id="jt-all-n">8 jobs (5 completed, 2 scheduled, 1 in progress)</td><td class="jt-r" id="jt-all-amt">$32,765</td></tr>
+</tfoot>
+</table>
+</div>
+<p class="jt-note">Job status comes from Housecall Pro and is refreshed on every run. John Letzelter&rsquo;s Sep 19 job still reads &ldquo;Scheduled&rdquo; in Housecall Pro, so it is shown that way until the team marks it done.</p>
+</div>
+<script>
+(function(){
+  var tab=document.getElementById('jobtab'); if(!tab) return;
+  var rows=[].slice.call(tab.querySelectorAll('tbody tr[data-st]'));
+  function money(n){return '$'+Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function money2(n){return '$'+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  var names={done:'completed',sch:'scheduled',prog:'in progress'};
+  function describe(list){
+    var c={done:0,sch:0,prog:0},sum=0;
+    list.forEach(function(r){c[r.getAttribute('data-st')]++;sum+=(+r.getAttribute('data-amt')||0);});
+    var parts=[];['done','sch','prog'].forEach(function(k){if(c[k])parts.push(c[k]+' '+names[k]);});
+    return {n:list.length,txt:list.length+(list.length===1?' job':' jobs')+(parts.length?' ('+parts.join(', ')+')':''),sum:sum};
+  }
+  function set(id,t){var e=document.getElementById(id); if(e) e.textContent=t;}
+  function apply(f){
+    var vis=rows.filter(function(r){var ok=(f==='all'||r.getAttribute('data-st')===f);r.style.display=ok?'':'none';return ok;});
+    var sep=describe(vis.filter(function(r){return r.getAttribute('data-sep')==='1';})), all=describe(vis);
+    set('jt-sep-n',sep.txt); set('jt-sep-amt',money(sep.sum));
+    set('jt-all-n',all.txt); set('jt-all-amt',money(all.sum));
+  }
+  var whole=describe(rows), earlier=rows.filter(function(r){return r.getAttribute('data-sep')!=='1';}).length;
+  set('jt-cnt',whole.n+(whole.n===1?' job':' jobs')+' \u00b7 '+money(whole.sum));
+  set('kjob-all-amt',money2(whole.sum));
+  set('kjob-all-meta',whole.n+(whole.n===1?' job':' jobs')+' \u00b7 '+earlier+' from earlier months\u2019 leads');
+  [].forEach.call(document.querySelectorAll('#jobsec .jt-f'),function(b){
+    b.addEventListener('click',function(){
+      [].forEach.call(document.querySelectorAll('#jobsec .jt-f'),function(x){x.classList.remove('on');});
+      b.classList.add('on'); apply(b.getAttribute('data-f'));
+    });
+  });
+  apply('all');
+})();
+</script>
+<!-- ===== END JOBS THIS MONTH FROM OUR LEADS ===== -->
+
 
 <!-- ===== KEYWORD ANALYSIS ===== -->
 <div class="sec-title">
