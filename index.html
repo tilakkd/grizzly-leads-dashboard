@@ -80,6 +80,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-u
 .chips{display:flex;gap:8px;flex-wrap:wrap;}
 .chip{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;}
 .chip.active{background:#13314f;color:#fff;border-color:#13314f;}
+.daterange{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 12px;flex-wrap:wrap;}
+.daterange .dr-lbl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
+.daterange input[type=date]{font:inherit;font-size:13px;color:#1c2430;background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:5px 8px;}
+.daterange input[type=date]:focus{outline:none;border-color:#2563eb;background:#fff;}
+.daterange .dr-clear{cursor:pointer;font-size:12px;font-weight:700;color:#b4232a;background:none;border:0;padding:2px 4px;display:none;}
+.daterange.dr-active .dr-clear{display:inline;}
+@media(max-width:640px){.daterange{width:100%;justify-content:space-between;}}
 
 /* Section title */
 .sec-title{display:flex;align-items:center;gap:9px;margin:26px 2px 12px;font-size:15px;font-weight:800;color:#13314f;}
@@ -508,7 +515,7 @@ Job pipeline in Housecall Pro <span class="cnt" id="hcp-cnt">0 of 0 leads have a
 <div class="kmeta"><span id="hcp-lost-n">0</span> leads</div>
 </div>
 </div>
-<div class="ads-note kw-note">These three boxes only cover the <b><span id="hcp-priced">0</span></b> leads that have reached a price in Housecall Pro. The other <b><span id="hcp-unpriced">0</span></b> are not there yet: <b><span id="hcp-visit-n">0</span></b> have a visit booked but no price on the estimate, <b><span id="hcp-inhcp-n">0</span></b> are customers in Housecall Pro with no estimate raised, and <b><span id="hcp-none-n">0</span></b> have not been added to Housecall Pro at all. Figures come straight from the Housecall Pro column in the tables below and follow the search and Paid/Organic filters, so they always agree with the rows on screen.</div>
+<div class="ads-note kw-note">These three boxes only cover the <b><span id="hcp-priced">0</span></b> leads that have reached a price in Housecall Pro. The other <b><span id="hcp-unpriced">0</span></b> are not there yet: <b><span id="hcp-visit-n">0</span></b> have a visit booked but no price on the estimate, <b><span id="hcp-inhcp-n">0</span></b> are customers in Housecall Pro with no estimate raised, and <b><span id="hcp-none-n">0</span></b> have not been added to Housecall Pro at all. Figures come straight from the Housecall Pro column in the tables below and follow the search, Paid/Organic and date-range filters, so they always agree with the rows on screen.</div>
 </div>
 <!-- ===== END HCP PIPELINE KPIS ===== -->
 <div class="totline" style="margin-top:2px;">⏱ All times in <b>Arizona time (MST, GMT−7)</b> — <b>India time (IST)</b> shown in brackets.</div>
@@ -522,6 +529,13 @@ Job pipeline in Housecall Pro <span class="cnt" id="hcp-cnt">0 of 0 leads have a
 <span class="chip active" data-f="all">All</span>
 <span class="chip" data-f="paid">Paid</span>
 <span class="chip" data-f="organic">Organic / GMB</span>
+</div>
+<div class="daterange" id="daterange">
+<span class="dr-lbl">From</span>
+<input type="date" id="dr-from" aria-label="Filter tracker from date">
+<span class="dr-lbl">To</span>
+<input type="date" id="dr-to" aria-label="Filter tracker to date">
+<button type="button" class="dr-clear" id="dr-clear" title="Clear date filter">Clear</button>
 </div>
 </div>
 
@@ -1309,13 +1323,33 @@ if(pill) pill.textContent = priced + ' of ' + total + (total===1?' lead':' leads
 }
 /* ===== END HCP PIPELINE KPIS ===== */
 
+// Date-range filter (Erik's request, added 2026-09-25): a From/To pair that filters
+// both tables live, on top of the search box and the All/Paid/Organic chips, using each
+// row's existing data-date attribute. No download needed - it drives the on-screen tables
+// and every KPI/summary number that already depends on row visibility.
+var drFrom = document.getElementById('dr-from');
+var drTo = document.getElementById('dr-to');
+var drClear = document.getElementById('dr-clear');
+var drWrap = document.getElementById('daterange');
+
+function inDateRange(r){
+var d = r.getAttribute('data-date');
+if(!d) return true;
+var f = drFrom.value, t = drTo.value;
+if(f && d < f) return false;
+if(t && d > t) return false;
+return true;
+}
+
 function apply(){
 var t = (q.value||'').toLowerCase();
 rows.forEach(function(r){
 var matchText = r.textContent.toLowerCase().indexOf(t) > -1;
 var matchSrc = activeFilter === 'all' || r.getAttribute('data-source') === activeFilter;
-r.style.display = (matchText && matchSrc) ? '' : 'none';
+var matchDate = inDateRange(r);
+r.style.display = (matchText && matchSrc && matchDate) ? '' : 'none';
 });
+if(drWrap) drWrap.classList.toggle('dr-active', !!(drFrom.value || drTo.value));
 updateKPIs();
 }
 q.addEventListener('input', apply);
@@ -1326,6 +1360,13 @@ c.classList.add('active');
 activeFilter = c.getAttribute('data-f');
 apply();
 });
+});
+drFrom.addEventListener('change', apply);
+drTo.addEventListener('change', apply);
+drClear.addEventListener('click', function(){
+drFrom.value = '';
+drTo.value = '';
+apply();
 });
 // Auto NEW badge for leads within last 2 days
 var now = new Date();
