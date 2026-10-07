@@ -261,6 +261,23 @@ tbody tr:hover td{background:#f9fbff;}
 #calls th:nth-child(7){width:6.65%}#calls th:nth-child(8){width:6.01%}#calls th:nth-child(9){width:15.25%}
 #calls th:nth-child(10){width:7.6%}#calls th:nth-child(11){width:10.63%}
 
+/* ===== WEEKLY CPL inside the Form Leads summary box (added 2026-10-01) - KEEP ===== */
+.sum-body .wk-t{font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:#8a93a3;font-weight:800;margin:13px 0 8px;padding-top:11px;border-top:1px dashed var(--line);}
+.wk-list{display:flex;flex-direction:column;gap:7px;}
+.wk-r{display:grid;grid-template-columns:26px 1fr auto;grid-template-areas:"n d v" "m m m";column-gap:7px;align-items:center;}
+.wk-r .wk-n{grid-area:n;font-size:10px;font-weight:800;color:#fff;background:var(--navy);border-radius:5px;text-align:center;padding:1px 0;}
+.wk-r .wk-d{grid-area:d;font-size:11.5px;color:#4b5563;font-weight:600;}
+.wk-r .wk-v{grid-area:v;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;font-weight:700;letter-spacing:-.4px;}
+.wk-v.lo{color:var(--green);} .wk-v.hi{color:var(--amber);}
+.wk-r .wk-bar{grid-area:b;position:relative;height:5px;background:#eef1f5;border-radius:99px;margin-top:5px;}
+.wk-r .wk-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:#9fb6cf;}
+.wk-r .wk-bar b{position:absolute;top:-3px;bottom:-3px;width:2px;background:#6b7280;}
+.wk-r .wk-m{grid-area:m;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;color:var(--muted);margin-top:1px;padding-left:33px;}
+.wk-key{font-size:10.5px;color:var(--muted);margin-top:10px;line-height:1.45;}
+.wk-key .lo{color:var(--green);font-weight:700;} .wk-key .hi{color:var(--amber);font-weight:700;}
+.wk-s{color:var(--amber);font-weight:800;margin-left:2px;}
+.wk-note{margin-top:8px;padding:7px 9px;border-radius:8px;background:#fdf6e9;color:#7a5a00;font-size:10.5px;line-height:1.45;}
+/* ===== END WEEKLY CPL ===== */
 /* ===== SUMMARY BOX ===== */
 .split{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start;}
 .sumcard{order:-1;min-width:0;}
@@ -435,6 +452,21 @@ td.hcp.h-none .hcp-why::after{content:"This lead has not been added to Housecall
 <div class="kmeta"><span id="ads-clicks">844</span> clicks &middot; <span id="ads-cpc">$18.20</span> cpc</div>
 </div>
 <!-- ===== END GOOGLE ADS MTD ===== -->
+<!-- ===== WEEKLY ADS SPEND ===== -->
+<!-- ARCHIVE - FROZEN (added 2026-10-07, Kunal: same week-wise CPL as the live October page).
+     Calendar blocks: W1 = 1-7, W2 = 8-14, W3 = 15-21, W4 = 22-28, W5 = 29-30. "spend" = Google Ads account cost for that
+     week (Total: Account, Mountain time), each week read from Google Ads on 2026-10-07 for its exact date range.
+     W1 $3,531.28 / 197 clicks, W2 $3,774.25 / 199, W3 $3,396.70 / 188, W4 $3,709.29 / 203, W5 $953.06 / 57.
+     The five add up to #ads-cost $15,364.58 and 844 clicks exactly. Paid leads per week are counted by the script from
+     the table rows, never typed. -->
+<script type="application/json" id="wk-spend">[
+{"label":"Sep 1\u20137","from":"2026-09-01","to":"2026-09-07","days":7,"spend":3531.28},
+{"label":"Sep 8\u201314","from":"2026-09-08","to":"2026-09-14","days":7,"spend":3774.25},
+{"label":"Sep 15\u201321","from":"2026-09-15","to":"2026-09-21","days":7,"spend":3396.70},
+{"label":"Sep 22\u201328","from":"2026-09-22","to":"2026-09-28","days":7,"spend":3709.29},
+{"label":"Sep 29\u201330","from":"2026-09-29","to":"2026-09-30","days":2,"spend":953.06}
+]</script>
+<!-- ===== END WEEKLY ADS SPEND ===== -->
 <!-- ===== TOTAL WON KPI ===== -->
 <!-- HAND-WRITTEN, REFRESH EVERY RUN. WHAT IT COUNTS (Kunal 2026-09-23, from Erik Lefko's request "aggregate all total won,
      add to top of dashboard like ad spend" + his correction "use the Housecall Pro JOBS tab, jobs with a job START in the month"):
@@ -2655,6 +2687,30 @@ updateKPIs();
     return '<div class="sum-head"><h3>'+title+'</h3><div class="stamp"><span class="sdot"></span> Updated '+esc(upd)+' &middot; refreshes every day</div></div>';
   }
 
+  // ---- WEEKLY CPL (W1, W2 ...) inside the Cost per lead block ----
+  // Weekly Ads spend is HAND-WRITTEN in #wk-spend (one entry per week, account level, Mountain time).
+  // Paid leads per week are counted from the rows (forms + calls, data-source="paid", data-date inside the week).
+  function weekBlock(avg){
+    var src=document.getElementById('wk-spend'); if(!src) return '';
+    var W; try{W=JSON.parse(src.textContent);}catch(e){return '';}
+    var P=[].slice.call(document.querySelectorAll('#leads tbody tr[data-source="paid"],#calls tbody tr[data-source="paid"]'));
+    var rows=W.map(function(w){var n=P.filter(function(r){var d=r.getAttribute('data-date');return d>=w.from&&d<=w.to;}).length;
+      return {w:w,n:n,cpl:n?w.spend/n:null};});
+    var star=false;
+    var html='<div class="wk-t">By week</div><div class="wk-list">';
+    rows.forEach(function(x,i){
+      var part=x.w.days<7; if(part) star=true;
+      var dir=x.cpl===null?'':(x.cpl<=avg?'lo':'hi');
+      html+='<div class="wk-r"><span class="wk-n">W'+(i+1)+'</span>'
+        +'<span class="wk-d">'+x.w.label+(part?'<span class="wk-s">*</span>':'')+'</span>'
+        +'<span class="wk-v '+dir+'">'+(x.cpl===null?'&mdash;':money(x.cpl))+'</span>'
+        +'<span class="wk-m">'+money(x.w.spend)+' spend &divide; '+x.n+' paid lead'+(x.n===1?'':'s')+'</span></div>';
+    });
+    html+='</div><div class="wk-key"><span class="lo">Green</span> = cheaper than the month&rsquo;s '+money(avg)+', <span class="hi">amber</span> = dearer.</div>';
+    if(star) html+='<div class="wk-note"><span class="wk-s">*</span> Short week at the start or end of the month, so it has fewer leads and can swing more. The figure is real.</div>';
+    return html;
+  }
+
   function build(){
     var F=rows('leads'), C=rows('calls');
     if(!F.length&&!C.length) return;
@@ -2672,7 +2728,9 @@ updateKPIs();
         +'<div class="cpl">'+money(spend/paidAll)+'</div>'
         +'<div class="snote">Ads spend of '+money(spend)+' this month, divided by the '+paidAll
         +' paid leads it brought in, website forms and phone calls counted together. '
-        +'Organic leads are not in the figure because they cost nothing.</div></div>';
+        +'Organic leads are not in the figure because they cost nothing.</div>'
+        +weekBlock(spend/paidAll)
+        +'</div>';
     }
 
     // ---------------- FORM CARD ----------------
